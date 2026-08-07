@@ -1,0 +1,17 @@
+{
+  "vk": {
+    "icon": "vk",
+    "title": "sharing.vk",
+    "url": "https://vk.com/share.php?url=%s&title=%s"
+  },
+  "ok": {
+    "icon": "ok",
+    "title": "sharing.ok",
+    "url": "https://connect.ok.ru/offer?url=%s&title=%s"
+  },
+  "max": {
+    "icon": "max",
+    "title": "sharing.max",
+    "url": "https://max.ru/:share?url=%s&text=%s"
+  }
+}
