@@ -1,0 +1,6 @@
+main = [
+  { name = "Главная", pageRef = "/", weight = 1 },
+  { name = "Статьи", pageRef = "/articles", weight = 2 },
+  { name = "Рубрики", pageRef = "/categories", weight = 3 },
+  { name = "Теги", pageRef = "/tags", weight = 4 },
+]

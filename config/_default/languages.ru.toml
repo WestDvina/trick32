@@ -1,0 +1,22 @@
+locale = "ru-RU"
+label = "Русский"
+direction = "ltr"
+weight = 1
+
+title = "Уловка-32"
+copyright = "Уловка-32"
+
+[params]
+  dateFormat = "2 January 2006"
+
+  mainSections = ["articles"]
+  description = "Техно-блог про Windows, браузеры и операционные системы"
+
+[params.author]
+  name = "Уловка-32"
+  headline = "Техно-блог"
+  bio = "Windows 11, браузеры, ОС и цифровое внимание"
+  links = [
+    { globe = "https://dzen.ru/trick32" },
+    { github = "https://github.com/WestDvina" },
+  ]
