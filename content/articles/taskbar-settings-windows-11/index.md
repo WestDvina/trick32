@@ -3,8 +3,6 @@ title: "Microsoft возвращает настройки панели зада�
 date: "2026-08-07"
 categories: ["os", "windows"]
 tags: ["windows-11", "microsoft", "панель-задач"]
-cover: "windows-11-26h2-taskbar-changes-hero.webp"
-coverAlt: "Панель задач Windows 11 26H2"
 draft: false
 ---
 
