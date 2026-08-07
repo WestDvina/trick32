@@ -10,13 +10,13 @@ copyright = "Уловка-32"
   dateFormat = "2 January 2006"
 
   mainSections = ["articles"]
-  description = "Техно-блог про Windows, браузеры и операционные системы"
+  description = "Технологии без фанатизма. Личный опыт и истории"
 
 [params.author]
   name = "Уловка-32"
   image = "32.png"
-  headline = "Техно-блог про Windows, браузеры и операционные системы"
-  bio = "Разбираю Windows 11, браузеры, ОС и цифровое внимание — понятно и по делу"
+  headline = "Технологии без фанатизма. Личный опыт и истории"
+  bio = "Технологии без фанатизма. Личный опыт и истории"
   links = [
     { globe = "https://dzen.ru/trick32" },
     { telegram = "https://t.me/walgo" },
