@@ -67,7 +67,7 @@ fingerprintAlgorithm = "sha256"
   showTermCount = true
 
 [analytics]
-  # yandex_metrika_id = 12345678
+  yandex_metrika_id = 90990392
 
 [verification]
   # google = ""
