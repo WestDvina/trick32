@@ -1,6 +1,27 @@
-main = [
-  { name = "Главная", pageRef = "/", weight = 1 },
-  { name = "Статьи", pageRef = "/articles", weight = 2 },
-  { name = "Рубрики", pageRef = "/categories", weight = 3 },
-  { name = "Теги", pageRef = "/tags", weight = 4 },
-]
+[[main]]
+  name = "Главная"
+  pageRef = "/"
+  weight = 1
+
+[[main]]
+  name = "Статьи"
+  pageRef = "/articles"
+  weight = 2
+
+[[main]]
+  name = "Рубрики"
+  pageRef = "/categories"
+  weight = 3
+
+[[main]]
+  name = "Теги"
+  pageRef = "/tags"
+  weight = 4
+
+[[main]]
+  identifier = "appearance"
+  weight = 5
+  [main.params]
+    action = "appearance"
+    icon = "moon"
+    showName = false

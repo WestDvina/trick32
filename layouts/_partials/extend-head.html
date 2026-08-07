@@ -1,0 +1,37 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var header = document.getElementById("site-header");
+    if (!header) return;
+    var lastY = window.pageYOffset;
+    var hidden = false;
+    var ticking = false;
+
+    function update() {
+      var y = window.pageYOffset;
+      var delta = y - lastY;
+      if (Math.abs(delta) < 4) {
+        ticking = false;
+        return;
+      }
+      if (y <= 0) {
+        header.classList.remove("-translate-y-full");
+        hidden = false;
+      } else if (delta > 8 && !hidden) {
+        header.classList.add("-translate-y-full");
+        hidden = true;
+      } else if (delta < -8 && hidden) {
+        header.classList.remove("-translate-y-full");
+        hidden = false;
+      }
+      lastY = y;
+      ticking = false;
+    }
+
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    });
+  });
+</script>
