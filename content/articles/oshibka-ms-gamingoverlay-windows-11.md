@@ -1,6 +1,7 @@
 ---
 title: "Ошибка ms-gamingoverlay в Windows 11: одна команда, которая убирает popup"
 date: "2026-07-29"
+description: "Запускаете игру, а Windows требует приложение для ms-gamingoverlay? Не вирус, а сбой регистрации Xbox Game Bar. Одна команда в PowerShell навсегда убирает надоедливый popup."
 categories: ["windows"]
 tags: ["windows-11", "xbox", "powershell"]
 draft: false

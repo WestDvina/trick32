@@ -1,6 +1,7 @@
 ---
 title: "Linux бьёт рекорды, доходы Windows падают. Что внутри Project K2 и спасёт ли он Windows 11"
 date: "2026-08-03"
+description: "Доля Linux на десктопах впервые достигла 7,53%, а Windows теряет позиции. Разбираем Project K2: что задумала Microsoft и спасёт ли внутренняя перестройка Windows 11."
 categories: ["os"]
 tags: ["windows-11", "linux", "microsoft"]
 draft: false
