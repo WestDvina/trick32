@@ -4,6 +4,7 @@ date: "2026-08-03"
 categories: ["os"]
 tags: ["windows-11", "linux", "microsoft"]
 draft: false
+images: ["/og-img.jpg"]
 ---
 
 <p>Пока Microsoft печатает миллиарды на Azure и искусственном интеллекте, её старый добрый Windows потихоньку сдувается. В июле 2026 года доля Linux на десктопах впервые в истории достигла <strong>7,53%</strong> — данные StatCounter. Ещё в январе было 5,59%.</p>
