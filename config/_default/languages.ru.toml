@@ -14,9 +14,10 @@ copyright = "Уловка-32"
 
 [params.author]
   name = "Уловка-32"
-  headline = "Техно-блог"
-  bio = "Windows 11, браузеры, ОС и цифровое внимание"
+  image = "32.png"
+  headline = "Техно-блог про Windows, браузеры и операционные системы"
+  bio = "Разбираю Windows 11, браузеры, ОС и цифровое внимание — понятно и по делу"
   links = [
     { globe = "https://dzen.ru/trick32" },
-    { github = "https://github.com/WestDvina" },
+    { telegram = "https://t.me/walgo" },
   ]
