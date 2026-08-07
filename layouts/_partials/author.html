@@ -5,7 +5,7 @@
     {{ with .Site.Language.Params.Author.image }}
       {{ $authorImage := resources.Get . }}
       {{ if $authorImage }}
-        {{ $imgClass := "!mb-0 !mt-0 me-3 w-12 h-12 rounded-full" }}
+        {{ $imgClass := "!mb-0 !mt-0 me-3 w-24 h-auto rounded-full" }}
         {{ partial "picture.html" (dict "img" $authorImage "alt" $altText "class" $imgClass "lazy" $lazy  ) }}
       {{ end }}
     {{ end }}
