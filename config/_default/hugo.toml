@@ -1,7 +1,7 @@
 # -- Site Configuration --
 # https://jpanther.github.io/congo/docs/getting-started/
 
-baseURL = "https://WestDvina.github.io/trick32/"
+baseURL = "https://trick32.ru/"
 theme = "congo"
 defaultContentLanguage = "ru"
 
