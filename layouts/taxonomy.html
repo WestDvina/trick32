@@ -3,7 +3,7 @@
     {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
       {{ partial "breadcrumbs.html" . }}
     {{ end }}
-    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ if eq .Kind "term" }}{{ .Title }}{{ else if eq .Data.Singular "tag" }}Теги{{ else if eq .Data.Singular "category" }}Категории{{ else }}{{ .Title }}{{ end }}</h1>
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ if eq .Data.Singular "tag" }}Теги{{ else if eq .Data.Singular "category" }}Категории{{ else }}{{ .Title }}{{ end }}</h1>
   </header>
   {{ if .Content }}
     <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
