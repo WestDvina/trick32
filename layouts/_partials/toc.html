@@ -1,0 +1,60 @@
+<details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    {{ i18n "article.table_of_contents" }}
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    {{ .TableOfContents | emojify }}
+  </div>
+</details>
+<script>
+  (function () {
+    var nav = document.querySelector('.toc nav');
+    if (!nav) return;
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    if (!links.length) return;
+    var active = null;
+    var heads = null;
+    function setActive(a) {
+      if (active === a) return;
+      if (active) active.classList.remove('font-semibold');
+      active = a;
+      if (active) active.classList.add('font-semibold');
+    }
+    function onScroll() {
+      if (!heads) {
+        var resolved = links
+          .map(function (a) {
+            var id;
+            try {
+              id = decodeURIComponent(a.getAttribute('href').replace(/^#/, ''));
+            } catch (e) {
+              id = a.getAttribute('href').replace(/^#/, '');
+            }
+            return { a: a, el: document.getElementById(id) };
+          })
+          .filter(function (h) {
+            return h.el;
+          });
+        if (!resolved.length) return;
+        heads = resolved;
+      }
+      if (!heads.length) return;
+      var pos = window.scrollY + 120;
+      var current = null;
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].el.offsetTop <= pos) current = heads[i].a;
+        else break;
+      }
+      setActive(current);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onScroll);
+    } else {
+      onScroll();
+    }
+  })();
+</script>
