@@ -60,6 +60,8 @@ RuBeRoID (Russia · Belarus · Route · ISO · Downloader) — мой форк �
 
 ## Про безопасность
 
+![Проверка RuBeRoID](ruberoid-security.webp)
+
 RuBeRoID, как и оригинальный Rufus, — полностью открытый код. exe подписан самоподписным сертификатом, а не доверенным сертификатом Microsoft, поэтому при скачивании вы увидите предупреждение об опасности. Это нормально для любых самосборок. Проверить безопасность исходников может каждый.
 
 [Скачать Rufus-RuBeRoID](https://github.com/WestDvina/rufus-RuBeRoID/releases)
