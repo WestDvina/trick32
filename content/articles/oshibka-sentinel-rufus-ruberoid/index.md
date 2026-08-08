@@ -14,7 +14,6 @@ images: ["/og-img.jpg"]
 
 Проблема во встроенном инструменте загрузки. Разбираюсь, почему он сломался и как скачивать оригинальные ISO без торрентов и неофициальных сборок.
 
--
 
 ## Почему Rufus больше не качает Windows
 
@@ -26,9 +25,7 @@ Rufus скачивает ISO через встроенный скрипт FIDO. 
 
 В итоге встроенный инструмент FIDO стал бесполезен: он не обходит ни защиту от автоматизации, ни региональные ограничения.
 
-![Ошибка Sentinel в окне Rufus](ruberoid-sentinel.jpg)
-
-![Ошибка Sentinel при выборе версии Windows](ruberoid-sentinel-2.jpg)
+![Ошибка Sentinel в окне Rufus](ruberoid-interface.webp)
 
 ## RuBeRoID: форк с рабочим скачиванием
 
@@ -36,7 +33,7 @@ RuBeRoID (Russia · Belarus · Route · ISO · Downloader) — мой форк �
 
 В исходном коде изменено три файла: `src/net.c`, `src/stdlg.c` и `src/rufus.h`. Вместо проблемного скрипта FIDO программа берёт оригинальные ссылки на ISO Windows 10 и 11. Принцип получения ссылок и обход защиты Sentinel — такой же, как в моём [Telegram-боте](https://dzen.ru/a/ajY7jfQQCSpPBgkm).
 
-![Окно выбора версии Windows в RuBeRoID](ruberoid-what.jpg)
+![Окно выбора версии Windows в RuBeRoID](ruberoid-what.webp)
 
 Главные преимущества:
 
@@ -55,7 +52,7 @@ RuBeRoID (Russia · Belarus · Route · ISO · Downloader) — мой форк �
 
 Изменения коснулись только этапа загрузки файла. Вся остальная логика программы работает штатно.
 
-![Интерфейс Rufus-RuBeRoID](ruberoid-interface.jpg)
+![Интерфейс Rufus-RuBeRoID](ruberoid-sentinel-2.webp)
 
 ## Важное ограничение
 
