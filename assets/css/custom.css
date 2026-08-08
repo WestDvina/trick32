@@ -2,6 +2,10 @@ article footer .flex picture {
   margin-right: 5px;
 }
 
+.toc a:hover {
+  color: #fff;
+}
+
 figure[data-lightbox] {
   cursor: zoom-in;
 }
