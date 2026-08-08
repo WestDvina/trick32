@@ -1,7 +1,7 @@
 # -- Theme Options --
 # https://jpanther.github.io/congo/docs/configuration/#theme-parameters
 
-colorScheme = "congo"
+colorScheme = "trick32"
 defaultAppearance = "light"
 autoSwitchAppearance = true
 
