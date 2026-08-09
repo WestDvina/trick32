@@ -11,10 +11,12 @@
     <button class="lightbox__prev" type="button" aria-label="Назад">‹</button>
     <div class="lightbox__stage"><img alt="" /></div>
     <button class="lightbox__next" type="button" aria-label="Вперёд">›</button>
+    <div class="lightbox__caption" role="status"></div>
     <div class="lightbox__counter" role="status"></div>
   `;
   const img = node.querySelector(".lightbox__stage img");
   const counter = node.querySelector(".lightbox__counter");
+  const caption = node.querySelector(".lightbox__caption");
   const closeBtn = node.querySelector(".lightbox__close");
   const prevBtn = node.querySelector(".lightbox__prev");
   const nextBtn = node.querySelector(".lightbox__next");
@@ -27,12 +29,14 @@
     img.alt = item.alt || "";
     img.src = item.src;
     counter.textContent = `${index + 1} / ${items.length}`;
+    caption.textContent = item.caption || "";
   }
 
   function open(fig) {
     items = figures.map((f) => ({
       src: figFor(f),
       alt: f.querySelector("img")?.alt || "",
+      caption: f.getAttribute("data-caption") || "",
     }));
     index = figures.indexOf(fig);
     node.classList.add("is-open");

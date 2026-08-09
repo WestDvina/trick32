@@ -6,6 +6,11 @@ article footer .flex picture {
   color: #fff;
 }
 
+.prose figure figcaption {
+  font-style: italic;
+  color: var(--tw-prose-captions);
+}
+
 figure[data-lightbox] {
   cursor: zoom-in;
 }
@@ -97,4 +102,18 @@ figure[data-lightbox] {
   opacity: 0.85;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
+}
+
+.lightbox__caption {
+  position: fixed;
+  bottom: 3.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  max-width: 80vw;
+  color: #fff;
+  opacity: 0.9;
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
 }
