@@ -15,6 +15,59 @@ figure[data-lightbox] {
   cursor: zoom-in;
 }
 
+.prose pre {
+  position: relative;
+  background: #141413;
+  border: 1px solid #262626;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  color: #e8e8e6;
+  font-size: 0.9em;
+  line-height: 1.6;
+  overflow-x: auto;
+  cursor: copy;
+  transition: border-color 0.2s ease;
+}
+
+.prose pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;
+}
+
+.prose pre:hover {
+  border-color: #00e07f;
+}
+
+.prose pre.copied {
+  border-color: #00e07f;
+  background: #1a1f1c;
+}
+
+.copy-tip {
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 10001;
+  background: #00e07f;
+  color: #101312;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.copy-tip.is-visible {
+  opacity: 1;
+}
+
 .lightbox {
   position: fixed;
   inset: 0;

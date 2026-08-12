@@ -1,3 +1,5 @@
 <meta name="zen-verification" content="Z20t7gBPVzJ6GsJb9KXJ33L6YkuaB9KmIv2EbBiSYmsDZyV4UR9G39wr1UUVmEER" />
 {{ $lightbox := resources.Get "js/lightbox.js" | js.Build | minify }}
 <script type="text/javascript" src="{{ $lightbox.RelPermalink }}" defer></script>
+{{ $copyCode := resources.Get "js/copy-code.js" | js.Build | minify }}
+<script type="text/javascript" src="{{ $copyCode.RelPermalink }}" defer></script>
