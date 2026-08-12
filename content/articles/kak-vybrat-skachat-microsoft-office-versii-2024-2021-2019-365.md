@@ -1,6 +1,6 @@
 ---
 title: "Как выбрать и скачать Microsoft Office: разбираемся в версиях 2024, 2021, 2019 и Microsoft 365"
-date: "2026-08-12"
+date: "2026-08-12T21:37:00+03:00"
 description: "Office 2024, 2021, 2019 или Microsoft 365 — разбираемся, чем версия отличается от редакции и почему появляются названия Home, Business и Professional. Как выбрать пакет для своих задач и где скачать рабочий дистрибутив."
 categories: ["ms-office"]
 tags: ["microsoft-office", "office-2024", "microsoft-365", "скачать-office"]
