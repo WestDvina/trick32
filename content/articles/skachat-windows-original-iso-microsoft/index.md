@@ -5,6 +5,7 @@ description: "Microsoft блокирует скачивание ISO-образо
 categories: ["windows", "os"]
 tags: ["windows-10", "windows-11", "скачать-iso", "microsoft-cdn", "shifer"]
 draft: false
+pinned: true
 images: ["/og-img.jpg"]
 ---
 

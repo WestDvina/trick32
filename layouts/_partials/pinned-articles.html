@@ -1,0 +1,22 @@
+{{ $pinned := where .Site.RegularPages "Params.pinned" true }}
+{{ $limit := 4 }}
+{{ if gt (len $pinned) 0 }}
+  <aside class="home-pinned mt-8 lg:mt-0 print:hidden">
+    <div class="home-pinned-inner">
+      <h2 class="home-pinned-title">{{ T "pinned_articles" }}</h2>
+      <div class="home-pinned-list">
+        {{ range first $limit $pinned }}
+          <a href="{{ .Permalink }}" class="home-pinned-card">
+            <div class="home-pinned-meta">
+              {{ partial "meta/date.html" .Date }}
+              {{ if and (.Params.showReadingTime | default (.Site.Params.article.showReadingTime | default true)) (ne .ReadingTime 0) }}
+                <span class="home-pinned-sep">&middot;</span>{{ partial "meta/reading-time.html" . }}
+              {{ end }}
+            </div>
+            <div class="home-pinned-name">{{ .Title | emojify }}</div>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  </aside>
+{{ end }}

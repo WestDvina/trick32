@@ -1,0 +1,14 @@
+<article
+  class="{{ if not .Site.Params.homepage.showRecent }}
+    h-full
+  {{ end }} flex flex-col items-center justify-center text-center"
+>
+  {{ partial "profile.html" }}
+  <section class="prose dark:prose-invert">{{ .Content | emojify }}</section>
+</article>
+<div class="home-layout mt-6">
+  <div class="home-recent min-w-0">
+    {{ partial "recent-articles.html" . }}
+  </div>
+  {{ partial "pinned-articles.html" . }}
+</div>

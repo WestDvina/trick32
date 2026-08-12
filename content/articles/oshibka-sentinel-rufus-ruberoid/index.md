@@ -5,6 +5,7 @@ description: "Rufus перестал качать Windows из-за ошибки
 categories: ["windows", "os"]
 tags: ["rufus", "ruberoid", "sentinel", "iso", "скачать-windows"]
 draft: false
+pinned: true
 images: ["/og-img.jpg"]
 ---
 

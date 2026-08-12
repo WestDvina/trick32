@@ -5,6 +5,7 @@ description: "Office 2024, 2021, 2019 или Microsoft 365 — разбирае�
 categories: ["ms-office"]
 tags: ["microsoft-office", "office-2024", "microsoft-365", "скачать-office"]
 draft: false
+pinned: true
 images: ["/og-img.jpg"]
 ---
 
