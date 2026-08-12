@@ -180,7 +180,6 @@ figure[data-lightbox] {
 @media (min-width: 1024px) {
   .home-layout {
     flex-direction: row;
-    align-items: flex-start;
   }
   .home-recent {
     flex: 1 1 auto;
