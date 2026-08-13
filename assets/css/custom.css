@@ -242,3 +242,7 @@ figure[data-lightbox] {
 .dark .home-pinned-link {
   color: rgba(var(--color-neutral-400), 1);
 }
+
+.dark .home-pinned-link:hover {
+  color: #fff;
+}
