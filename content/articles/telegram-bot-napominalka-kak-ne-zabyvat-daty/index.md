@@ -112,7 +112,6 @@ images: ["/og-img.jpg"]
 04-tariff.webp | Тарифы и лимиты
 05-payment.webp | Оплата в приложении
 06-payment-done.webp | Оплата подтверждена
-07-reminders-after-payment.webp | Количество напоминаний после оплаты
 {{< /carousel >}}
 
 ## Мой взгляд как человека из IT
