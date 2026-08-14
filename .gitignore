@@ -2,3 +2,6 @@ public/
 resources/
 .hugo_build.lock
 .DS_Store
+
+# локальный реестр тем (не публикуется в публичный репозиторий)
+topics.json
