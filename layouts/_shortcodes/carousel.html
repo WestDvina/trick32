@@ -1,0 +1,25 @@
+{{ $slides := .Inner }}
+<div class="carousel" data-carousel>
+  <div class="carousel__track" data-carousel-track>
+    {{ range split $slides "\n" }}
+      {{ $line := trim . "\n\r " }}
+      {{ if $line }}
+        {{ $parts := split $line "|" }}
+        {{ $file := trim (index $parts 0) " " }}
+        {{ $caption := "" }}
+        {{ if gt (len $parts) 1 }}{{ $caption = trim (index $parts 1) " " }}{{ end }}
+        {{ with $.Page.Resources.GetMatch (printf "%s*" $file) }}
+        <div class="carousel__slide">
+          <figure data-lightbox="true" data-src="{{ .RelPermalink }}" data-caption="{{ $caption }}">
+            {{ partial "picture.html" (dict "img" . "alt" $caption "x2" true "lazy" true "webp" true) }}
+          </figure>
+        </div>
+        {{ else }}
+          {{ warnf "carousel: image not found: %s" $file }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+  <button class="carousel__btn carousel__btn--prev" type="button" data-carousel-prev aria-label="Назад">‹</button>
+  <button class="carousel__btn carousel__btn--next" type="button" data-carousel-next aria-label="Вперёд">›</button>
+</div>

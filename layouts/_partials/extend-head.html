@@ -3,3 +3,5 @@
 <script type="text/javascript" src="{{ $lightbox.RelPermalink }}" defer></script>
 {{ $copyCode := resources.Get "js/copy-code.js" | js.Build | minify }}
 <script type="text/javascript" src="{{ $copyCode.RelPermalink }}" defer></script>
+{{ $carousel := resources.Get "js/carousel.js" | js.Build | minify }}
+<script type="text/javascript" src="{{ $carousel.RelPermalink }}" defer></script>
