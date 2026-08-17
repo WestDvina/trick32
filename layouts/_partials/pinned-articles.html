@@ -1,4 +1,4 @@
-{{ $pinned := where .Site.RegularPages "Params.pinned" true }}
+{{ $pinned := (where .Site.RegularPages "Params.pinned" true).ByDate.Reverse }}
 {{ $limit := 4 }}
 {{ if gt (len $pinned) 0 }}
   <aside class="home-pinned mt-8 lg:mt-0 print:hidden">

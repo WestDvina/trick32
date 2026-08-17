@@ -1,6 +1,6 @@
 ---
 title: "Скачать Windows 10 и 11: оригинальный ISO с серверов Microsoft без торрентов"
-date: "2026-08-08"
+date: "2026-08-08T16:24:00+03:00"
 description: "Microsoft блокирует скачивание ISO-образов Windows для России и Беларуси. ShIFER собирает живые ссылки на оригинальные дистрибутивы прямо с серверов Microsoft. Выберите версию, скачайте чистый ISO — без торрентов и пиратских сборок."
 categories: ["windows", "os"]
 tags: ["windows-10", "windows-11", "скачать-iso", "microsoft-cdn", "shifer"]

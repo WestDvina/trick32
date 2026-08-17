@@ -1,6 +1,6 @@
 ---
 title: "Ошибка Sentinel в Rufus: как скачать оригинальный ISO Windows"
-date: "2026-08-08"
+date: "2026-08-08T20:23:00+03:00"
 description: "Rufus перестал качать Windows из-за ошибки Sentinel. Мой форк RuBeRoID снова возвращает кнопку «Скачать»: оригинальные ISO Windows 10 и 11 напрямую с серверов Microsoft, в обход антибота и геоблокировки России и Беларуси."
 categories: ["windows", "os"]
 tags: ["rufus", "ruberoid", "sentinel", "iso", "скачать-windows"]

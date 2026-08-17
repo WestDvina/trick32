@@ -34,12 +34,12 @@
                 {{ .Key }}
               </h2>
               <hr class="w-36 border-dotted border-neutral-400" />
-              {{ range .Pages }}
+              {{ range .Pages.ByDate.Reverse }}
                 {{ partial "article-link.html" . }}
               {{ end }}
             {{ end }}
           {{ else }}
-            {{ range (.Paginate .Pages).Pages }}
+            {{ range (.Paginate (.Pages.ByDate.Reverse)).Pages }}
               {{ partial "article-link.html" . }}
             {{ end }}
           {{ end }}
