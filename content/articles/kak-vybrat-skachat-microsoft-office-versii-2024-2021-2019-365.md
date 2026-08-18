@@ -6,6 +6,7 @@ categories: ["ms-office"]
 tags: ["microsoft-office", "office-2024", "microsoft-365", "скачать-office"]
 draft: false
 pinned: true
+pinnedOrder: 1
 images: ["/og-img.jpg"]
 ---
 

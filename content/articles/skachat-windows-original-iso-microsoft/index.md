@@ -6,6 +6,7 @@ categories: ["windows", "os"]
 tags: ["windows-10", "windows-11", "скачать-iso", "microsoft-cdn", "shifer"]
 draft: false
 pinned: true
+pinnedOrder: 3
 images: ["/og-img.jpg"]
 ---
 

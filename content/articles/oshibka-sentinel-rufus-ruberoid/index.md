@@ -6,6 +6,7 @@ categories: ["windows", "os"]
 tags: ["rufus", "ruberoid", "sentinel", "iso", "скачать-windows"]
 draft: false
 pinned: true
+pinnedOrder: 2
 images: ["/og-img.jpg"]
 ---
 
