@@ -19,8 +19,8 @@
     {{ if lt .Count $minCount }}{{ $minCount = .Count }}{{ end }}
     {{ if gt .Count $maxCount }}{{ $maxCount = .Count }}{{ end }}
   {{ end }}
-  {{ $minFont := 14 }}
-  {{ $maxFont := 40 }}
+  {{ $minFont := 12 }}
+  {{ $maxFont := 26 }}
   {{ $range := sub $maxFont $minFont }}
   {{ $countSpread := sub $maxCount $minCount }}
   <section class="taxonomy-cloud">
@@ -36,8 +36,10 @@
       {{ $word := "статей" }}
       {{ if and (eq $last 1) (ne $hundred 11) }}{{ $word = "статья" }}{{ end }}
       {{ if and (ge $last 2) (le $last 4) (or (lt $hundred 12) (gt $hundred 14)) }}{{ $word = "статьи" }}{{ end }}
+      {{ $tagClass := "taxonomy-tag--rare" }}
+      {{ if ge $n 4 }}{{ $tagClass = "taxonomy-tag--hot" }}{{ else if ge $n 2 }}{{ $tagClass = "taxonomy-tag--mid" }}{{ end }}
       <a
-        class="taxonomy-tag"
+        class="taxonomy-tag {{ $tagClass }}"
         style="font-size: {{ $size }}px"
         data-tooltip="{{ $n }} {{ $word }}"
         href="{{ .Page.Permalink }}"

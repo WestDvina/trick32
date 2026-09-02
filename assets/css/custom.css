@@ -5,21 +5,41 @@ article footer .flex picture {
 .taxonomy-cloud {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  gap: 1.5rem 3.5rem;
-  padding: 1.5rem 0;
+  gap: 0.45rem 0.85rem;
+  padding: 0.75rem 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .taxonomy-tag {
   position: relative;
   display: inline-block;
-  font-weight: 600;
-  line-height: 1.6;
-  color: inherit;
+  line-height: 1.25;
+  word-break: break-word;
   text-decoration: none;
 }
 
+.taxonomy-tag--rare {
+  color: rgba(var(--color-neutral-500), 1);
+  font-weight: 500;
+}
+.taxonomy-tag--mid {
+  color: rgba(var(--color-neutral-700), 1);
+  font-weight: 600;
+}
+.taxonomy-tag--hot {
+  color: rgba(var(--color-primary-600), 1);
+  font-weight: 700;
+}
+.dark .taxonomy-tag--rare {
+  color: rgba(var(--color-neutral-400), 1);
+}
+.dark .taxonomy-tag--mid {
+  color: rgba(var(--color-neutral-300), 1);
+}
 .taxonomy-tag:hover {
   text-decoration: underline;
   text-decoration-color: rgba(var(--color-primary-500), 1);
