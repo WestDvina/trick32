@@ -19,8 +19,8 @@
     {{ if lt .Count $minCount }}{{ $minCount = .Count }}{{ end }}
     {{ if gt .Count $maxCount }}{{ $maxCount = .Count }}{{ end }}
   {{ end }}
-  {{ $minFont := 12 }}
-  {{ $maxFont := 26 }}
+  {{ $minFont := 14 }}
+  {{ $maxFont := 30 }}
   {{ $range := sub $maxFont $minFont }}
   {{ $countSpread := sub $maxCount $minCount }}
   <section class="taxonomy-cloud">
