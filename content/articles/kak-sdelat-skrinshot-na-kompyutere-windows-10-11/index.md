@@ -1,6 +1,6 @@
 ---
 title: "Как сделать скриншот на компьютере: все способы в Windows 10 и Windows 11"
-date: "2026-08-24"
+date: "2026-08-24T23:49:00+03:00"
 description: "Как сделать скриншот в Windows 10 и Windows 11: PrtSc, Win + PrtSc, Alt + PrtSc, Win + Shift + S и «Ножницы». Куда сохраняется снимок и что делать, если Print Screen не работает."
 categories: ["windows", "os"]
 tags: ["скриншот", "print-screen", "windows-10", "windows-11"]

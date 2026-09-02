@@ -1,6 +1,6 @@
 ---
 title: "Windows 11 26H2 вышла в Release Preview: что изменится и почему это не обычное обновление"
-date: "2026-08-28"
+date: "2026-08-28T11:55:00+03:00"
 description: "Windows 11 26H2 вышла в канал Release Preview. Как работает enablement package, почему 26H2 — это не новая Windows с нуля и когда переходить."
 categories: ["os", "windows"]
 tags: ["windows-11", "microsoft", "26h2", "enablement-package"]
