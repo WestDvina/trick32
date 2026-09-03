@@ -400,6 +400,35 @@ figure[data-lightbox] {
   right: -14px;
 }
 
+/* Chroma fix: светлый код на тёмном фоне — был слишком тёмный */
+.chroma .n,
+.chroma .nd,
+.chroma .ni,
+.chroma .nl,
+.chroma .n:is(.dark *),
+.chroma .nd:is(.dark *),
+.chroma .ni:is(.dark *),
+.chroma .nl:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: #5ffbb7;
+}
+
+.chroma .na,
+.chroma .nb,
+.chroma .bp,
+.chroma .nx,
+.chroma .py,
+.chroma .nt,
+.chroma .na:is(.dark *),
+.chroma .nb:is(.dark *),
+.chroma .bp:is(.dark *),
+.chroma .nx:is(.dark *),
+.chroma .py:is(.dark *),
+.chroma .nt:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgba(233, 233, 233, 1);
+}
+
 @media (max-width: 767px) {
   .carousel__slide {
     flex-basis: 100%;
