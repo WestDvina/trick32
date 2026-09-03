@@ -1,6 +1,6 @@
 ---
 title: "3 бесплатные open-source программы, которые дополняют Windows 11 там, где Microsoft не доработала"
-date: "2026-09-03"
+date: "2026-09-03T17:20:00+03:00"
 description: "System Informer вместо Диспетчера задач, Everything + PowerToys Run для мгновенного поиска и Files с двумя панелями — три бесплатные open-source программы для Windows 11 через winget."
 categories: ["windows"]
 tags: ["windows-11", "open-source", "system-informer", "everything"]
