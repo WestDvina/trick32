@@ -37,3 +37,9 @@
   title = "Рубрики"
   pageRef = "/categories"
   weight = 2
+
+[[footer]]
+  name = "Теги"
+  title = "Теги"
+  pageRef = "/tags"
+  weight = 3

@@ -1,0 +1,73 @@
+<footer class="py-10 print:hidden">
+  <div class="flex items-center justify-between">
+    <div>
+      {{/* Copyright + footer menu inline: Уловка-32 | Статьи | Рубрики | Теги */}}
+      {{ if .Site.Params.footer.showCopyright | default true }}
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          {{- with site.Copyright }}
+            {{ . | emojify | markdownify }}
+          {{- else }}
+            &copy;
+            {{ now.Format "2006" }}
+            {{ .Site.Language.Params.Author.name | markdownify | emojify }}
+          {{- end }}
+          {{- if .Site.Menus.footer }}
+            {{- range .Site.Menus.footer }}
+              <span class="px-1 text-neutral-400 dark:text-neutral-600">|</span><a
+                href="{{ .URL }}"
+                title="{{ .Title }}"
+                class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+                >{{ .Name | markdownify | emojify }}</a
+              >
+            {{- end }}
+          {{- end }}
+        </p>
+      {{ end }}
+      {{/* Theme attribution — second line, same style as before */}}
+      {{ if .Site.Params.footer.showThemeAttribution | default true }}
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          {{ $hugo := printf `<a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>`
+          }}
+          {{ $congo := printf `<a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>` }}
+          {{ i18n "footer.powered_by" (dict "Hugo" $hugo "Congo" $congo) | safeHTML }}
+        </p>
+      {{ end }}
+    </div>
+    <div class="flex flex-row items-center">
+      {{/* Locale switcher */}}
+      {{ if and (.IsTranslated) (eq ($.Scratch.Get "localeCount") 0) }}
+        <div>
+          {{ partial "translations.html" (dict "ctx" . "dir" "up") }}
+        </div>
+      {{ end }}
+      {{/* Appearance switcher */}}
+      {{ if .Site.Params.footer.showAppearanceSwitcher | default false }}
+        <div
+          class="{{ if .Site.Params.footer.showScrollToTop | default true -}}
+            me-14
+          {{- end }} cursor-pointer text-sm text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        >
+          <button id="appearance-switcher-0" type="button" aria-label="appearance switcher">
+            <div
+              class="flex h-12 w-12 items-center justify-center dark:hidden"
+              title="{{ i18n "footer.dark_appearance" }}"
+            >
+              {{ partial "icon.html" "moon" }}
+            </div>
+            <div
+              class="hidden h-12 w-12 items-center justify-center dark:flex"
+              title="{{ i18n "footer.light_appearance" }}"
+            >
+              {{ partial "icon.html" "sun" }}
+            </div>
+          </button>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+  {{/* Extend footer */}}
+  {{ if templates.Exists "_partials/extend-footer.html" }}
+    {{ partial "extend-footer.html" . }}
+  {{ end }}
+</footer>
