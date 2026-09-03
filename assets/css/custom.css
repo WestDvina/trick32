@@ -8,10 +8,12 @@ article footer .flex picture {
   align-items: baseline;
   justify-content: center;
   gap: 0.6rem 1rem;
-  padding: 0.9rem 0;
+  padding: 1.6rem 0 0.9rem;
   max-width: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 .taxonomy-tag {
@@ -52,7 +54,7 @@ article footer .flex picture {
   top: -0.5rem;
   left: 50%;
   transform: translate(-50%, -100%);
-  z-index: 50;
+  z-index: 60;
   background: rgba(var(--color-neutral-800), 0.95);
   color: rgba(var(--color-neutral-100), 1);
   font-size: 0.75rem;

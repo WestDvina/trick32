@@ -25,3 +25,15 @@
     action = "appearance"
     icon = "moon"
     showName = false
+
+[[footer]]
+  name = "Статьи"
+  title = "Статьи"
+  pageRef = "/articles"
+  weight = 1
+
+[[footer]]
+  name = "Рубрики"
+  title = "Рубрики"
+  pageRef = "/categories"
+  weight = 2
