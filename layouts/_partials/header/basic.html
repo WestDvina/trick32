@@ -122,7 +122,11 @@
   class="hidden fixed inset-0 z-50 sm:hidden items-center justify-center bg-neutral-500/50 backdrop-blur-sm p-4"
 >
   <div class="bg-neutral dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-xl px-6 py-6 w-full max-w-3xl">
-    <div class="flex items-center justify-center gap-5" style="gap:20px">
+    <div class="flex flex-wrap items-center justify-center gap-5" style="gap:20px; flex-wrap:wrap">
+      <a href="/" title="Домой" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl">{{ partial "icon.html" "home" }}</span>
+        <span class="text-sm">Домой</span>
+      </a>
       <a href="/articles/" title="Статьи" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
         <span class="text-2xl">{{ partial "icon.html" "list" }}</span>
         <span class="text-sm">Статьи</span>
