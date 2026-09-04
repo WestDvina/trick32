@@ -3,20 +3,20 @@ label = "Русский"
 direction = "ltr"
 weight = 1
 
-title = "Уловка-32"
+title = "Уловка-32 — Windows, софт и железо без фанатизма"
 copyright = "Уловка-32"
 
 [params]
   dateFormat = "2 January 2006"
 
   mainSections = ["articles"]
-  description = "Технологии без фанатизма. Личный опыт и истории"
+  description = "Практические статьи про Windows 11, софт, железо и безопасность: пошаговые инструкции, личный опыт и решения без воды"
 
 [params.author]
   name = "Уловка-32"
   image = "32.png"
-  headline = "Технологии без фанатизма. Личный опыт и истории"
-  bio = "Технологии без фанатизма. Личный опыт и истории"
+  headline = "Практические статьи про Windows 11, софт и железо"
+  bio = "Пошаговые инструкции, личный опыт и решения без воды"
   links = [
     { globe = "https://dzen.ru/trick32" },
     { telegram = "https://t.me/walgo" },
