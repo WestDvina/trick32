@@ -1,113 +1,203 @@
 <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
-  <nav class="flex items-start justify-between sm:items-center">
+  <nav class="flex items-center justify-between relative">
     {{/* Site logo/title */}}
     <div class="flex flex-row items-center">
       {{ partial "logo.html" . }}
     </div>
-    {{/* Main menu */}}
-    {{ if or .Site.Menus.main (.Site.Params.enableSearch | default false) }}
-      <ul class="flex list-none flex-col text-end sm:flex-row">
-        {{ if .Site.Menus.main }}
-          {{ range .Site.Menus.main }}
-            {{ if and (eq .Params.action "locale") (or (not page.IsTranslated) (not hugo.IsMultilingual)) }}
-              {{ continue }}
-            {{ end }}
-            <li class="group mb-1 sm:mb-0 sm:me-7 sm:last:me-0.5">
-              {{ if eq .Params.action "search" }}
-                {{ $.Scratch.Add "searchCount" 1 }}
-                {{ if $.Site.Params.enableSearch | default false }}
+    {{/* Right side: desktop menu + mobile hamburger */}}
+    <div class="flex items-center">
+      {{/* Desktop menu — hidden on mobile, flex on desktop */}}
+      {{ if or .Site.Menus.main (.Site.Params.enableSearch | default false) }}
+        <ul class="hidden sm:flex list-none flex-row items-center">
+          {{ if .Site.Menus.main }}
+            {{ range .Site.Menus.main }}
+              {{ if and (eq .Params.action "locale") (or (not page.IsTranslated) (not hugo.IsMultilingual)) }}
+                {{ continue }}
+              {{ end }}
+              <li class="group sm:mb-0 sm:me-7 sm:last:me-0">
+                {{ if eq .Params.action "search" }}
+                  {{ $.Scratch.Add "searchCount" 1 }}
+                  {{ if $.Site.Params.enableSearch | default false }}
+                    <button
+                      id="search-button-{{ $.Scratch.Get "searchCount" }}"
+                      title="{{ .Title | default (i18n "search.open_button_title") }}"
+                    >
+                      {{ with .Params.icon | default "search" }}
+                        <span class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600">
+                          {{- partial "icon.html" . -}}
+                        </span>
+                      {{- end -}}{{- if .Params.showName | default true -}}
+                        <span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
+                          >{{ .Name | markdownify | emojify }}</span
+                        >
+                      {{ end }}
+                    </button>
+                  {{ end }}
+                {{ else if eq .Params.action "appearance" }}
+                  {{ $.Scratch.Add "switchCount" 1 }}
                   <button
-                    id="search-button-{{ $.Scratch.Get "searchCount" }}"
-                    title="{{ .Title | default (i18n "search.open_button_title") }}"
+                    id="appearance-switcher-{{ $.Scratch.Get "switchCount" }}"
+                    type="button"
+                    aria-label="appearance switcher"
                   >
-                    {{ with .Params.icon | default "search" }}
-                      <span
-                        class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600"
-                      >
+                    <span
+                      class="group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden"
+                      title="{{ i18n "footer.dark_appearance" }}"
+                    >
+                      {{ with .Params.icon | default "moon" }}
+                        {{- partial "icon.html" . -}}
+                      {{- end -}}
+                      {{- if .Params.showName | default true -}}
+                        <span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
+                          >{{ .Name | markdownify | emojify }}</span
+                        >
+                      {{ end }}
+                    </span>
+                    <span
+                      class="group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline"
+                      title="{{ i18n "footer.light_appearance" }}"
+                    >
+                      {{ with .Params.icon | default "sun" }}
+                        {{ partial "icon.html" . }}
+                      {{ end }}
+                      {{ if .Params.showName | default true }}
+                        <span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
+                          >{{ .Name | markdownify | emojify }}</span
+                        >
+                      {{ end }}
+                    </span>
+                  </button>
+                {{ else if eq .Params.action "locale" }}
+                  {{ $.Scratch.Add "localeCount" 1 }}
+                  {{ partial "translations.html" . }}
+                {{ else }}
+                  <a
+                    href="{{ .URL }}"
+                    title="{{ .Name }}"
+                    {{ with .Params.rel }}rel="{{ . }}"{{ end }}
+                    {{ with .Params.target }}target="{{ . }}"{{ end }}
+                    >{{ with .Params.icon }}
+                      <span class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600">
                         {{- partial "icon.html" . -}}
                       </span>
                     {{- end -}}{{- if .Params.showName | default true -}}
-                      <span
-                        class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
+                      <span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
                         >{{ .Name | markdownify | emojify }}</span
                       >
-                    {{ end }}
-                  </button>
+                    {{ end }}</a
+                  >
                 {{ end }}
-              {{ else if eq .Params.action "appearance" }}
-                {{ $.Scratch.Add "switchCount" 1 }}
-                <button
-                  id="appearance-switcher-{{ $.Scratch.Get "switchCount" }}"
-                  type="button"
-                  aria-label="appearance switcher"
-                >
-                  <span
-                    class="group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden"
-                    title="{{ i18n "footer.dark_appearance" }}"
-                  >
-                    {{ with .Params.icon | default "moon" }}
-                      {{- partial "icon.html" . -}}
-                    {{- end -}}
-                    {{- if .Params.showName | default true -}}
-                      <span
-                        class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
-                        >{{ .Name | markdownify | emojify }}</span
-                      >
-                    {{ end }}
-                  </span>
-                  <span
-                    class="group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline"
-                    title="{{ i18n "footer.light_appearance" }}"
-                  >
-                    {{ with .Params.icon | default "sun" }}
-                      {{ partial "icon.html" . }}
-                    {{ end }}
-                    {{ if .Params.showName | default true }}
-                      <span
-                        class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
-                        >{{ .Name | markdownify | emojify }}</span
-                      >
-                    {{ end }}
+              </li>
+            {{ end }}
+            {{ if and ($.Site.Params.enableSearch | default false) (eq ($.Scratch.Get "searchCount") 0) }}
+              <li class="group sm:mb-0 sm:me-7 sm:last:me-0">
+                <button id="search-button-m0" title="{{ i18n "search.open_button_title" }}">
+                  <span class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600">
+                    {{ partial "icon.html" "search" }}
                   </span>
                 </button>
-              {{ else if eq .Params.action "locale" }}
-                {{ $.Scratch.Add "localeCount" 1 }}
-                {{ partial "translations.html" . }}
-              {{ else }}
-                <a
-                  href="{{ .URL }}"
-                  title="{{ .Name }}"
-                  {{ with .Params.rel }}rel="{{ . }}"{{ end }}
-                  {{ with .Params.target }}target="{{ . }}"{{ end }}
-                  >{{ with .Params.icon }}
-                    <span
-                      class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600"
-                    >
-                      {{- partial "icon.html" . -}}
-                    </span>
-                  {{- end -}}{{- if .Params.showName | default true -}}
-                    <span
-                      class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
-                      >{{ .Name | markdownify | emojify }}</span
-                    >
-                  {{ end }}</a
-                >
-              {{ end }}
-            </li>
+              </li>
+            {{ end }}
           {{ end }}
-          {{ if and ($.Site.Params.enableSearch | default false) (eq ($.Scratch.Get "searchCount") 0) }}
-            <li class="group mb-1 sm:mb-0 sm:me-7 sm:last:me-0">
-              <button id="search-button-m0" title="{{ i18n "search.open_button_title" }}">
-                <span
-                  class="group-dark:hover:text-primary-400 transition-colors group-hover:text-primary-600"
-                >
-                  {{ partial "icon.html" "search" }}
-                </span>
-              </button>
-            </li>
-          {{ end }}
-        {{ end }}
-      </ul>
-    {{ end }}
+        </ul>
+      {{ end }}
+      {{/* Hamburger — mobile only */}}
+      <button
+        id="menu-toggle"
+        type="button"
+        class="sm:hidden p-2 -me-1"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="menu-icon-open">{{ partial "icon.html" "bars" }}</span>
+        <span class="menu-icon-close hidden">{{ partial "icon.html" "xmark" }}</span>
+      </button>
+    </div>
   </nav>
 </header>
+{{/* Mobile modal — centered, size by content, overlay like search */}}
+<div
+  id="mobile-menu"
+  class="hidden fixed inset-0 z-50 sm:hidden items-center justify-center bg-neutral-500/50 backdrop-blur-sm p-4"
+>
+  <div class="bg-neutral dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-xl px-6 py-5 w-auto max-w-[90vw]">
+    <div class="flex items-center justify-center gap-5">
+      <a href="/articles/" title="Статьи" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
+        <span class="text-xl">{{ partial "icon.html" "list" }}</span>
+        <span class="text-xs">Статьи</span>
+      </a>
+      <a href="/categories/" title="Рубрики" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
+        <span class="text-xl">{{ partial "icon.html" "bars" }}</span>
+        <span class="text-xs">Рубрики</span>
+      </a>
+      <a href="/tags/" title="Теги" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
+        <span class="text-xl">{{ partial "icon.html" "tag" }}</span>
+        <span class="text-xs">Теги</span>
+      </a>
+      <button id="mobile-search-button" title="{{ i18n "search.open_button_title" }}" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
+        <span class="text-xl">{{ partial "icon.html" "search" }}</span>
+        <span class="text-xs">Поиск</span>
+      </button>
+      <button id="mobile-appearance-switcher" type="button" aria-label="appearance switcher" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
+        <span class="dark:hidden">{{ partial "icon.html" "moon" }}</span>
+        <span class="hidden dark:inline">{{ partial "icon.html" "sun" }}</span>
+        <span class="text-xs">Тема</span>
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  var btn = document.getElementById('menu-toggle');
+  var menu = document.getElementById('mobile-menu');
+  var openIcon = btn ? btn.querySelector('.menu-icon-open') : null;
+  var closeIcon = btn ? btn.querySelector('.menu-icon-close') : null;
+  var mobileSearch = document.getElementById('mobile-search-button');
+  var mobileAppearance = document.getElementById('mobile-appearance-switcher');
+  if (!btn || !menu) return;
+  function setExpanded(expanded) {
+    btn.setAttribute('aria-expanded', expanded);
+    if (expanded) {
+      menu.classList.remove('hidden');
+      menu.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      if (openIcon) openIcon.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+    } else {
+      menu.classList.add('hidden');
+      menu.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (openIcon) openIcon.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+    }
+  }
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(!expanded);
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target === menu) setExpanded(false);
+  });
+  // Close on link click
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setExpanded(false); }); });
+  // Mobile search -> open search modal and close menu
+  if (mobileSearch) {
+    mobileSearch.addEventListener('click', function() {
+      setExpanded(false);
+      var searchBtn = document.getElementById('search-button-m0') || document.querySelector("[id^='search-button']");
+      if (searchBtn) searchBtn.click();
+    });
+  }
+  // Mobile appearance -> toggle theme (reuse existing switchers)
+  if (mobileAppearance) {
+    mobileAppearance.addEventListener('click', function() {
+      var sw = document.querySelector("[id^='appearance-switcher']");
+      if (sw) sw.click();
+    });
+  }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setExpanded(false); });
+  window.addEventListener('resize', function(){ if (window.innerWidth >= 640) setExpanded(false); });
+})();
+</script>
