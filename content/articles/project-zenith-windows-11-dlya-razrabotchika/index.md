@@ -1,6 +1,6 @@
 ---
 title: "Project Zenith: Microsoft собрала Windows 11 под разработчика — и это важнее нового набора программ"
-date: "2026-09-05"
+date: "2026-09-04"
 description: "Microsoft представила Project Zenith — готовую конфигурацию Windows 11 для разработчиков с VS Code, Terminal, WSL и локальным ИИ. Разбираю, почему смена стартовой точки системы важнее списка предустановленных программ."
 categories: ["windows"]
 tags: ["windows-11", "microsoft", "project-zenith", "wsl"]
