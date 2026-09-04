@@ -70,6 +70,5 @@ fingerprintAlgorithm = "sha256"
   yandex_metrika_id = 90990392
 
 [verification]
-  # Получить: Яндекс.Вебмастер → Настройки → Подтверждение → meta-тег → вставить значение
+  yandex = "21a3ba1c07e1a9b9"
   # google = ""
-  # yandex = ""
