@@ -121,27 +121,27 @@
   id="mobile-menu"
   class="hidden fixed inset-0 z-50 sm:hidden items-center justify-center bg-neutral-500/50 backdrop-blur-sm p-4"
 >
-  <div class="bg-neutral dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-xl px-6 py-5 w-auto max-w-[90vw]">
-    <div class="flex items-center justify-center gap-5">
-      <a href="/articles/" title="Статьи" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
-        <span class="text-xl">{{ partial "icon.html" "list" }}</span>
+  <div class="bg-neutral dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-xl px-6 py-6 w-full max-w-3xl">
+    <div class="flex items-center justify-center gap-6">
+      <a href="/articles/" title="Статьи" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl">{{ partial "icon.html" "list" }}</span>
         <span class="text-xs">Статьи</span>
       </a>
-      <a href="/categories/" title="Рубрики" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
-        <span class="text-xl">{{ partial "icon.html" "bars" }}</span>
+      <a href="/categories/" title="Рубрики" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl">{{ partial "icon.html" "bars" }}</span>
         <span class="text-xs">Рубрики</span>
       </a>
-      <a href="/tags/" title="Теги" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
-        <span class="text-xl">{{ partial "icon.html" "tag" }}</span>
+      <a href="/tags/" title="Теги" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl">{{ partial "icon.html" "tag" }}</span>
         <span class="text-xs">Теги</span>
       </a>
-      <button id="mobile-search-button" title="{{ i18n "search.open_button_title" }}" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
-        <span class="text-xl">{{ partial "icon.html" "search" }}</span>
+      <button id="mobile-search-button" title="{{ i18n "search.open_button_title" }}" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl">{{ partial "icon.html" "search" }}</span>
         <span class="text-xs">Поиск</span>
       </button>
-      <button id="mobile-appearance-switcher" type="button" aria-label="appearance switcher" class="flex flex-col items-center gap-1 hover:text-primary-600 transition-colors">
-        <span class="dark:hidden">{{ partial "icon.html" "moon" }}</span>
-        <span class="hidden dark:inline">{{ partial "icon.html" "sun" }}</span>
+      <button id="mobile-appearance-switcher" type="button" aria-label="appearance switcher" class="flex flex-col items-center gap-2 hover:text-primary-600 transition-colors">
+        <span class="text-2xl dark:hidden">{{ partial "icon.html" "moon" }}</span>
+        <span class="text-2xl hidden dark:inline">{{ partial "icon.html" "sun" }}</span>
         <span class="text-xs">Тема</span>
       </button>
     </div>
