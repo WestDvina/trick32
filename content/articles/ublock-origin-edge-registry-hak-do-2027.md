@@ -1,6 +1,6 @@
 ---
 title: "uBlock Origin ещё можно спасти в Edge: Microsoft оставила рабочий Registry-хак до 2027 года"
-date: "2026-09-07T10:00:00+03:00"
+date: "2026-09-06T09:30:00+03:00"
 description: "Microsoft оставила в Edge политику ExtensionManifestV2Availability — uBlock Origin на MV2 ещё работает до апреля 2027 года. Как включить Registry-хак и почему в Chrome он уже не поможет."
 categories: ["windows"]
 tags: ["ublock-origin", "microsoft-edge", "manifest-v3", "windows-11"]
