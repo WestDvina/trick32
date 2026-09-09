@@ -10,59 +10,86 @@
     if (!s) { s = genSid(); localStorage.setItem(LS_SID, s); }
     return s;
   }
-  function getName() {
-    return localStorage.getItem(LS_NAME) || "";
-  }
+  function getName() { return localStorage.getItem(LS_NAME) || ""; }
   function setName(v) { localStorage.setItem(LS_NAME, v); }
 
   const style = document.createElement("style");
   style.textContent = `
-.chat-fab{position:fixed;right:18px;bottom:18px;z-index:9999;display:flex;align-items:center;gap:8px;background:#0ea5e9;color:#fff;border:0;border-radius:999px;padding:12px 18px;font:600 14px/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(2,132,199,.35);transition:transform .15s}
-.chat-fab:hover{transform:translateY(-1px)}
-.chat-fab .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 6px rgba(34,197,94,.15)}
-.chat-fab .badge{min-width:18px;height:18px;background:#ef4444;color:#fff;border-radius:999px;font-size:11px;display:grid;place-items:center;padding:0 5px;display:none}
-.chat-panel{position:fixed;right:18px;bottom:72px;z-index:9999;width:360px;max-width:calc(100vw - 24px);height:460px;max-height:70vh;background:var(--chat-bg,#fff);border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden}
+.chat-fab{position:fixed;right:16px;bottom:88px;z-index:9998;display:flex;align-items:center;justify-content:center;gap:0;width:52px;height:52px;background:#00c871;color:#fff;border:0;border-radius:50%;cursor:pointer;box-shadow:0 8px 24px rgba(0,172,97,.35);transition:all .22s cubic-bezier(.4,0,.2,1);overflow:hidden}
+.chat-fab:hover{width:182px;border-radius:999px;gap:8px;padding:0 14px;right:16px}
+.chat-fab .fab-icon{flex-shrink:0;width:22px;height:22px;display:grid;place-items:center}
+.chat-fab .fab-icon svg{width:22px;height:22px}
+.chat-fab .fab-text{white-space:nowrap;font:600 13px/1 system-ui,sans-serif;opacity:0;max-width:0;overflow:hidden;transition:opacity .18s,max-width .22s}
+.chat-fab:hover .fab-text{opacity:1;max-width:120px}
+.chat-fab .badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;background:#ef4444;color:#fff;border-radius:999px;font:700 11px/18px system-ui,sans-serif;display:none;place-items:center;padding:0 5px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.chat-fab .dot{position:absolute;bottom:2px;right:2px;width:10px;height:10px;background:#fff;border:2px solid #00c871;border-radius:50%}
+.chat-panel{position:fixed;right:16px;bottom:88px;z-index:9999;width:380px;max-width:calc(100vw - 24px);height:480px;max-height:72vh;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden}
 .chat-panel.open{display:flex}
-@media(max-width:480px){.chat-panel{right:12px;left:12px;width:auto}}
-.dark .chat-panel{background:#1f2937;border-color:#374151;color:#e5e7eb}
-.chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f8fafc}
-.dark .chat-head{background:#111827;border-color:#374151}
-.chat-head b{font-size:14px}
-.chat-head small{color:#64748b;font-size:11px}
-.dark .chat-head small{color:#9ca3af}
-.chat-close{border:0;background:transparent;font-size:18px;cursor:pointer;color:#64748b}
-.chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff}
-.dark .chat-body{background:#1f2937}
-.chat-msg{max-width:78%;padding:8px 10px;border-radius:12px;font-size:13px;line-height:1.4;word-break:break-word}
-.chat-msg.user{align-self:flex-end;background:#0ea5e9;color:#fff;border-bottom-right-radius:4px}
-.chat-msg.admin{align-self:flex-start;background:#f1f5f9;color:#0f172a;border-bottom-left-radius:4px}
-.dark .chat-msg.admin{background:#374151;color:#e5e7eb}
-.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:8px;background:#fff}
-.dark .chat-foot{background:#111827;border-color:#374151}
-.chat-foot input{flex:1;border:1px solid #e5e7eb;border-radius:999px;padding:8px 12px;font-size:13px;outline:0}
-.dark .chat-foot input{background:#1f2937;border-color:#374151;color:#e5e7eb}
-.chat-foot button{border:0;background:#0ea5e9;color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;cursor:pointer}
+.chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;flex-shrink:0}
+.chat-head b{font-size:14px;color:#064e3b}
+.chat-head small{color:#065f46;font-size:11px}
+.chat-close{width:28px;height:28px;border:0;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;line-height:1;cursor:pointer;color:#065f46;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-shrink:0}
+.chat-close:hover{background:#e5e7eb}
+.chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff;overscroll-behavior:contain}
+.chat-msg{max-width:78%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;word-break:break-word}
+.chat-msg.user{align-self:flex-end;background:#00c871;color:#fff;border-bottom-right-radius:4px}
+.chat-msg.admin{align-self:flex-start;background:#e8fff4;color:#064e3b;border:1px solid #aaf2d7;border-bottom-left-radius:4px}
+.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:8px;background:#fff;flex-shrink:0}
+.chat-foot input{flex:1;border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:13px;outline:0;background:#fff}
+.chat-foot input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
+.chat-foot button{border:0;background:#00c871;color:#fff;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;cursor:pointer;flex-shrink:0}
+.chat-foot button:hover{background:#00a86a}
 .chat-foot button:disabled{opacity:.5}
-.chat-empty{color:#94a3b8;font-size:12px;text-align:center;padding:24px 12px}
+.chat-empty{color:#94a3b8;font-size:12px;text-align:center;padding:28px 12px;line-height:1.5}
+.chat-gate{margin:auto;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;padding:24px 16px;text-align:center;max-width:280px}
+.chat-gate b{font-size:15px;color:#064e3b}
+.chat-gate p{font-size:13px;color:#475569;margin:0}
+.chat-gate input{width:100%;border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:13px;outline:0;text-align:center}
+.chat-gate input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
+.chat-gate .gate-btn{width:100%;border:0;background:#00c871;color:#fff;border-radius:999px;padding:10px;font:700 13px system-ui,sans-serif;cursor:pointer}
+.chat-gate .gate-btn:hover{background:#00a86a}
+.chat-gate small{font-size:11px;color:#94a3b8}
+.dark .chat-panel{background:#1f2937;border-color:#374151}
+.dark .chat-head{background:#064e3b;border-color:#374151}
+.dark .chat-head b{color:#ecfdf5}
+.dark .chat-head small{color:#a7f3d0}
+.dark .chat-close{background:#1f2937;color:#a7f3d0}
+.dark .chat-body{background:#1f2937}
+.dark .chat-msg.admin{background:#064e3b;color:#ecfdf5;border-color:#047857}
+.dark .chat-foot{background:#111827;border-color:#374151}
+.dark .chat-foot input{background:#1f2937;border-color:#374151;color:#e5e7eb}
+.dark .chat-gate b{color:#ecfdf5}
+.dark .chat-gate p{color:#9ca3af}
+/* mobile fullscreen */
+@media(max-width:640px){
+  .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;max-height:100dvh;max-width:none;border-radius:0;border:0}
+  .chat-fab{right:14px;bottom:72px;width:48px;height:48px}
+  .chat-fab:hover{width:48px;border-radius:50%}
+  .chat-fab:hover .fab-text{opacity:0;max-width:0}
+  .chat-fab .fab-text{display:none}
+  body.chat-open{overflow:hidden}
+}
 `;
   document.head.appendChild(style);
 
   const fab = document.createElement("button");
   fab.className = "chat-fab";
-  fab.innerHTML = '<span class="dot"></span> Написать в чате <span class="badge"></span>';
+  fab.setAttribute("aria-label", "Написать в чате");
+  fab.innerHTML = '<span class="fab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="fab-text">Написать в чате</span><span class="dot"></span><span class="badge"></span>';
   document.body.appendChild(fab);
 
   const panel = document.createElement("div");
   panel.className = "chat-panel";
   panel.innerHTML = `
-    <div class="chat-head"><div><b>Чат поддержки</b><br><small>Отвечаю в Telegram — видите здесь</small></div><button class="chat-close">×</button></div>
+    <div class="chat-head"><div><b>Чат поддержки</b><br><small>Отвечаю в Telegram — видите здесь</small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
     <div class="chat-body"><div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
-    <form class="chat-foot"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off"><button type="submit">Отправить</button></form>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg"><button type="submit">Отправить</button></form>
   `;
   document.body.appendChild(panel);
   const body = panel.querySelector(".chat-body");
   const form = panel.querySelector("form");
-  const input = form.querySelector("input");
+  const input = form.querySelector('input[name="msg"]');
+  const hpInput = form.querySelector('input[name="hp"]');
   const badge = fab.querySelector(".badge");
   const closeBtn = panel.querySelector(".chat-close");
 
@@ -71,6 +98,7 @@
   let open = false;
   let unread = 0;
   let timer = null;
+  let gateShown = false;
 
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
@@ -79,6 +107,31 @@
     div.className = "chat-msg " + (m.direction === "admin" ? "admin" : "user");
     div.textContent = m.text;
     body.appendChild(div);
+  }
+
+  function showGate() {
+    if (gateShown || getName()) return;
+    gateShown = true;
+    const empty = body.querySelector(".chat-empty");
+    if (empty) empty.style.display = "none";
+    const gate = document.createElement("div");
+    gate.className = "chat-gate";
+    gate.innerHTML = '<b>Как к вам обращаться?</b><p>Введите имя — нужно для ответа</p><input class="gate-input" placeholder="Ваше имя" maxlength="32" autocomplete="name"><button class="gate-btn" type="button">Продолжить</button><small>Защита от спама включена</small>';
+    body.appendChild(gate);
+    const gateInput = gate.querySelector(".gate-input");
+    const gateBtn = gate.querySelector(".gate-btn");
+    setTimeout(() => gateInput.focus(), 100);
+    function submitGate() {
+      const v = gateInput.value.trim().slice(0,32);
+      if (!v) { gateInput.style.borderColor="#ef4444"; gateInput.focus(); return; }
+      setName(v);
+      gate.remove();
+      const e = body.querySelector(".chat-empty");
+      if (e) e.style.display = "";
+      input.focus();
+    }
+    gateBtn.addEventListener("click", submitGate);
+    gateInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitGate(); }});
   }
 
   async function poll() {
@@ -90,6 +143,9 @@
       let hasNew = false;
       msgs.forEach(m => {
         if (m.id > lastId) {
+          // remove gate if appeared and message is admin
+          const gate = body.querySelector(".chat-gate");
+          if (gate) gate.remove();
           renderMessage(m);
           lastId = m.id;
           hasNew = true;
@@ -113,23 +169,34 @@
   fab.addEventListener("click", () => {
     open = !open;
     panel.classList.toggle("open", open);
+    document.body.classList.toggle("chat-open", open && window.innerWidth <= 640);
     if (open) {
       unread = 0; badge.style.display = "none";
+      if (!getName()) showGate();
+      else {
+        const empty = body.querySelector(".chat-empty");
+        if (empty) empty.style.display = "";
+      }
       body.scrollTop = body.scrollHeight;
-      input.focus();
+      const gateInput = body.querySelector(".gate-input");
+      if (gateInput) gateInput.focus(); else input.focus();
       startPoll();
+    } else {
+      document.body.classList.remove("chat-open");
     }
   });
-  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); });
+  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (hpInput.value.trim() !== "") return; // honeypot
+    if (!getName()) { showGate(); return; }
     const text = input.value.trim();
     if (!text) return;
     input.value = "";
-    const btn = form.querySelector("button");
+    const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
-    // optimistic
+    setTimeout(() => btn.disabled = false, 1000); // anti-spam throttle
     const tmp = {id: lastId+1, direction:"user", text};
     renderMessage(tmp);
     body.scrollTop = body.scrollHeight;
@@ -142,23 +209,10 @@
       if (!r.ok) throw new Error();
       const j = await r.json();
       if (j.id) lastId = Math.max(lastId, j.id);
-      // poll immediately
       setTimeout(poll, 500);
-    } catch {
-      // show error inline
-    } finally { btn.disabled = false; }
+    } catch {}
+    finally { btn.disabled = false; }
   });
 
-  // ask name once
-  if (!getName()) {
-    setTimeout(() => {
-      if (!localStorage.getItem(LS_NAME)) {
-        const n = prompt("Как к вам обращаться? (необязательно)");
-        if (n) setName(n.trim().slice(0,32));
-      }
-    }, 1500);
-  }
-
-  // start polling only when opened to save traffic; but also poll once hidden for badge
   setInterval(() => { if (!open) poll(); }, 8000);
 })();
