@@ -47,6 +47,11 @@
 .chat-intro{background:#f0fdf4;border:1px solid #aaf2d7;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;color:#064e3b}
 .chat-intro b{color:#064e3b}
 .chat-intro a{color:#00a86a;text-decoration:underline}
+.chat-quick{display:flex;flex-wrap:wrap;gap:6px;padding:6px 0}
+.quick-btn{border:1px solid #aaf2d7;background:#fff;color:#064e3b;border-radius:999px;padding:7px 12px;font:600 12px system-ui,sans-serif;cursor:pointer}
+.quick-btn:hover{background:#ecfdf5}
+.quick-btn.primary{background:#00c871;color:#fff;border-color:#00c871}
+.quick-btn.primary:hover{background:#00a86a}
 .chat-gate{margin:auto;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;padding:24px 16px;text-align:center;max-width:280px}
 .chat-gate b{font-size:15px;color:#064e3b}
 .chat-gate p{font-size:13px;color:#475569;margin:0}
@@ -98,6 +103,7 @@
       • <b>Установка MS Office</b> — Word, Excel, Outlook, активация. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
       • <b>Починка Windows 10/11</b> — ошибки, сети, оборудование, консультация.<br>
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
+      <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
     <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg" enterkeyhint="send"><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
   `;
@@ -108,6 +114,7 @@
   const hpInput = form.querySelector('input[name="hp"]');
   const badge = fab.querySelector(".badge");
   const closeBtn = panel.querySelector(".chat-close");
+  const quick = panel.querySelector(".chat-quick");
 
   let sid = getSid();
   const LS_LAST = "chat_last_" + sid;
@@ -117,6 +124,58 @@
   let timer = null;
   let gateShown = false;
   let firstPoll = true;
+  let flowDone = localStorage.getItem("chat_flow_done") === "1";
+
+  const FLOW = {
+    services: [
+      {id:"office", label:"📦 MS Office", sub:[
+        {id:"install", label:"Установка", reply:"Принято — установка MS Office. Подскажите: Windows 10/11 или Mac? Версия — 2024, 365 или LTSC? Есть ли ключ/подписка?"},
+        {id:"activation", label:"Активация", reply:"Понял — активация. Какой код ошибки (0xC004..., «Нелицензионный продукт»)? Есть ли ключ? Скрин поможет."},
+        {id:"other", label:"Другое", reply:"Опишите задачу по Office своими словами — что нужно сделать?"}
+      ]},
+      {id:"windows", label:"🛠 Windows 10/11", sub:[
+        {id:"errors", label:"Ошибки / не грузится", reply:"Опишите: что случилось, когда, код ошибки, что пробовали? Скрин приветствуется."},
+        {id:"network", label:"Сеть / оборудование", reply:"Что с сетью/оборудованием — Wi-Fi, принтер, роутер? Модель и что проверили?"},
+        {id:"other", label:"Другое", reply:"Опишите проблему с Windows своими словами — что нужно сделать?"}
+      ]}
+    ]
+  };
+  function renderQuick(btns) {
+    quick.innerHTML = "";
+    btns.forEach(b => {
+      const el = document.createElement("button");
+      el.className = "quick-btn" + (b.primary ? " primary" : "");
+      el.textContent = b.label;
+      el.addEventListener("click", b.onClick);
+      quick.appendChild(el);
+    });
+    quick.style.display = btns.length ? "flex" : "none";
+  }
+  function showServices() {
+    if (flowDone) return;
+    renderQuick(FLOW.services.map(s => ({label:s.label, onClick:()=>showSub(s)})));
+  }
+  function showSub(service) {
+    const subs = service.sub.map(s => ({
+      label:s.label,
+      onClick:()=>choose(service.label, s.label, s.reply)
+    }));
+    renderQuick(subs);
+  }
+  function choose(serviceLabel, subLabel, reply) {
+    const text = `Услуга: ${serviceLabel} → ${subLabel}`;
+    // send as user message
+    input.value = text;
+    form.dispatchEvent(new Event("submit", {cancelable:true}));
+    // local auto-reply after 400ms
+    setTimeout(() => {
+      renderMessage({direction:"admin", text:reply});
+      body.scrollTop = body.scrollHeight;
+    }, 400);
+    renderQuick([]);
+    flowDone = true;
+    localStorage.setItem("chat_flow_done","1");
+  }
 
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
@@ -147,6 +206,7 @@
       const e = body.querySelector(".chat-empty");
       if (e) e.style.display = "";
       input.focus();
+      if (!flowDone) setTimeout(showServices, 200);
     }
     gateBtn.addEventListener("click", submitGate);
     gateInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitGate(); }});
@@ -217,6 +277,7 @@
       else {
         const empty = body.querySelector(".chat-empty");
         if (empty) empty.style.display = "";
+        if (!flowDone) setTimeout(showServices, 300);
       }
       body.scrollTop = body.scrollHeight;
       const gateInput = body.querySelector(".gate-input");
