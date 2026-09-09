@@ -61,18 +61,30 @@
 .chat-gate .gate-btn:hover{background:#00a86a}
 .chat-gate small{font-size:11px;color:#94a3b8}
 .dark .chat-panel{background:#1f2937;border-color:#374151}
-.dark .chat-head{background:#064e3b;border-color:#374151}
+.dark .chat-head{background:#022c22;border-color:#374151}
 .dark .chat-head b{color:#ecfdf5}
-.dark .chat-head small{color:#a7f3d0}
-.dark .chat-close{background:#1f2937;color:#a7f3d0}
+.dark .chat-head small{color:#6ee7b7}
+.dark .chat-close{background:#1f2937;color:#ecfdf5;border:1px solid #374151}
 .dark .chat-body{background:#1f2937}
-.dark .chat-msg.admin{background:#064e3b;color:#ecfdf5;border-color:#047857}
+.dark .chat-msg.admin{background:#134e4a;color:#ecfdf5;border-color:#10b981}
 .dark .chat-foot{background:#111827;border-color:#374151}
-.dark .chat-foot .foot-pill{background:#1f2937;border-color:#374151}
-.dark .chat-foot input{color:#e5e7eb}
-.dark .chat-intro{background:#064e3b;border-color:#047857;color:#ecfdf5}
+.dark .chat-foot .foot-pill{background:#374151;border-color:#4b5563}
+.dark .chat-foot input{color:#f3f4f6}
+.dark .chat-foot input::placeholder{color:#9ca3af}
+.dark .chat-intro{background:#0f3a2e;border-color:#10b981;color:#d1fae5}
+.dark .chat-intro b{color:#ecfdf5}
+.dark .chat-intro a{color:#34d399}
+.dark .chat-intro small{color:#a7f3d0 !important}
+.dark .chat-empty{color:#9ca3af}
+.dark .chat-gate{color:#e5e7eb}
 .dark .chat-gate b{color:#ecfdf5}
-.dark .chat-gate p{color:#9ca3af}
+.dark .chat-gate p{color:#d1d5db}
+.dark .chat-gate small{color:#9ca3af}
+.dark .chat-gate input{background:#374151;border-color:#4b5563;color:#f3f4f6}
+.dark .chat-gate input::placeholder{color:#9ca3af}
+.dark .quick-btn{background:#374151;border-color:#4b5563;color:#ecfdf5}
+.dark .quick-btn:hover{background:#4b5563;border-color:#6b7280}
+.dark .quick-btn.primary{background:#00c871;border-color:#00c871;color:#fff}
 /* mobile fullscreen - iOS 26 fix */
 @media(max-width:640px){
   .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;height:100vh;height:-webkit-fill-available;max-height:none;max-height:100dvh;max-width:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
