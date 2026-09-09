@@ -28,23 +28,29 @@
 .chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;flex-shrink:0}
 .chat-head b{font-size:14px;color:#064e3b}
 .chat-head small{color:#065f46;font-size:11px}
-.chat-close{width:28px;height:28px;border:0;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;line-height:1;cursor:pointer;color:#065f46;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-shrink:0}
+.chat-close{width:32px;height:32px;border:0;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1;cursor:pointer;color:#064e3b;box-shadow:0 1px 6px rgba(0,0,0,.1);flex-shrink:0}
 .chat-close:hover{background:#e5e7eb}
-.chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff;overscroll-behavior:contain}
+.chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .chat-msg{max-width:78%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;word-break:break-word}
 .chat-msg.user{align-self:flex-end;background:#00c871;color:#fff;border-bottom-right-radius:4px}
 .chat-msg.admin{align-self:flex-start;background:#e8fff4;color:#064e3b;border:1px solid #aaf2d7;border-bottom-left-radius:4px}
-.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:8px;background:#fff;flex-shrink:0}
-.chat-foot input{flex:1;border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:13px;outline:0;background:#fff}
-.chat-foot input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
-.chat-foot button{border:0;background:#00c871;color:#fff;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;cursor:pointer;flex-shrink:0}
+.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:0;background:#fff;flex-shrink:0;align-items:center}
+.chat-foot .foot-pill{flex:1;display:flex;align-items:center;gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:999px;overflow:hidden;padding:2px}
+.chat-foot .foot-pill:focus-within{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
+.chat-foot input{flex:1;min-width:0;border:0;padding:8px 12px;font-size:13px;outline:0;background:transparent}
+.chat-foot button{border:0;background:#00c871;color:#fff;border-radius:999px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;margin-right:2px}
 .chat-foot button:hover{background:#00a86a}
 .chat-foot button:disabled{opacity:.5}
+.chat-foot button .btn-text{display:none}
+.chat-foot button .btn-icon{display:block;width:16px;height:16px}
 .chat-empty{color:#94a3b8;font-size:12px;text-align:center;padding:28px 12px;line-height:1.5}
+.chat-intro{background:#f0fdf4;border:1px solid #aaf2d7;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;color:#064e3b}
+.chat-intro b{color:#064e3b}
+.chat-intro a{color:#00a86a;text-decoration:underline}
 .chat-gate{margin:auto;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;padding:24px 16px;text-align:center;max-width:280px}
 .chat-gate b{font-size:15px;color:#064e3b}
 .chat-gate p{font-size:13px;color:#475569;margin:0}
-.chat-gate input{width:100%;border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:13px;outline:0;text-align:center}
+.chat-gate input{width:100%;border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:16px;outline:0;text-align:center}
 .chat-gate input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
 .chat-gate .gate-btn{width:100%;border:0;background:#00c871;color:#fff;border-radius:999px;padding:10px;font:700 13px system-ui,sans-serif;cursor:pointer}
 .chat-gate .gate-btn:hover{background:#00a86a}
@@ -57,17 +63,22 @@
 .dark .chat-body{background:#1f2937}
 .dark .chat-msg.admin{background:#064e3b;color:#ecfdf5;border-color:#047857}
 .dark .chat-foot{background:#111827;border-color:#374151}
-.dark .chat-foot input{background:#1f2937;border-color:#374151;color:#e5e7eb}
+.dark .chat-foot .foot-pill{background:#1f2937;border-color:#374151}
+.dark .chat-foot input{color:#e5e7eb}
+.dark .chat-intro{background:#064e3b;border-color:#047857;color:#ecfdf5}
 .dark .chat-gate b{color:#ecfdf5}
 .dark .chat-gate p{color:#9ca3af}
-/* mobile fullscreen */
+/* mobile fullscreen - iOS 26 fix */
 @media(max-width:640px){
-  .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;max-height:100dvh;max-width:none;border-radius:0;border:0}
+  .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;height:100vh;height:-webkit-fill-available;max-height:none;max-height:100dvh;max-width:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+  .chat-head{padding-top:max(12px, env(safe-area-inset-top));padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right))}
+  .chat-foot{padding-bottom:max(10px, env(safe-area-inset-bottom));padding-left:max(10px, env(safe-area-inset-left));padding-right:max(10px, env(safe-area-inset-right))}
+  .chat-foot input{font-size:16px}
   .chat-fab{right:14px;bottom:72px;width:48px;height:48px}
   .chat-fab:hover{width:48px;border-radius:50%}
   .chat-fab:hover .fab-text{opacity:0;max-width:0}
   .chat-fab .fab-text{display:none}
-  body.chat-open{overflow:hidden}
+  body.chat-open{overflow:hidden;position:fixed;width:100%;overscroll-behavior:none;touch-action:none}
 }
 `;
   document.head.appendChild(style);
@@ -81,9 +92,14 @@
   const panel = document.createElement("div");
   panel.className = "chat-panel";
   panel.innerHTML = `
-    <div class="chat-head"><div><b>Чат поддержки</b><br><small>Отвечаю в Telegram — видите здесь</small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
-    <div class="chat-body"><div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg"><button type="submit">Отправить</button></form>
+    <div class="chat-head"><div><b>Чат поддержки</b><br><small>Приём заявок — отвечаю в Telegram</small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
+    <div class="chat-body">
+      <div class="chat-intro"><b>Чем помогаю (платно):</b><br>
+      • <b>Установка MS Office</b> — Word, Excel, Outlook, активация. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
+      • <b>Починка Windows 10/11</b> — ошибки, сети, оборудование, консультация.<br>
+      <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
+      <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg" enterkeyhint="send"><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
   `;
   document.body.appendChild(panel);
   const body = panel.querySelector(".chat-body");
@@ -169,11 +185,32 @@
     timer = setInterval(poll, 3000);
   }
 
+  let scrollY = 0;
+  function lockScroll() {
+    if (window.innerWidth <= 640) {
+      scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+  }
+  function unlockScroll() {
+    const top = document.body.style.top;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    if (top) window.scrollTo(0, parseInt(top || "0", 10) * -1);
+  }
   fab.addEventListener("click", () => {
     open = !open;
     panel.classList.toggle("open", open);
-    document.body.classList.toggle("chat-open", open && window.innerWidth <= 640);
     if (open) {
+      lockScroll();
+      document.body.classList.add("chat-open");
       unread = 0; badge.style.display = "none";
       localStorage.setItem(LS_LAST, String(lastId));
       if (!getName()) showGate();
@@ -187,9 +224,10 @@
       startPoll();
     } else {
       document.body.classList.remove("chat-open");
+      unlockScroll();
     }
   });
-  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); });
+  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); unlockScroll(); });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
