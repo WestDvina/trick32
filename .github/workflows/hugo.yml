@@ -47,7 +47,8 @@ jobs:
         run: |
           hugo \
             --gc \
-            --minify
+            --minify \
+            --baseURL https://trick32.ru/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
