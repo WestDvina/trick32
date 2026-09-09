@@ -106,14 +106,14 @@
   fab.innerHTML = '<span class="fab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="fab-text">Написать в чате</span><span class="dot"></span><span class="badge"></span>';
   document.body.appendChild(fab);
 
-  const panel = document.createElement("div");
+   const panel = document.createElement("div");
   panel.className = "chat-panel";
   panel.innerHTML = `
-    <div class="chat-head"><div><b>Чат поддержки</b><br><small>Приём заявок — отвечаю в Telegram</small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
+    <div class="chat-head"><div><b>Чат поддержки</b></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
     <div class="chat-body">
       <div class="chat-intro"><b>Чем помогаю (платно):</b><br>
-      • <b>Установка MS Office</b> — Word, Excel, Outlook, активация. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
-      • <b>Починка Windows 10/11</b> — ошибки, сети, оборудование, консультация.<br>
+      • <b>Установка MS Office</b> — Word, Excel, Outlook. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
+      • <b>Активация Windows 10/11</b> — только безопасными способами.<br>
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
@@ -142,13 +142,12 @@
     services: [
       {id:"office", label:"📦 MS Office", sub:[
         {id:"install", label:"Установка", reply:"Принято — установка MS Office. Подскажите: Windows 10/11 или Mac? Версия — 2024, 365 или LTSC? Есть ли ключ/подписка?"},
-        {id:"activation", label:"Активация", reply:"Понял — активация. Какой код ошибки (0xC004..., «Нелицензионный продукт»)? Есть ли ключ? Скрин поможет."},
+        {id:"activation", label:"Активация", reply:"Понял — активация Office. Какой код ошибки (0xC004..., «Нелицензионный продукт»)? Есть ли ключ?"},
         {id:"other", label:"Другое", reply:"Опишите задачу по Office своими словами — что нужно сделать?"}
       ]},
-      {id:"windows", label:"🛠 Windows 10/11", sub:[
-        {id:"errors", label:"Ошибки / не грузится", reply:"Опишите: что случилось, когда, код ошибки, что пробовали? Скрин приветствуется."},
-        {id:"network", label:"Сеть / оборудование", reply:"Что с сетью/оборудованием — Wi-Fi, принтер, роутер? Модель и что проверили?"},
-        {id:"other", label:"Другое", reply:"Опишите проблему с Windows своими словами — что нужно сделать?"}
+      {id:"windows", label:"🛠 Windows — активация", sub:[
+        {id:"activation", label:"Активация", reply:"Принято — активация Windows 10/11 безопасными способами. Какая система и сборка? Код ошибки активации? Есть ли ключ?"},
+        {id:"other", label:"Другое", reply:"Опишите задачу по Windows своими словами — что нужно активировать?"}
       ]}
     ]
   };
