@@ -94,11 +94,13 @@
   const closeBtn = panel.querySelector(".chat-close");
 
   let sid = getSid();
-  let lastId = 0;
+  const LS_LAST = "chat_last_" + sid;
+  let lastId = parseInt(localStorage.getItem(LS_LAST) || "0", 10) || 0;
   let open = false;
   let unread = 0;
   let timer = null;
   let gateShown = false;
+  let firstPoll = true;
 
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
@@ -143,19 +145,20 @@
       let hasNew = false;
       msgs.forEach(m => {
         if (m.id > lastId) {
-          // remove gate if appeared and message is admin
           const gate = body.querySelector(".chat-gate");
           if (gate) gate.remove();
           renderMessage(m);
           lastId = m.id;
+          localStorage.setItem(LS_LAST, String(lastId));
           hasNew = true;
-          if (m.direction === "admin" && !open) {
+          if (!firstPoll && m.direction === "admin" && !open) {
             unread++;
             badge.textContent = unread > 9 ? "9+" : unread;
             badge.style.display = "grid";
           }
         }
       });
+      if (firstPoll) firstPoll = false;
       if (hasNew) body.scrollTop = body.scrollHeight;
     } catch {}
   }
@@ -172,6 +175,7 @@
     document.body.classList.toggle("chat-open", open && window.innerWidth <= 640);
     if (open) {
       unread = 0; badge.style.display = "none";
+      localStorage.setItem(LS_LAST, String(lastId));
       if (!getName()) showGate();
       else {
         const empty = body.querySelector(".chat-empty");

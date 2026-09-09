@@ -5,5 +5,5 @@
 <script type="text/javascript" src="{{ $copyCode.RelPermalink }}" defer></script>
 {{ $carousel := resources.Get "js/carousel.js" | js.Build | minify }}
 <script type="text/javascript" src="{{ $carousel.RelPermalink }}" defer></script>
-{{ $chat := resources.Get "js/chat-widget.js" | js.Build | minify }}
+{{ $chat := resources.Get "js/chat-widget.js" | js.Build | minify | fingerprint }}
 <script type="text/javascript" src="{{ $chat.RelPermalink }}" defer></script>
