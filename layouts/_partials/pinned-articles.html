@@ -6,7 +6,8 @@
       <h2 class="home-pinned-title">{{ T "pinned_articles" }}</h2>
       <div class="home-pinned-list border-s border-dotted border-neutral-300 dark:border-neutral-600">
         {{ range first $limit $pinned }}
-          <a href="{{ .Permalink }}" class="home-pinned-link">
+          {{ $isFeatured := in .RelPermalink "udalennaya-pomoshch-ustanovka-microsoft-office-word-excel" }}
+          <a href="{{ .Permalink }}" class="home-pinned-link{{ if $isFeatured }} home-pinned-link--featured{{ end }}">
             <span class="home-pinned-name">{{ .Title | emojify }}</span>
             <span class="home-pinned-meta">
               {{ partial "meta/date.html" .Date }}

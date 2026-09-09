@@ -6,7 +6,7 @@ categories: ["windows"]
 tags: ["bitlocker", "powershell", "шифрование", "windows-11"]
 draft: false
 pinned: true
-pinnedOrder: 4
+pinnedOrder: 5
 images: ["/og-img.jpg"]
 ---
 

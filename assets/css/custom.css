@@ -333,6 +333,45 @@ figure[data-lightbox] {
 
 .dark .home-pinned-link {
   color: rgba(var(--color-neutral-400), 1);
+}
+
+.home-pinned-link--featured {
+  background: rgba(var(--color-primary-500), 1);
+  color: #022c22;
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  margin-left: -0.6rem;
+  margin-right: -0.35rem;
+  font-weight: 600;
+}
+
+.home-pinned-link--featured .home-pinned-name {
+  color: inherit;
+}
+
+.home-pinned-link--featured .home-pinned-meta {
+  color: rgba(2, 44, 34, 0.7);
+}
+
+.home-pinned-link--featured:hover {
+  background: rgba(var(--color-primary-600), 1);
+}
+
+.home-pinned-link--featured:hover .home-pinned-name {
+  text-decoration: none;
+}
+
+.dark .home-pinned-link--featured {
+  background: rgba(var(--color-primary-600), 1);
+  color: #ecfdf5;
+}
+
+.dark .home-pinned-link--featured .home-pinned-meta {
+  color: rgba(236, 253, 245, 0.75);
+}
+
+.dark .home-pinned-link--featured:hover {
+  background: rgba(var(--color-primary-700), 1);
 }.carousel {
   position: relative;
   margin: 1.5rem 0;
