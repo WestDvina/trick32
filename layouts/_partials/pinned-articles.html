@@ -1,5 +1,5 @@
 {{ $pinned := sort (where .Site.RegularPages "Params.pinned" true) "Params.pinnedOrder" "asc" }}
-{{ $limit := 4 }}
+{{ $limit := 5 }}
 {{ if gt (len $pinned) 0 }}
   <aside class="home-pinned mt-8 lg:mt-0 print:hidden">
     <div class="home-pinned-inner">
