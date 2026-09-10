@@ -85,6 +85,11 @@
 .dark .quick-btn{background:#374151;border-color:#4b5563;color:#ecfdf5}
 .dark .quick-btn:hover{background:#4b5563;border-color:#6b7280}
 .dark .quick-btn.primary{background:#00c871;border-color:#00c871;color:#fff}
+.chat-footer-note{text-align:center;padding:6px 10px;font:500 10px/1.4 system-ui,sans-serif;color:#94a3b8;border-top:1px solid #f1f5f9;background:#fff}
+.chat-footer-note a{color:#00a86a;text-decoration:none;font-weight:600}
+.chat-footer-note a:hover{text-decoration:underline}
+.dark .chat-footer-note{background:#111827;border-color:#374151;color:#64748b}
+.dark .chat-footer-note a{color:#34d399}
 /* mobile fullscreen - iOS 26 fix */
 @media(max-width:640px){
   .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;height:100vh;height:-webkit-fill-available;max-height:none;max-height:100dvh;max-width:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
@@ -118,6 +123,7 @@
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
     <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg" enterkeyhint="send"><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Могу и вам такой чат поставить → Telegram</a></div>
   `;
   document.body.appendChild(panel);
   const body = panel.querySelector(".chat-body");
