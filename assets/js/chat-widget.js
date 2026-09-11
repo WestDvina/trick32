@@ -196,12 +196,39 @@
     localStorage.setItem("chat_flow_done","1");
   }
 
+  function linkify(text) {
+    const urlRe = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+    const frag = document.createDocumentFragment();
+    let last = 0, match;
+    while ((match = urlRe.exec(text)) !== null) {
+      if (match.index > last) frag.appendChild(document.createTextNode(text.slice(last, match.index)));
+      const url = match[0];
+      const href = url.startsWith("http") ? url : "https://" + url;
+      const a = document.createElement("a");
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = url;
+      a.style.color = "inherit";
+      a.style.textDecoration = "underline";
+      a.style.wordBreak = "break-all";
+      frag.appendChild(a);
+      last = match.index + url.length;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    return frag;
+  }
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
     const div = document.createElement("div");
     div.className = "chat-msg " + (m.direction === "admin" ? "admin" : "user");
-    div.textContent = m.text;
+    // preserve line breaks
+    const lines = m.text.split("\n");
+    lines.forEach((line, idx) => {
+      if (idx > 0) div.appendChild(document.createElement("br"));
+      div.appendChild(linkify(line));
+    });
     body.appendChild(div);
   }
 
