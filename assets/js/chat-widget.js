@@ -196,7 +196,7 @@
     localStorage.setItem("chat_flow_done","1");
   }
 
-  function linkify(text) {
+  function linkifyFragment(text) {
     const urlRe = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
     const frag = document.createDocumentFragment();
     let last = 0, match;
@@ -218,16 +218,49 @@
     if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
     return frag;
   }
+  // alias for backward compat
+  const linkify = linkifyFragment;
+  function adminKeywordFragment(text) {
+    // replace hop/any variations with linked word HopToDesk/AnyDesk
+    const hopRe = /(hop\s*to\s*desk|hoptodesk|хоп\s*ту\s*деск|хоп\s*т[оу]\s*деск|хоптодеск|\bхоп\b)/gi;
+    const anyRe = /(any\s*desk|anidesk|anidek|ани\s*деск|анидеск|анидекс)/gi;
+    // combined with capture to know which matched
+    const combined = /(hop\s*to\s*desk|hoptodesk|хоп\s*ту\s*деск|хоп\s*т[оу]\s*деск|хоптодеск|\bхоп\b|any\s*desk|anidesk|anidek|ани\s*деск|анидеск|анидекс)/gi;
+    const frag = document.createDocumentFragment();
+    let last = 0, m;
+    while ((m = combined.exec(text)) !== null) {
+      if (m.index > last) frag.appendChild(linkifyFragment(text.slice(last, m.index)));
+      const matched = m[0];
+      const lower = matched.toLowerCase();
+      const isHop = /hop|хоп/.test(lower);
+      const href = isHop ? "https://www.hoptodesk.com/" : "https://anydesk.com/ru";
+      const label = isHop ? "HopToDesk" : "AnyDesk";
+      const a = document.createElement("a");
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = label;
+      a.style.color = "inherit";
+      a.style.textDecoration = "underline";
+      a.style.fontWeight = "600";
+      frag.appendChild(a);
+      last = m.index + matched.length;
+    }
+    if (last < text.length) frag.appendChild(linkifyFragment(text.slice(last)));
+    if (frag.childNodes.length === 0) frag.appendChild(document.createTextNode(text));
+    return frag;
+  }
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
     const div = document.createElement("div");
     div.className = "chat-msg " + (m.direction === "admin" ? "admin" : "user");
-    // preserve line breaks
+    const isAdmin = m.direction === "admin";
     const lines = m.text.split("\n");
     lines.forEach((line, idx) => {
       if (idx > 0) div.appendChild(document.createElement("br"));
-      div.appendChild(linkify(line));
+      const frag = isAdmin ? adminKeywordFragment(line) : linkifyFragment(line);
+      div.appendChild(frag);
     });
     body.appendChild(div);
   }
