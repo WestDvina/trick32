@@ -22,7 +22,7 @@
 .chat-fab .fab-text{white-space:nowrap;font:600 13px/1 system-ui,sans-serif;opacity:0;max-width:0;overflow:hidden;transition:opacity .18s,max-width .22s}
 .chat-fab:hover .fab-text{opacity:1;max-width:120px}
 .chat-fab .badge{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;background:#ef4444;color:#fff;border:2px solid #fff;border-radius:50%;font:800 12px/1 system-ui,sans-serif;display:none;place-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:1}
-.chat-fab .dot{position:absolute;bottom:1px;right:1px;width:12px;height:12px;background:#22c55e;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.chat-fab .dot{position:absolute;bottom:6px;right:6px;width:10px;height:10px;background:#fff;border:2px solid #00c871;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .chat-panel{position:fixed;right:16px;top:50px;bottom:50px;z-index:9999;width:380px;max-width:calc(100vw - 24px);height:auto;max-height:calc(100vh - 100px);background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden}
 .chat-panel.open{display:flex}
 .chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;flex-shrink:0}
@@ -136,7 +136,9 @@
 
   let sid = getSid();
   const LS_LAST = "chat_last_" + sid;
-  let lastId = parseInt(localStorage.getItem(LS_LAST) || "0", 10) || 0;
+  const LS_SEEN = "chat_seen_" + sid;
+  let lastId = 0;
+  let seenId = parseInt(localStorage.getItem(LS_SEEN) || "0", 10) || 0;
   let open = false;
   let unread = 0;
   let timer = null;
@@ -242,9 +244,8 @@
           if (gate) gate.remove();
           renderMessage(m);
           lastId = m.id;
-          localStorage.setItem(LS_LAST, String(lastId));
           hasNew = true;
-          if (!firstPoll && m.direction === "admin" && !open) {
+          if (m.direction === "admin" && !open && m.id > seenId) {
             unread++;
             badge.textContent = unread > 9 ? "9+" : unread;
             badge.style.display = "grid";
@@ -289,7 +290,8 @@
       lockScroll();
       document.body.classList.add("chat-open");
       unread = 0; badge.style.display = "none";
-      localStorage.setItem(LS_LAST, String(lastId));
+      seenId = lastId;
+      localStorage.setItem(LS_SEEN, String(seenId));
       if (!getName()) showGate();
       else {
         const empty = body.querySelector(".chat-empty");
