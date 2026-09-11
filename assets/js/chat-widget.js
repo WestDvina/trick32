@@ -225,7 +225,7 @@
     const hopRe = /(hop\s*to\s*desk|hoptodesk|хоп\s*ту\s*деск|хоп\s*т[оу]\s*деск|хоптодеск|\bхоп\b)/gi;
     const anyRe = /(any\s*desk|anidesk|anidek|ани\s*деск|анидеск|анидекс)/gi;
     // combined with capture to know which matched
-    const combined = /(hop\s*to\s*desk|hoptodesk|хоп\s*ту\s*деск|хоп\s*т[оу]\s*деск|хоптодеск|\bхоп\b|any\s*desk|anidesk|anidek|ани\s*деск|анидеск|анидекс)/gi;
+    const combined = /(hop\s*[-]?\s*to\s*[-]?\s*desk|hoptodesk|хоп\s*[-]?\s*ту\s*[-]?\s*деск|хоп\s*[-]?\s*т[оу]\s*[-]?\s*деск|хоптодеск|хоп\s*[-]?\s*to\s*[-]?\s*desk|hop\s*[-]?\s*ту\s*[-]?\s*деск|\bхоп\b|\bhop\b|any\s*[-]?\s*desk|anidesk|anidek|ани\s*[-]?\s*деск|анидеск|анидекс)/gi;
     const frag = document.createDocumentFragment();
     let last = 0, m;
     while ((m = combined.exec(text)) !== null) {
