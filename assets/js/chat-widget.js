@@ -334,6 +334,31 @@
       unlockScroll();
     }
   });
+  // external link confirm
+  body.addEventListener("click", e => {
+    const a = e.target.closest("a");
+    if (!a || !a.href.startsWith("http")) return;
+    try {
+      const url = new URL(a.href);
+      if (url.hostname === location.hostname) return;
+      if (!confirm(`Вы переходите на внешний сайт:\n${url.hostname}\n${a.href}\n\nПродолжить?`)) e.preventDefault();
+    } catch {}
+  });
+  // keyword auto-links
+  const KEY_REPLY = {
+    hop: "HopToDesk — https://www.hoptodesk.com/",
+    any: "AnyDesk — https://anydesk.com/ru"
+  };
+  function checkKeywords(text) {
+    const t = text.toLowerCase();
+    const hopHit = ["hop", "хоп", "hoptodesk"].some(k => t.includes(k));
+    const anyHit = ["anydesk", "anidesk", "anidek", "анидеск", "анидекс"].some(k => t.includes(k));
+    if (!hopHit && !anyHit) return;
+    let reply = "";
+    if (hopHit) reply += KEY_REPLY.hop + "\n";
+    if (anyHit) reply += KEY_REPLY.any;
+    if (reply) setTimeout(() => { renderMessage({direction:"admin", text: reply.trim()}); body.scrollTop = body.scrollHeight; }, 500);
+  }
   closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); unlockScroll(); });
 
   form.addEventListener("submit", async (e) => {
@@ -349,6 +374,7 @@
     const tmp = {id: lastId+1, direction:"user", text};
     renderMessage(tmp);
     body.scrollTop = body.scrollHeight;
+    checkKeywords(text);
     try {
       const r = await fetch(`${API}/api/message`, {
         method:"POST",
