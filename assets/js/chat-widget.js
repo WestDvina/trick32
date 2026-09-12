@@ -70,10 +70,15 @@
 .chat-gate .gate-btn{width:100%;border:0;background:#00c871;color:#fff;border-radius:999px;padding:10px;font:700 13px system-ui,sans-serif;cursor:pointer}
 .chat-gate .gate-btn:hover{background:#00a86a}
 .chat-gate small{font-size:11px;color:#94a3b8}
-.gate-rules{font-size:10px;line-height:1.4;color:#475569;text-align:left;max-height:90px;overflow:auto;border:1px solid #e5e7eb;border-radius:8px;padding:8px;background:#f8fafc;margin-top:2px}
-.gate-rules b{font-size:11px;color:#064e3b}
+.gate-rules{font-size:10px;line-height:1.4;color:#475569;text-align:left;border:1px solid #e5e7eb;border-radius:8px;padding:8px;background:#f8fafc;margin-top:2px;width:100%;box-sizing:border-box}
+.gate-rules summary{cursor:pointer;font-size:11px;color:#064e3b;font-weight:700;list-style:none;display:flex;align-items:center;gap:6px}
+.gate-rules summary::-webkit-details-marker{display:none}
+.gate-rules summary::before{content:"+";font-weight:800;color:#00a86a}
+.gate-rules[open] summary::before{content:"–"}
+.gate-rules-body{margin-top:6px;max-height:120px;overflow:auto}
 .dark .gate-rules{background:#1f2937;border-color:#374151;color:#d1d5db}
-.dark .gate-rules b{color:#ecfdf5}
+.dark .gate-rules summary{color:#ecfdf5}
+.dark .gate-rules summary::before{color:#34d399}
 .dark .chat-panel{background:#1f2937;border-color:#374151}
 .dark .chat-head{background:#022c22;border-color:#374151}
 .dark .chat-head b{color:#ecfdf5}
@@ -294,7 +299,7 @@
     if (empty) empty.style.display = "none";
     const gate = document.createElement("div");
     gate.className = "chat-gate";
-    gate.innerHTML = '<b>Как к вам обращаться?</b><p>Введите имя — нужно для ответа</p><input class="gate-input" placeholder="Ваше имя" maxlength="32" autocomplete="name"><div class="gate-rules"><b>Правила чата</b><br>1. Соблюдайте закон РФ<br>2. Вежливость и уважение<br>3. Без хамства и оскорблений<br>4. Без мата и ругани<br>5. Без спама/рекламы<br>6. Нарушение → бан</div><label style="display:flex;gap:6px;align-items:center;font-size:11px;cursor:pointer"><input type="checkbox" class="gate-check"> Принимаю правила</label><button class="gate-btn" type="button">Продолжить</button><small>Защита от спама включена</small>';
+    gate.innerHTML = '<b>Как к вам обращаться?</b><p>Введите имя — нужно для ответа</p><input class="gate-input" placeholder="Ваше имя" maxlength="32" autocomplete="name"><details class="gate-rules"><summary>Правила чата — нажмите, чтобы раскрыть</summary><div class="gate-rules-body">1. Соблюдайте законодательство РФ — запрещено всё, что нарушает закон.<br>2. Вежливость и уважение — обращайтесь корректно.<br>3. Запрещены хамство, грубость, оскорбления.<br>4. Запрещены мат, нецензурные выражения, ругань.<br>5. Запрещён спам, флуд, реклама, ссылки &gt;2.<br>6. За нарушение — чат приостанавливается (бан).</div></details><label style="display:flex;gap:6px;align-items:center;font-size:11px;cursor:pointer"><input type="checkbox" class="gate-check"> Принимаю правила</label><button class="gate-btn" type="button">Продолжить</button><small>Защита от спама включена</small>';
     body.appendChild(gate);
     const gateInput = gate.querySelector(".gate-input");
     const gateBtn = gate.querySelector(".gate-btn");
