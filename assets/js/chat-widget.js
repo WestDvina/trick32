@@ -42,6 +42,8 @@
 .chat-msg{max-width:78%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;word-break:break-word}
 .chat-msg.user{align-self:flex-end;background:#00c871;color:#fff;border-bottom-right-radius:4px}
 .chat-msg.admin{align-self:flex-start;background:#e8fff4;color:#064e3b;border:1px solid #aaf2d7;border-bottom-left-radius:4px}
+.chat-msg.sys-ban{align-self:stretch;max-width:100%;background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;text-align:center;font-weight:600}
+.chat-msg.sys-unban{align-self:stretch;max-width:100%;background:#eff6ff;color:#1e40af;border:1px solid #93c5fd;text-align:center;font-weight:600}
 .chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:0;background:#fff;flex-shrink:0;align-items:center}
 .chat-foot .foot-pill{flex:1;display:flex;align-items:center;gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:999px;overflow:hidden;padding:2px}
 .chat-foot .foot-pill:focus-within{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
@@ -79,6 +81,8 @@
 .dark .chat-close{background:#1f2937;color:#ecfdf5;border:1px solid #374151}
 .dark .chat-body{background:#1f2937}
 .dark .chat-msg.admin{background:#134e4a;color:#ecfdf5;border-color:#10b981}
+.dark .chat-msg.sys-ban{background:#450a0a;color:#fecaca;border-color:#7f1d1d}
+.dark .chat-msg.sys-unban{background:#172554;color:#bfdbfe;border-color:#1e40af}
 .dark .chat-foot{background:#111827;border-color:#374151}
 .dark .chat-foot .foot-pill{background:#374151;border-color:#4b5563}
 .dark .chat-foot input{color:#f3f4f6}
@@ -195,7 +199,8 @@
   }
   function choose(serviceLabel, subLabel, reply) {
     const text = `Услуга: ${serviceLabel} → ${subLabel}`;
-    // send as user message
+    // send as user message (bypass topic gate)
+    window.__chatSkipFlow = true;
     input.value = text;
     form.dispatchEvent(new Event("submit", {cancelable:true}));
     // local auto-reply after 400ms
@@ -266,7 +271,12 @@
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
     const div = document.createElement("div");
-    div.className = "chat-msg " + (m.direction === "admin" ? "admin" : "user");
+    let kind = m.direction === "admin" ? "admin" : "user";
+    if (m.direction === "admin" && typeof m.text === "string") {
+      if (m.text.indexOf("приостановлен за нарушение") !== -1) kind = "sys-ban";
+      else if (m.text.indexOf("разблокирован") !== -1) kind = "sys-unban";
+    }
+    div.className = "chat-msg " + kind;
     const isAdmin = m.direction === "admin";
     const lines = m.text.split("\n");
     lines.forEach((line, idx) => {
@@ -414,6 +424,19 @@
     if (!getName()) { showGate(); return; }
     const text = input.value.trim();
     if (!text) return;
+    // first message requires topic choice via buttons
+    if (!flowDone && !window.__chatSkipFlow) {
+      input.value = "";
+      renderMessage({direction:"user", text});
+      body.scrollTop = body.scrollHeight;
+      setTimeout(() => {
+        renderMessage({direction:"admin", text:"Выберите тему сообщения"});
+        showServices();
+        body.scrollTop = body.scrollHeight;
+      }, 300);
+      return;
+    }
+    window.__chatSkipFlow = false;
     input.value = "";
     const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -428,6 +451,11 @@
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify({sid, text, name: getName() || "Гость"})
       });
+      if (r.status === 403) {
+        renderMessage({direction:"admin", text: BANNED_TEXT});
+        body.scrollTop = body.scrollHeight;
+        return;
+      }
       if (!r.ok) throw new Error();
       const j = await r.json();
       if (j.id) lastId = Math.max(lastId, j.id);
