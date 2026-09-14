@@ -482,6 +482,25 @@ figure[data-lightbox] {
   transform: translateY(-1px);
 }
 
+/* Строка-оффер «Удалённо помогаю…» на главной */
+.site-offer {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0a9b5c;
+  text-decoration: none;
+}
+
+.site-offer:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dark .site-offer {
+  color: #4ade9d;
+}
+
 @media (max-width: 767px) {
   .carousel__slide {
     flex-basis: 100%;
