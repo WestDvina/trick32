@@ -90,7 +90,7 @@ images: ["/og-img.jpg"]
 
 Проверить просто: утилита [Coreinfo от Sysinternals](https://learn.microsoft.com/en-us/sysinternals/downloads/coreinfo) показывает наборы инструкций, ищите строку с SSE4.2.
 
-![Вывод Coreinfo от Sysinternals: поддерживаемые наборы инструкций процессора помечены звёздочкой — среди них SSE4.2 и POPCNT](coreinfo-cpu-features.webp)
+![Вывод Coreinfo от Sysinternals: поддерживаемые наборы инструкций процессора помечены звёздочкой — среди них SSE4.2 и POPCNT](coreinfo-cpu-info.webp)
 
 ## Есть и официальный путь
 
