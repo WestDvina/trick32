@@ -90,6 +90,8 @@ images: ["/og-img.jpg"]
 
 Проверить просто: утилита [Coreinfo от Sysinternals](https://learn.microsoft.com/en-us/sysinternals/downloads/coreinfo) показывает наборы инструкций, ищите строку с SSE4.2.
 
+![Вывод Coreinfo от Sysinternals: поддерживаемые наборы инструкций процессора помечены звёздочкой — среди них SSE4.2 и POPCNT](coreinfo-cpu-features.webp)
+
 ## Есть и официальный путь
 
 Мало кто знает, но Windows 11 IoT Enterprise LTSC начиная с версии 24H2 официально **не требует TPM** и поддерживает legacy BIOS. Это не взлом и не пиратская сборка — обычная редакция корпоративной линейки с поддержкой до 2034 года. Минус один: лицензию достать сложнее, чем бытовую Home.

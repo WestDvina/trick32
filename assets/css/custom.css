@@ -470,6 +470,18 @@ figure[data-lightbox] {
   color: rgba(233, 233, 233, 1);
 }
 
+/* Точка в бренде «Уловка●32» */
+.brand-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 3px;
+  border-radius: 50%;
+  background: #00c871;
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 767px) {
   .carousel__slide {
     flex-basis: 100%;
