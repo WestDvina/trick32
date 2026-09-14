@@ -88,7 +88,7 @@ images: ["/og-img.jpg"]
 
 ![Таблица совместимости процессоров с Windows 11: Intel 8-го поколения и AMD Ryzen 2000 — официально; Intel Core 1–7 и AMD Bulldozer/FX — установка в обход; Intel Core 2 Duo и AMD K10 — не запустятся](table-processors.webp)
 
-Проверить просто: утилита Coreinfo от Sysinternals показывает наборы инструкций, ищите строку с SSE4.2.
+Проверить просто: утилита [Coreinfo от Sysinternals](https://learn.microsoft.com/en-us/sysinternals/downloads/coreinfo) показывает наборы инструкций, ищите строку с SSE4.2.
 
 ## Есть и официальный путь
 
