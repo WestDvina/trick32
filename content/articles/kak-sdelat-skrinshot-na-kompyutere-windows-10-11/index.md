@@ -5,7 +5,7 @@ description: "Как сделать скриншот в Windows 10 и Windows 11
 categories: ["windows", "os"]
 tags: ["скриншот", "print-screen", "windows-10", "windows-11"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/kak-sdelat-skrinshot-na-kompyutere-windows-10-11.jpg"]
 ---
 
 Скриншот — это снимок того, что сейчас происходит на экране компьютера. Он нужен, когда надо показать ошибку, сохранить переписку, отправить кому-то настройки программы или зафиксировать информацию, которая через минуту может исчезнуть.

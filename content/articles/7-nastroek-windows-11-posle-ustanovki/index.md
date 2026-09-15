@@ -5,7 +5,7 @@ description: "Виджеты, баннеры, советы Windows и уведо
 categories: ["os", "windows"]
 tags: ["windows-11", "настройки", "уведомления"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/7-nastroek-windows-11-posle-ustanovki.jpg"]
 ---
 
 После чистой установки Windows 11 я не бросаюсь сразу ставить программы. Сначала прохожусь по настройкам самой системы.

@@ -5,7 +5,7 @@ description: "Запускаете игру, а Windows требует прил�
 categories: ["windows"]
 tags: ["windows-11", "xbox", "powershell"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/oshibka-ms-gamingoverlay-windows-11.jpg"]
 ---
 
 Запускаете игру, а Windows просит «новое приложение для ms-gamingoverlay». Это не вирус и не ошибка системы — просто сбилась регистрация Xbox Game Bar.

@@ -5,7 +5,7 @@ description: "Поддержка Windows 10 кончилась 14 октября
 categories: ["windows", "os"]
 tags: ["windows-10", "windows-11", "обновление", "iso"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/obnovit-windows-10-do-windows-11-2026-cherez-parametry-i-iso.jpg"]
 ---
 
 Windows 10 закончила обычную поддержку 14 октября 2025 года. Компьютер от этого не перестал работать, но Microsoft больше не выпускает для неё обычные бесплатные обновления безопасности.

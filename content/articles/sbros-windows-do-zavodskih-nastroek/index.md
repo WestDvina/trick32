@@ -5,7 +5,7 @@ description: "Как сбросить Windows 10 и 11 до заводских �
 categories: ["windows", "os"]
 tags: ["windows-11", "windows-10", "сброс", "восстановление", "переустановка"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/sbros-windows-do-zavodskih-nastroek.jpg"]
 ---
 
 Windows начинает тормозить, сыпятся ошибки, появляются странные окна. Первая мысль: переустановить систему.

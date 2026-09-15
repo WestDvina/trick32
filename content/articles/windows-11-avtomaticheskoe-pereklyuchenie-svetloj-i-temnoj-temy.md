@@ -5,7 +5,7 @@ description: "Microsoft тестирует встроенный планиров
 categories: ["windows", "os"]
 tags: ["windows-11", "темная-тема", "microsoft", "персонализация"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-avtomaticheskoe-pereklyuchenie-svetloj-i-temnoj-temy.jpg"]
 ---
 
 В Windows 11 тёмная тема появилась давно. А вот простого переключения по времени суток до сих пор нет. Днём приходится пользоваться светлой темой, вечером – открывать настройки и менять её вручную.

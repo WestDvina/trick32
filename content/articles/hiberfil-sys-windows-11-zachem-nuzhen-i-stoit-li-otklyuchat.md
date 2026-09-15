@@ -5,7 +5,7 @@ description: "Что такое hiberfil.sys в Windows 11, почему он з
 categories: ["windows"]
 tags: ["windows-11", "gibernaciya", "ssd", "optimizatsiya"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/hiberfil-sys-windows-11-zachem-nuzhen-i-stoit-li-otklyuchat.jpg"]
 ---
 
 На диске C: может лежать файл на десятки гигабайт, который вы никогда не создавали и не видели в Проводнике. Называется он `hiberfil.sys`.

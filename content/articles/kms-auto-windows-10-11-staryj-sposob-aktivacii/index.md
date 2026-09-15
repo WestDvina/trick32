@@ -5,7 +5,7 @@ description: "Разбираем, почему искать KMS Auto на слу
 categories: ["windows"]
 tags: ["kms", "активация-windows", "windows-11", "microsoft"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/kms-auto-windows-10-11-staryj-sposob-aktivacii.jpg"]
 ---
 
 Запросы вроде «KMS Auto Windows», «KMS Windows 10», «KMS Windows 11» и особенно «скачать KMS» никуда не делись.

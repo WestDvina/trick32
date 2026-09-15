@@ -5,7 +5,7 @@ description: "Windows 11 получит настраиваемое контек�
 categories: ["os", "windows"]
 tags: ["windows-11", "microsoft", "контекстное-меню", "проводник"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/kontekstnoe-menyu-windows-11-nastrojka.jpg"]
 ---
 
 Контекстное меню Windows 11 – один из тех элементов системы, который Microsoft переделала ради красоты, но долго не давала пользователю нормально настроить.

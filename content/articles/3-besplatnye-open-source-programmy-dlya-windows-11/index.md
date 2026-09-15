@@ -5,7 +5,7 @@ description: "System Informer вместо Диспетчера задач, Ever
 categories: ["windows"]
 tags: ["windows-11", "open-source", "system-informer", "everything"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/3-besplatnye-open-source-programmy-dlya-windows-11.jpg"]
 ---
 
 Windows 11 имеет почти всё необходимое для обычной работы. Но у системы есть странная особенность: некоторые базовые задачи она решает заметно хуже, чем это делают бесплатные сторонние программы.

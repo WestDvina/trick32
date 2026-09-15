@@ -5,7 +5,7 @@ description: "Разбор PowerToys 0.101: Window Hopper для переклю�
 categories: ["windows"]
 tags: ["powertoys", "windows-11", "microsoft", "локальный-ии"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/powertoys-101-window-hopper.jpg"]
 ---
 
 PowerToys давно перестал быть набором мелких игрушек для энтузиастов Windows. В версии 0.101 Microsoft снова не стала делать ставку на одну громкую функцию. Вместо этого разработчики взялись за десятки сценариев: от переключения окон и управления мониторами до локального ИИ, поиска горячих клавиш и демонстрации экрана.

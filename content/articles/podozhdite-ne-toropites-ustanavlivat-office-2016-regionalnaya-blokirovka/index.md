@@ -5,7 +5,7 @@ description: "Ошибка «Подождите, не торопитесь ус�
 categories: ["ms-office"]
 tags: ["microsoft-office", "office-2016", "oshibka-ustanovki", "regionalnaya-blokirovka"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/podozhdite-ne-toropites-ustanavlivat-office-2016-regionalnaya-blokirovka.jpg"]
 ---
 
 При установке Office иногда появляется странная ошибка.

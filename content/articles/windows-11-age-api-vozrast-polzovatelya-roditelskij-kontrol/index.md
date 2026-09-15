@@ -5,7 +5,7 @@ description: "Windows 11 получает Age API — системный спо�
 categories: ["windows", "os"]
 tags: ["windows-11", "microsoft", "roditelskij-kontrol", "age-api"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-age-api-vozrast-polzovatelya-roditelskij-kontrol.jpg"]
 ---
 
 Windows 11 получает новый механизм. Он позволит приложениям узнавать не дату рождения, а возрастную группу пользователя. Microsoft называет его **Windows Age API**.

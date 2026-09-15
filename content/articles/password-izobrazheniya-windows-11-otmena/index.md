@@ -5,7 +5,7 @@ description: "Microsoft сворачивает пароли изображени
 categories: ["windows", "os"]
 tags: ["windows-11", "microsoft", "windows-hello", "пароль-изображения", "аутентификация"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/password-izobrazheniya-windows-11-otmena.jpg"]
 ---
 
 Microsoft без громких анонсов начала сворачивать ещё одну функцию из эпохи Windows 8 — пароли изображений. После июльского обновления безопасности 2026 года **новые пользователи Windows 11 больше не могут настроить этот способ входа. При этом уже существующие пароли продолжают работать.**

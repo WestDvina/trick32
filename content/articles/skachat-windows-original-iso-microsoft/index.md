@@ -7,7 +7,7 @@ tags: ["windows-10", "windows-11", "скачать-iso", "microsoft-cdn", "shife
 draft: false
 pinned: true
 pinnedOrder: 4
-images: ["/og-img.jpg"]
+images: ["/og/skachat-windows-original-iso-microsoft.jpg"]
 ---
 
 Нужно установить Windows, а с сайта Microsoft она не скачивается. В России и Беларуси загрузка ISO-образов и утилиты Media Creation Tool заблокирована. Многие машут рукой и уходят на торренты. И это лотерея: в сборке, собранной неизвестно кем, может оказаться майнер или вирус.

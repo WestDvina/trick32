@@ -5,7 +5,7 @@ description: "Телефон дробит внимание на короткие
 categories: ["digital-life"]
 tags: ["внимание", "телефон", "привычки"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/popkornovyj-mozg-telefon-sel-vnimanie.jpg"]
 ---
 
 Попкорновый мозг: почему ваш телефон съел ваше внимание и как его вернуть

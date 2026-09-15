@@ -5,7 +5,7 @@ description: "Забыли пароль от ноутбука с Windows 10 ил
 categories: ["windows"]
 tags: ["пароль", "восстановление", "ноутбук", "bitlocker"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/zabyl-parol-ot-noutbuka-kak-vosstanovit-dostup-k-windows.jpg"]
 ---
 
 Экран входа, поле пароля, в голове пусто. Первый вопрос: «Файлы мои пропали?» Нет. Экран входа блокирует доступ, но не трогает данные. Документы, фото, проекты остаются на диске и ждут вас.

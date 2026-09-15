@@ -5,7 +5,7 @@ description: "Как обновить Windows 11 24H2 или 25H2 до 26H2 че
 categories: ["os", "windows"]
 tags: ["windows-11", "26h2", "kb5121794", "enablement-package"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-26h2-kb5121794-obnovlenie.jpg"]
 ---
 
 Microsoft начала распространение Windows 11 26H2 через канал Release Preview. Для пользователей Windows 11 24H2 и 25H2 есть интересный вариант обновления: пакет включения функций KB5121794. Он переводит систему на Windows 11 26H2 без установки из ISO-образа и без удаления программ и файлов.

@@ -5,7 +5,7 @@ description: "Intel готовит третий рефреш Raptor Lake для 
 categories: ["железо"]
 tags: ["ddr5", "ddr4", "intel", "процессоры", "память"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/intel-snova-dostaet-processory-2022-ddr5-starye-platformy.jpg"]
 ---
 
 В 2027 году Intel собирается снова выпускать процессоры на платформе LGA 1700 – сокете, который появился ещё вместе с Alder Lake в 2021 году. Речь идёт о семействе Raptor Lake Next, которое станет уже третьим витком развития архитектуры Raptor Lake.

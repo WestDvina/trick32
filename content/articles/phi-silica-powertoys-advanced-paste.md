@@ -5,7 +5,7 @@ description: "Предпросмотр PowerToys 0.101.2211.0 добавляет
 categories: ["windows"]
 tags: ["powertoys", "windows-11", "ai", "copilot-plus"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/phi-silica-powertoys-advanced-paste.jpg"]
 ---
 
 Microsoft выпустила предварительную версию PowerToys 0.101.2211.0. Главное изменение – локальная модель искусственного интеллекта Phi Silica появилась в Advanced Paste.

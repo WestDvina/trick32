@@ -5,7 +5,7 @@ description: "Microsoft представила Project Zenith — готовую
 categories: ["windows"]
 tags: ["windows-11", "microsoft", "project-zenith", "wsl"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/project-zenith-windows-11-dlya-razrabotchika.jpg"]
 ---
 
 После чистой установки Windows разработчик редко сразу открывает проект и начинает работать.

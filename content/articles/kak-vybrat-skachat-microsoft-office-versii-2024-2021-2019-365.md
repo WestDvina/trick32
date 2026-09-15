@@ -7,7 +7,7 @@ tags: ["microsoft-office", "office-2024", "microsoft-365", "скачать-offic
 draft: false
 pinned: true
 pinnedOrder: 1
-images: ["/og-img.jpg"]
+images: ["/og/kak-vybrat-skachat-microsoft-office-versii-2024-2021-2019-365.jpg"]
 ---
 
 Если вы ищете в интернете «скачать Microsoft Office», то ожидаете увидеть что-то вроде Office 2024, Office 2019 или Office 365. Но вместо этого Microsoft предлагает целый набор названий: Home, Home & Business, Professional, LTSC, Microsoft 365 Personal, Family, Business и другие.

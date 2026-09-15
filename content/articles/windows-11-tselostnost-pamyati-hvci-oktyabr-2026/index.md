@@ -5,7 +5,7 @@ description: "Microsoft с октября 2026 года расширяет ав�
 categories: ["windows"]
 tags: ["windows-11", "tselostnost-pamyati", "hvci", "bezopasnost"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-tselostnost-pamyati-hvci-oktyabr-2026.jpg"]
 ---
 
 Microsoft с октября 2026 года начнёт автоматически включать **Целостность памяти** (Memory Integrity, HVCI) на совместимых компьютерах с Windows 11. Настройка придёт не отдельной программой и не новой версией Windows, а через обычные накопительные обновления.

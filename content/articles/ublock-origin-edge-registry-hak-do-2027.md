@@ -5,7 +5,7 @@ description: "Microsoft оставила в Edge политику ExtensionManif
 categories: ["windows"]
 tags: ["ublock-origin", "microsoft-edge", "manifest-v3", "windows-11"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/ublock-origin-edge-registry-hak-do-2027.jpg"]
 ---
 
 Если вы пользуетесь uBlock Origin в Microsoft Edge, удалять расширение пока рано. Microsoft официально подтвердила: политика `ExtensionManifestV2Availability` всё ещё позволяет запускать расширения на старом Manifest V2. Но это уже не постоянное решение.

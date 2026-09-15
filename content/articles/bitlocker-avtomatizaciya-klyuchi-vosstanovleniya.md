@@ -7,7 +7,7 @@ tags: ["bitlocker", "powershell", "шифрование", "windows-11"]
 draft: false
 pinned: true
 pinnedOrder: 5
-images: ["/og-img.jpg"]
+images: ["/og/bitlocker-avtomatizaciya-klyuchi-vosstanovleniya.jpg"]
 ---
 
 Windows при загрузке просит ключ восстановления BitLocker — 48 цифр, которые вы не помните и нигде не записывали. Диск превращается в кирпич с данными внутри.

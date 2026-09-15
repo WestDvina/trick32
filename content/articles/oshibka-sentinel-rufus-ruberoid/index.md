@@ -7,7 +7,7 @@ tags: ["rufus", "ruberoid", "sentinel", "iso", "скачать-windows"]
 draft: false
 pinned: true
 pinnedOrder: 2
-images: ["/og-img.jpg"]
+images: ["/og/oshibka-sentinel-rufus-ruberoid.jpg"]
 ---
 
 Многие пользователи Rufus заметили: кнопка «Скачать» перестала работать. При попытке скачать образ Windows программа выдаёт ошибку:

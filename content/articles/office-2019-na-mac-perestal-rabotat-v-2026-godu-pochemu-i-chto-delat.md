@@ -5,7 +5,7 @@ description: "Office 2019 на Mac перешёл в режим только д�
 categories: ["ms-office"]
 tags: ["microsoft-office", "office-2019", "macos", "лицензия"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/office-2019-na-mac-perestal-rabotat-v-2026-godu-pochemu-i-chto-delat.jpg"]
 ---
 
 Office 2019 для Mac перестал поддерживаться ещё **10 октября 2023 года**. Но Microsoft тогда не отключила программу: Word, Excel и PowerPoint продолжили работать без новых обновлений. Поэтому владелец купленной лицензии мог спокойно пользоваться Office ещё почти три года.

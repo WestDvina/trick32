@@ -5,7 +5,7 @@ description: "Как поставить Windows 11 26H2 на компьютер 
 categories: ["os", "windows"]
 tags: ["windows-11", "windows-11-26h2", "rufus", "tpm"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-26h2-chistaya-ustanovka-nepodderzhivaemoe-oborudovanie.jpg"]
 ---
 
 Ваш компьютер работает отлично, но Microsoft считает его слишком старым для Windows 11: нет совместимого процессора, TPM 2.0 или Secure Boot. Обновление не приходит, официальные инструменты установки отказываются работать. Решение — чистая установка с собственного загрузочного носителя, который обходит проверку оборудования.

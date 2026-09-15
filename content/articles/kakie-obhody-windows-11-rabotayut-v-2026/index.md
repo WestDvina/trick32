@@ -5,7 +5,7 @@ description: "Проверил обходы Windows 11 на виртуально
 categories: ["windows", "os"]
 tags: ["windows-11", "26h2", "обход-tpm", "установка"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/kakie-obhody-windows-11-rabotayut-v-2026.jpg"]
 ---
 
 В октябре выходит Windows 11 26H2, а версия 24H2 перестаёт получать обновления. Для владельцев старого железа это значит, что обновляться придётся вручную. Обходы проверки TPM, Secure Boot и памяти не закрыты, но за год многое изменилось.

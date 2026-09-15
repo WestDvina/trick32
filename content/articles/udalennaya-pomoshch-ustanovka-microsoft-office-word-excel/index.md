@@ -7,7 +7,7 @@ tags: ["microsoft-office", "установка-office", "удаленная-по
 draft: false
 pinned: true
 pinnedOrder: 3
-images: ["/og-img.jpg"]
+images: ["/og/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel.jpg"]
 ---
 
 Нужно установить Office на Windows 11 или 10, а он не ставится, выдаёт ошибку или просит активацию – помогу удалённо.

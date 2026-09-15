@@ -5,7 +5,7 @@ description: "Windows 11 26H2: меню «Пуск» станет настраи
 categories: ["os", "windows"]
 tags: ["windows-11", "microsoft", "меню-пуск", "26h2"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/menyu-pusk-windows-11-26h2.jpg"]
 ---
 
 Microsoft готовит для Windows 11 более гибкое меню «Пуск». Пользователь сможет выбрать его размер, управлять отображением отдельных разделов и скрыть имя с фотографией профиля.

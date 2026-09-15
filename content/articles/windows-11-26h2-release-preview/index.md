@@ -5,7 +5,7 @@ description: "Windows 11 26H2 вышла в канал Release Preview. Как �
 categories: ["os", "windows"]
 tags: ["windows-11", "microsoft", "26h2", "enablement-package"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-26h2-release-preview.jpg"]
 ---
 
 27 августа Microsoft выпустила Windows 11 26H2 в канал Release Preview. Текущая сборка имеет номер **26300.9278**, пакет обновления — **KB5120998**.

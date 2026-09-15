@@ -5,7 +5,7 @@ description: "Как обновить Windows 11 24H2 или 25H2 до 26H2 на
 categories: ["os", "windows"]
 tags: ["windows-11", "26h2", "kb5121794", "tpm"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-26h2-nepodderzhivaemyj-pk-bez-pereustanovki-kb5121794.jpg"]
 ---
 
 Windows 11 на компьютере без TPM 2.0, Secure Boot и с древним процессором. В этом случае переход на новую версию - отдельный квест. Приходится искать ISO, обходить проверки установщика и надеяться, что после обновления всё заработает как раньше.

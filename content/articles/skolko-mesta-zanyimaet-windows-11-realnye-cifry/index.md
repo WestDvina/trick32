@@ -5,7 +5,7 @@ description: "Windows 11 требует диск от 64 ГБ, но этого �
 categories: ["windows"]
 tags: ["windows-11", "ssd", "optimizatsiya", "ustanovka"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/skolko-mesta-zanyimaet-windows-11-realnye-cifry.jpg"]
 ---
 
 Если посмотреть системные требования Windows 11, можно увидеть цифру 64 ГБ. Из-за неё легко сделать вывод: значит, для Windows достаточно диска на 64 ГБ. На практике это плохая идея.

@@ -5,7 +5,7 @@ description: "Wi-Fi тормозит, хотя тариф нормальный? 
 categories: ["windows", "os"]
 tags: ["windows-11", "wi-fi", "trafik", "fоновые-приложения"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/fonovye-prilozheniya-zhrut-wi-fi-kak-ostanovit.jpg"]
 ---
 
 Скорость по договору 300 Мбит, а YouTube крутит 480p и заикается. Знакомо?

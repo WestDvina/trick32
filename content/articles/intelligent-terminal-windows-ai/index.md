@@ -5,7 +5,7 @@ description: "Microsoft добавила ИИ-агентов прямо в те�
 categories: ["windows"]
 tags: ["windows", "microsoft", "ии", "терминал"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/intelligent-terminal-windows-ai.jpg"]
 ---
 
 Microsoft экспериментирует с новым подходом к командной строке. Проект **Intelligent Terminal** добавляет ИИ-агентов прямо в интерфейс терминала и позволяет разбирать ошибки, получать подсказки и запускать сложные задачи, не переключаясь между PowerShell, браузером и документацией.

@@ -5,7 +5,7 @@ description: "Тест UFD Tech показал почти 900 ГБ записи 
 categories: ["железо"]
 tags: ["ssd", "macbook", "apple", "macos"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/ssd-macbook-neo-mozhet-vyjti-iz-stroya-za-58-dnej.jpg"]
 ---
 
 MacBook Neo не ломается через 58 дней. Эта цифра появилась в результате стресс-теста, где ноутбук записывал на SSD почти 900 ГБ за три часа.

@@ -5,7 +5,7 @@ description: "Windows 11 25H2 добавила кнопку «Отказатьс
 categories: ["windows", "os"]
 tags: ["windows-11", "onedrive", "резервное-копирование", "microsoft"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-onedrive-otkaz-ot-rezervnogo-kopirovaniya.jpg"]
 ---
 
 Windows 11 научилась принимать отказ. В навязчивом промпте OneDrive появилась кнопка **Opt out of backup (Отказаться от резервного копирования)** - нажать один раз и больше не откладывать решение на 3 дня.

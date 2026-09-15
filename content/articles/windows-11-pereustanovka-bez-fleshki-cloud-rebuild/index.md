@@ -5,7 +5,7 @@ description: "Cloud Rebuild в Windows 11 — переустановка без 
 categories: ["windows", "os"]
 tags: ["windows-11", "восстановление", "переустановка", "winre"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-pereustanovka-bez-fleshki-cloud-rebuild.jpg"]
 ---
 
 Windows не загружается, флешки нет, второго компьютера тоже нет. Раньше это был тот ещё квест: найти оригинальный ISO, записать USB, загрузиться с него и попытаться поставить систему заново.

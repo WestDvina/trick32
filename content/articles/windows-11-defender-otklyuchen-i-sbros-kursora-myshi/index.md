@@ -5,7 +5,7 @@ description: "Windows показывает «Microsoft Defender Antivirus отк
 categories: ["windows", "os"]
 tags: ["windows-11", "defender", "windows-update", "kb5120998"]
 draft: false
-images: ["/og-img.jpg"]
+images: ["/og/windows-11-defender-otklyuchen-i-sbros-kursora-myshi.jpg"]
 ---
 
 У Microsoft появились сразу две проблемы с обновлениями Windows. В одном случае система сообщает, что Microsoft Defender Antivirus отключён, хотя антивирус продолжает работать. В другом Windows 11 может самовольно сбросить настройки указателя мыши на дефолтные, отключив пользовательские курсоры, размер и анимацию.
