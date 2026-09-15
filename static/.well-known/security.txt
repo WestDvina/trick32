@@ -1,0 +1,5 @@
+Contact: https://github.com/WestDvina/trick32/security/advisories/new
+Contact: https://t.me/walgo
+Expires: 2027-09-15T00:00:00.000Z
+Canonical: https://trick32.ru/.well-known/security.txt
+Preferred-Languages: ru, en
