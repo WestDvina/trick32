@@ -82,6 +82,7 @@
 .chat-gate p{font-size:13px;color:#475569;margin:0}
 .chat-gate input{border:1px solid #e5e7eb;border-radius:999px;padding:9px 14px;font-size:16px;outline:0;text-align:center}
 .chat-gate input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
+.chat-gate .gate-input{width:100%;box-sizing:border-box}
 .chat-gate .gate-btn{width:100%;border:0;background:#00c871;color:#fff;border-radius:999px;padding:10px;font:700 13px system-ui,sans-serif;cursor:pointer}
 .chat-gate .gate-btn:hover{background:#00a86a}
 .gate-accept{display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;white-space:nowrap;line-height:1}
