@@ -31,11 +31,22 @@
 .chat-fab:hover .fab-text{opacity:1;max-width:120px}
 .chat-fab .badge{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;background:#ef4444;color:#fff;border:2px solid #fff;border-radius:50%;font:800 12px/1 system-ui,sans-serif;display:none;place-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:1}
 .chat-fab .dot{position:absolute;bottom:6px;right:6px;width:10px;height:10px;background:#fff;border:2px solid #00c871;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.chat-fab.offline{background:#64748b;box-shadow:0 8px 24px rgba(71,85,105,.35)}
+.chat-fab.offline:hover{background:#475569}
+.chat-fab.offline .dot{background:#f59e0b;border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.25)}
 .chat-panel{position:fixed;right:16px;top:50px;bottom:50px;z-index:9999;width:380px;max-width:calc(100vw - 24px);height:auto;max-height:calc(100vh - 100px);background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden}
 .chat-panel.open{display:flex}
 .chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;flex-shrink:0}
-.chat-head b{font-size:14px;color:#064e3b}
-.chat-head small{color:#065f46;font-size:11px}
+.chat-head b{font-size:14px;color:#064e3b;display:block}
+.chat-head small{color:#065f46;font-size:11px;display:block;margin-top:2px}
+.chat-head.offline{background:#f1f5f9;border-color:#e2e8f0}
+.chat-head.offline b{color:#334155}
+.chat-head.offline small{color:#b45309}
+.dark .chat-head.offline{background:#1e293b;border-color:#334155}
+.dark .chat-head.offline b{color:#e2e8f0}
+.dark .chat-head.offline small{color:#fbbf24}
+.chat-offline-note{background:#fffbeb;border:1px solid #fcd34d;color:#92400e;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.45}
+.dark .chat-offline-note{background:#422006;border-color:#a16207;color:#fde68a}
 .chat-close{width:32px;height:32px;border:0;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1;cursor:pointer;color:#064e3b;box-shadow:0 1px 6px rgba(0,0,0,.1);flex-shrink:0}
 .chat-close:hover{background:#e5e7eb}
 .chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
@@ -44,13 +55,17 @@
 .chat-msg.admin{align-self:flex-start;background:#e8fff4;color:#064e3b;border:1px solid #aaf2d7;border-bottom-left-radius:4px}
 .chat-msg.sys-ban{align-self:stretch;max-width:100%;background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;text-align:center;font-weight:600}
 .chat-msg.sys-unban{align-self:stretch;max-width:100%;background:#eff6ff;color:#1e40af;border:1px solid #93c5fd;text-align:center;font-weight:600}
-.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:0;background:#fff;flex-shrink:0;align-items:center}
-.chat-foot .foot-pill{flex:1;display:flex;align-items:center;gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:999px;overflow:hidden;padding:2px}
+.chat-foot{padding:10px;border-top:1px solid #e5e7eb;display:flex;gap:0;background:#fff;flex-shrink:0;align-items:flex-end}
+.chat-foot .foot-pill{flex:1;display:flex;align-items:flex-end;gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden;padding:2px}
 .chat-foot .foot-pill:focus-within{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
-.chat-foot input{flex:1;min-width:0;border:0;padding:8px 12px;font-size:13px;outline:0;background:transparent}
-.chat-foot button{border:0;background:#00c871;color:#fff;border-radius:999px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;margin-right:2px}
+.chat-foot textarea{flex:1;min-width:0;border:0;padding:8px 12px;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;outline:0;background:transparent;resize:none;field-sizing:content;min-height:34px;max-height:120px;overflow-y:auto;display:block}
+.chat-foot textarea::placeholder{color:#94a3b8}
+.chat-foot button{border:0;background:#00c871;color:#fff;border-radius:999px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;margin-right:2px;margin-bottom:1px}
 .chat-foot button:hover{background:#00a86a}
-.chat-foot button:disabled{opacity:.5}
+.chat-foot button:disabled{opacity:.5;cursor:not-allowed}
+.chat-foot.is-offline .foot-pill{background:#f1f5f9;border-color:#e2e8f0}
+.chat-foot.is-offline textarea{cursor:not-allowed;color:#94a3b8}
+.dark .chat-foot.is-offline .foot-pill{background:#1f2937;border-color:#334155}
 .chat-foot button .btn-text{display:none}
 .chat-foot button .btn-icon{display:block;width:16px;height:16px}
 .chat-empty{color:#94a3b8;font-size:12px;text-align:center;padding:28px 12px;line-height:1.5}
@@ -69,6 +84,8 @@
 .chat-gate input:focus{border-color:#00c871;box-shadow:0 0 0 3px rgba(0,224,127,.15)}
 .chat-gate .gate-btn{width:100%;border:0;background:#00c871;color:#fff;border-radius:999px;padding:10px;font:700 13px system-ui,sans-serif;cursor:pointer}
 .chat-gate .gate-btn:hover{background:#00a86a}
+.gate-accept{display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;white-space:nowrap;line-height:1}
+.gate-accept input{margin:0;flex-shrink:0}
 .chat-gate small{font-size:11px;color:#94a3b8}
 .gate-rules{font-size:10px;line-height:1.4;color:#475569;text-align:left;border:1px solid #e5e7eb;border-radius:8px;padding:8px;background:#f8fafc;margin-top:2px;width:100%;box-sizing:border-box}
 .gate-rules summary{cursor:pointer;font-size:11px;color:#064e3b;font-weight:700;list-style:none;display:flex;align-items:center;gap:6px}
@@ -90,8 +107,8 @@
 .dark .chat-msg.sys-unban{background:#172554;color:#bfdbfe;border-color:#1e40af}
 .dark .chat-foot{background:#111827;border-color:#374151}
 .dark .chat-foot .foot-pill{background:#374151;border-color:#4b5563}
-.dark .chat-foot input{color:#f3f4f6}
-.dark .chat-foot input::placeholder{color:#9ca3af}
+.dark .chat-foot textarea{color:#f3f4f6}
+.dark .chat-foot textarea::placeholder{color:#9ca3af}
 .dark .chat-intro{background:#0f3a2e;border-color:#10b981;color:#d1fae5}
 .dark .chat-intro b{color:#ecfdf5}
 .dark .chat-intro a{color:#34d399}
@@ -116,7 +133,7 @@
   .chat-panel{right:0;left:0;top:0;bottom:0;width:auto;height:100dvh;height:100vh;height:-webkit-fill-available;max-height:none;max-height:100dvh;max-width:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
   .chat-head{padding-top:max(12px, env(safe-area-inset-top));padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right))}
   .chat-foot{padding-bottom:max(10px, env(safe-area-inset-bottom));padding-left:max(10px, env(safe-area-inset-left));padding-right:max(10px, env(safe-area-inset-right))}
-  .chat-foot input{font-size:16px}
+  .chat-foot textarea{font-size:16px}
   .chat-fab{right:14px;bottom:72px;width:48px;height:48px}
   .chat-fab:hover{width:48px;border-radius:50%}
   .chat-fab:hover .fab-text{opacity:0;max-width:0}
@@ -135,7 +152,7 @@
    const panel = document.createElement("div");
   panel.className = "chat-panel";
   panel.innerHTML = `
-    <div class="chat-head"><div><b>Чат поддержки</b></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
+    <div class="chat-head"><div><b>Чат поддержки</b><small class="chat-hours"></small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
     <div class="chat-body">
       <div class="chat-intro"><b>Чем помогаю (платно):</b><br>
       • <b>Установка MS Office</b> — Word, Excel, Outlook. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
@@ -143,17 +160,48 @@
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><input placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" name="msg" enterkeyhint="send"><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
     <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Могу и вам такой чат поставить → Telegram</a></div>
   `;
   document.body.appendChild(panel);
   const body = panel.querySelector(".chat-body");
   const form = panel.querySelector("form");
-  const input = form.querySelector('input[name="msg"]');
+  const input = form.querySelector('textarea[name="msg"]');
   const hpInput = form.querySelector('input[name="hp"]');
   const badge = fab.querySelector(".badge");
   const closeBtn = panel.querySelector(".chat-close");
   const quick = panel.querySelector(".chat-quick");
+  const headEl = panel.querySelector(".chat-head");
+  const hoursEl = panel.querySelector(".chat-hours");
+  const sendBtn = form.querySelector('button[type="submit"]');
+
+  const WORK_FROM = 8, WORK_TO = 22;
+  function isWorkTime() {
+    const h = (new Date().getUTCHours() + 3) % 24;
+    return h >= WORK_FROM && h < WORK_TO;
+  }
+  function autogrow() {
+    if (CSS && CSS.supports && CSS.supports("field-sizing", "content")) return;
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 120) + "px";
+  }
+  let workState = null;
+  function applyWorkState() {
+    const on = isWorkTime();
+    const changed = workState !== on;
+    workState = on;
+    fab.classList.toggle("offline", !on);
+    headEl.classList.toggle("offline", !on);
+    hoursEl.textContent = on ? "Работаю 8:00–22:00 МСК" : "Сейчас не работаю · 8:00–22:00 МСК";
+    form.classList.toggle("is-offline", !on);
+    input.disabled = !on;
+    sendBtn.disabled = !on;
+    input.placeholder = on ? "Ваше сообщение..." : "Чат работает с 8:00 до 22:00 МСК";
+    if (!on && changed) {
+      renderMessage({direction:"admin", text:"Чат работает с 8:00 до 22:00 по МСК. Сейчас нерабочее время — сообщение отправить нельзя. Напишите, пожалуйста, в рабочие часы."});
+      body.scrollTop = body.scrollHeight;
+    }
+  }
 
   let sid = getSid();
   const LS_LAST = "chat_last_" + sid;
@@ -299,7 +347,7 @@
     if (empty) empty.style.display = "none";
     const gate = document.createElement("div");
     gate.className = "chat-gate";
-    gate.innerHTML = '<b>Как к вам обращаться?</b><p>Введите имя — нужно для ответа</p><input class="gate-input" placeholder="Ваше имя" maxlength="32" autocomplete="name"><details class="gate-rules"><summary>Правила чата — нажмите, чтобы раскрыть</summary><div class="gate-rules-body">1. Соблюдайте законодательство РФ — запрещено всё, что нарушает закон.<br>2. Вежливость и уважение — обращайтесь корректно.<br>3. Запрещены хамство, грубость, оскорбления.<br>4. Запрещены мат, нецензурные выражения, ругань.<br>5. Запрещён спам, флуд, реклама, ссылки &gt;2.<br>6. За нарушение — чат приостанавливается (бан).</div></details><label style="display:flex;gap:6px;align-items:center;font-size:11px;cursor:pointer"><input type="checkbox" class="gate-check"> Принимаю правила</label><button class="gate-btn" type="button">Продолжить</button><small>Защита от спама включена</small>';
+    gate.innerHTML = '<b>Как к вам обращаться?</b><p>Введите имя — нужно для ответа</p><input class="gate-input" placeholder="Ваше имя" maxlength="32" autocomplete="name"><details class="gate-rules"><summary>Правила чата — нажмите, чтобы раскрыть</summary><div class="gate-rules-body">1. Соблюдайте законодательство РФ — запрещено всё, что нарушает закон.<br>2. Вежливость и уважение — обращайтесь корректно.<br>3. Запрещены хамство, грубость, оскорбления.<br>4. Запрещены мат, нецензурные выражения, ругань.<br>5. Запрещён спам, флуд, реклама, ссылки &gt;2.<br>6. За нарушение — чат приостанавливается (бан).</div></details><label class="gate-accept"><input type="checkbox" class="gate-check">Принимаю правила</label><button class="gate-btn" type="button">Продолжить</button><small>Защита от спама включена</small>';
     body.appendChild(gate);
     const gateInput = gate.querySelector(".gate-input");
     const gateBtn = gate.querySelector(".gate-btn");
@@ -426,12 +474,14 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (hpInput.value.trim() !== "") return; // honeypot
+    if (!isWorkTime()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     const text = input.value.trim();
     if (!text) return;
     // first message requires topic choice via buttons
     if (!flowDone && !window.__chatSkipFlow) {
       input.value = "";
+      autogrow();
       renderMessage({direction:"user", text});
       body.scrollTop = body.scrollHeight;
       setTimeout(() => {
@@ -443,9 +493,9 @@
     }
     window.__chatSkipFlow = false;
     input.value = "";
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    setTimeout(() => btn.disabled = false, 1000); // anti-spam throttle
+    autogrow();
+    sendBtn.disabled = true;
+    setTimeout(() => { if (isWorkTime()) sendBtn.disabled = false; }, 1000); // anti-spam throttle
     const tmp = {id: lastId+1, direction:"user", text};
     renderMessage(tmp);
     body.scrollTop = body.scrollHeight;
@@ -457,8 +507,10 @@
         body: JSON.stringify({sid, text, name: getName() || "Гость"})
       });
       if (r.status === 403) {
-        renderMessage({direction:"admin", text: BANNED_TEXT});
+        const jj = await r.json().catch(() => ({}));
+        renderMessage({direction:"admin", text: jj.error === "offline" ? "Чат работает с 8:00 до 22:00 по МСК. Сейчас нерабочее время." : BANNED_TEXT});
         body.scrollTop = body.scrollHeight;
+        applyWorkState();
         return;
       }
       if (!r.ok) throw new Error();
@@ -466,8 +518,19 @@
       if (j.id) lastId = Math.max(lastId, j.id);
       setTimeout(poll, 500);
     } catch {}
-    finally { btn.disabled = false; }
+    finally { if (isWorkTime()) sendBtn.disabled = false; }
   });
 
+  // autogrow + Enter to send (Shift+Enter = newline), field-sizing:content is the CSS base
+  input.addEventListener("input", autogrow);
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
+      e.preventDefault();
+      if (!input.disabled) form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event("submit", {cancelable:true}));
+    }
+  });
+
+  applyWorkState();
+  setInterval(applyWorkState, 60000);
   setInterval(() => { if (!open) poll(); }, 8000);
 })();
