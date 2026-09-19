@@ -4,6 +4,7 @@ date: "2026-09-18T14:00:00+03:00"
 description: "На системном диске 59 ГБ свободно 28 — куда делся 31 ГБ? Проверяю на своей Windows 11 25H2: DISM пообещал −6,3 ГБ, диск показал +2,5 ГБ. Баланс сходится через WizTree: три линейки, три цифры WinSxS."
 categories: ["windows"]
 tags: ["windows-11", "диск", "место", "winsxs", "dism", "восстановление"]
+images: ["/og/disk-c-fantomy-i-realnye-gigabajty.jpg"]
 draft: false
 ---
 
