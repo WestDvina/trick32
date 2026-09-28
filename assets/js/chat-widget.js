@@ -162,7 +162,7 @@
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
     <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
-    <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Могу и вам такой чат поставить → Telegram</a></div>
+    <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Установка чатов на сайт → Telegram</a></div>
   `;
   document.body.appendChild(panel);
   const body = panel.querySelector(".chat-body");
