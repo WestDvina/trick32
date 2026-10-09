@@ -38,6 +38,9 @@
 .chat-panel.open{display:flex}
 .chat-head{padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;flex-shrink:0}
 .chat-head b{font-size:14px;color:#064e3b;display:block}
+.chat-head-link{display:inline-block;color:inherit;text-decoration:none}
+.chat-head-link:hover b{text-decoration:underline;text-underline-offset:2px}
+.chat-head-link b::after{content:" →";font-weight:400;opacity:.7}
 .chat-head small{color:#065f46;font-size:11px;display:block;margin-top:2px}
 .chat-head.offline{background:#f1f5f9;border-color:#e2e8f0}
 .chat-head.offline b{color:#334155}
@@ -162,7 +165,7 @@
    const panel = document.createElement("div");
   panel.className = "chat-panel";
   panel.innerHTML = `
-    <div class="chat-head"><div><b>Чат поддержки</b><small class="chat-hours"></small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
+    <div class="chat-head"><div><a class="chat-head-link" href="/articles/pomoshch-windows-office/" target="_blank" rel="noopener" title="Установка и активация Windows и Office — помощь"><b>Чат поддержки</b></a><small class="chat-hours"></small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
     <div class="chat-body">
       <div class="chat-intro"><b>Помогаю с Windows + MS Office:</b> разбор ошибок, активация, удалённая установка. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
