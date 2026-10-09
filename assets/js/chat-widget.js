@@ -394,7 +394,10 @@
           renderMessage(m);
           lastId = m.id;
           hasNew = true;
-          if (m.direction === "admin" && !open && m.id > seenId) {
+          if (open) {
+            seenId = lastId;
+            localStorage.setItem(LS_SEEN, String(seenId));
+          } else if (m.direction === "admin" && m.id > seenId) {
             unread++;
             badge.textContent = unread > 9 ? "9+" : unread;
             badge.style.display = "grid";
@@ -410,6 +413,13 @@
     if (timer) clearInterval(timer);
     poll();
     timer = setInterval(poll, 3000);
+  }
+
+  function markSeen() {
+    seenId = lastId;
+    localStorage.setItem(LS_SEEN, String(seenId));
+    unread = 0;
+    badge.style.display = "none";
   }
 
   let scrollY = 0;
@@ -439,8 +449,7 @@
       lockScroll();
       document.body.classList.add("chat-open");
       unread = 0; badge.style.display = "none";
-      seenId = lastId;
-      localStorage.setItem(LS_SEEN, String(seenId));
+      markSeen();
       if (!getName()) showGate();
       else {
         const empty = body.querySelector(".chat-empty");
@@ -454,6 +463,7 @@
     } else {
       document.body.classList.remove("chat-open");
       unlockScroll();
+      markSeen();
     }
   });
   // external link confirm
@@ -481,7 +491,7 @@
     if (anyHit) reply += KEY_REPLY.any;
     if (reply) setTimeout(() => { renderMessage({direction:"admin", text: reply.trim()}); body.scrollTop = body.scrollHeight; }, 500);
   }
-  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); unlockScroll(); });
+  closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); unlockScroll(); markSeen(); });
 
   // screenshot upload: paste / drop / clip (downscale client-side, RAM-only server)
   const clipBtn = form.querySelector(".clip-btn");
@@ -664,6 +674,7 @@
 
   // autogrow + Enter to send (Shift+Enter = newline), field-sizing:content is the CSS base
   input.addEventListener("input", autogrow);
+  window.addEventListener("beforeunload", () => { if (open) markSeen(); });
   input.addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
       e.preventDefault();
