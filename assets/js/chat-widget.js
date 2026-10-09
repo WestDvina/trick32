@@ -155,9 +155,7 @@
   panel.innerHTML = `
     <div class="chat-head"><div><b>Чат поддержки</b><small class="chat-hours"></small></div><button class="chat-close" aria-label="Закрыть">✕</button></div>
     <div class="chat-body">
-      <div class="chat-intro"><b>Чем помогаю (платно):</b><br>
-      • <b>Установка MS Office</b> — Word, Excel, Outlook. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
-      • <b>Активация Windows 10/11</b> — только безопасными способами.<br>
+      <div class="chat-intro"><b>Помогаю с Windows + MS Office:</b> разбор ошибок, активация, удалённая установка. <a href="/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/" target="_blank">Подробнее</a><br>
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
