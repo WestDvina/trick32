@@ -68,6 +68,15 @@
 .dark .chat-foot.is-offline .foot-pill{background:#1f2937;border-color:#334155}
 .chat-foot button .btn-text{display:none}
 .chat-foot button .btn-icon{display:block;width:16px;height:16px}
+.chat-foot .clip-btn{background:transparent;color:#64748b;box-shadow:none;width:32px;height:36px;margin:0 0 1px 2px}
+.chat-foot .clip-btn:hover{background:#f1f5f9}
+.chat-foot .clip-btn:disabled{opacity:.4}
+.chat-foot .clip-btn svg{width:18px;height:18px}
+.dark .chat-foot .clip-btn{color:#9ca3af}
+.dark .chat-foot .clip-btn:hover{background:#374151}
+.chat-drop-veil{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;background:rgba(0,200,113,.12);border:2px dashed #00c871;border-radius:16px;font:600 13px system-ui,sans-serif;color:#064e3b;pointer-events:none}
+.chat-panel.dragover .chat-drop-veil{display:flex}
+.chat-uploading{opacity:.6;font-style:italic}
 .chat-empty{color:#94a3b8;font-size:12px;text-align:center;padding:28px 12px;line-height:1.5}
 .chat-intro{background:#f0fdf4;border:1px solid #aaf2d7;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;color:#064e3b}
 .chat-intro b{color:#064e3b}
@@ -159,7 +168,8 @@
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <div class="chat-drop-veil">Отпустите, чтобы отправить скриншот</div>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот" title="Прикрепить скриншот"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
     <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Установка чатов на сайт → Telegram</a></div>
   `;
   document.body.appendChild(panel);
@@ -195,6 +205,7 @@
     form.classList.toggle("is-offline", !on);
     input.disabled = !on;
     sendBtn.disabled = !on;
+    if (typeof clipBtn !== "undefined" && clipBtn) clipBtn.disabled = !on;
     input.placeholder = on ? "Ваше сообщение..." : "Чат работает с 8:00 до 22:00 МСК";
     if (!on && changed) {
       renderMessage({direction:"admin", text:"Чат работает с 8:00 до 22:00 по МСК. Сейчас нерабочее время — сообщение отправить нельзя. Напишите, пожалуйста, в рабочие часы."});
@@ -471,6 +482,135 @@
     if (reply) setTimeout(() => { renderMessage({direction:"admin", text: reply.trim()}); body.scrollTop = body.scrollHeight; }, 500);
   }
   closeBtn.addEventListener("click", () => { open = false; panel.classList.remove("open"); document.body.classList.remove("chat-open"); unlockScroll(); });
+
+  // screenshot upload: paste / drop / clip (downscale client-side, RAM-only server)
+  const clipBtn = form.querySelector(".clip-btn");
+  const fileInput = form.querySelector('input[name="shot"]');
+  const UPLOAD_MAX = 8 * 1024 * 1024;
+  const UPLOAD_ERR = {
+    "too big": "Скриншот слишком большой (макс 8 МБ).",
+    "only png/jpeg/webp": "Только картинки PNG/JPEG/WebP.",
+    "bad image": "Не получилось прочитать картинку.",
+    "offline": "Чат работает с 8:00 до 22:00 по МСК. Сейчас нерабочее время.",
+    "banned": BANNED_TEXT,
+    "one photo per minute": "Одно фото в минуту, подождите немного.",
+    "ip rate limit": "Слишком часто. Подождите минуту.",
+    "send failed": "Не удалось отправить. Попробуйте позже."
+  };
+  function downscale(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        try {
+          const MAX = 1600;
+          let w = img.width, h = img.height;
+          if (!w || !h) throw new Error("bad");
+          const k = Math.min(1, MAX / Math.max(w, h));
+          w = Math.round(w * k); h = Math.round(h * k);
+          const cv = document.createElement("canvas");
+          cv.width = w; cv.height = h;
+          cv.getContext("2d").drawImage(img, 0, 0, w, h);
+          URL.revokeObjectURL(url);
+          cv.toBlob(b => b ? resolve(b) : reject(new Error("bad")), "image/jpeg", 0.82);
+        } catch (e) { URL.revokeObjectURL(url); reject(e); }
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("bad")); };
+      img.src = url;
+    });
+  }
+  async function uploadShot(file) {
+    if (!file) return;
+    if (!isWorkTime()) { applyWorkState(); return; }
+    if (!getName()) { showGate(); return; }
+    if (!flowDone) {
+      renderMessage({direction:"admin", text:"Выберите тему сообщения"});
+      showServices();
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+    if (!/^image\/(png|jpe?g|webp)$/i.test(file.type || "")) {
+      renderMessage({direction:"admin", text: UPLOAD_ERR["only png/jpeg/webp"]});
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+    if (file.size > UPLOAD_MAX) {
+      renderMessage({direction:"admin", text: UPLOAD_ERR["too big"]});
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+    let blob;
+    try { blob = await downscale(file); }
+    catch {
+      renderMessage({direction:"admin", text: UPLOAD_ERR["bad image"]});
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+    const tmp = document.createElement("div");
+    tmp.className = "chat-msg user chat-uploading";
+    tmp.textContent = "📎 Отправка скриншота…";
+    const empty = body.querySelector(".chat-empty");
+    if (empty) empty.remove();
+    body.appendChild(tmp);
+    body.scrollTop = body.scrollHeight;
+    clipBtn.disabled = true;
+    try {
+      const fd = new FormData();
+      fd.append("sid", sid);
+      fd.append("name", getName() || "Гость");
+      fd.append("file", blob, "screenshot.jpg");
+      const r = await fetch(`${API}/api/upload`, {method:"POST", body: fd});
+      tmp.remove();
+      if (r.status === 403) {
+        const jj = await r.json().catch(() => ({}));
+        renderMessage({direction:"admin", text: jj.error === "offline" ? UPLOAD_ERR.offline : BANNED_TEXT});
+        body.scrollTop = body.scrollHeight;
+        applyWorkState();
+        return;
+      }
+      if (!r.ok) {
+        const jj = await r.json().catch(() => ({}));
+        renderMessage({direction:"admin", text: UPLOAD_ERR[jj.error] || "Не удалось отправить. Попробуйте позже."});
+        body.scrollTop = body.scrollHeight;
+        return;
+      }
+      const j = await r.json();
+      if (j.id) lastId = Math.max(lastId, j.id);
+      setTimeout(poll, 500);
+    } catch {
+      tmp.remove();
+      renderMessage({direction:"admin", text: UPLOAD_ERR["send failed"]});
+      body.scrollTop = body.scrollHeight;
+    } finally { clipBtn.disabled = false; }
+  }
+  clipBtn.addEventListener("click", () => {
+    if (!isWorkTime()) { applyWorkState(); return; }
+    if (!getName()) { showGate(); return; }
+    fileInput.click();
+  });
+  fileInput.addEventListener("change", () => {
+    const f = fileInput.files && fileInput.files[0];
+    fileInput.value = "";
+    if (f) uploadShot(f);
+  });
+  document.addEventListener("paste", e => {
+    if (!open) return;
+    const items = (e.clipboardData && e.clipboardData.files) || [];
+    for (const f of items) {
+      if (f && f.type && f.type.indexOf("image/") === 0) { e.preventDefault(); uploadShot(f); return; }
+    }
+  });
+  let dragDepth = 0;
+  panel.addEventListener("dragenter", e => { e.preventDefault(); dragDepth++; panel.classList.add("dragover"); });
+  panel.addEventListener("dragover", e => e.preventDefault());
+  panel.addEventListener("dragleave", e => { e.preventDefault(); if (--dragDepth <= 0) { dragDepth = 0; panel.classList.remove("dragover"); } });
+  panel.addEventListener("drop", e => {
+    e.preventDefault();
+    dragDepth = 0;
+    panel.classList.remove("dragover");
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) uploadShot(f);
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
