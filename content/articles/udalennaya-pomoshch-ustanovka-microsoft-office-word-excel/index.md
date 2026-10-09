@@ -5,8 +5,6 @@ description: "Удалённая помощь с установкой Microsoft 
 categories: ["ms-office"]
 tags: ["microsoft-office", "установка-office", "удаленная-помощь", "ошибки-office"]
 draft: false
-pinned: true
-pinnedOrder: 3
 images: ["/og/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel.jpg"]
 ---
 

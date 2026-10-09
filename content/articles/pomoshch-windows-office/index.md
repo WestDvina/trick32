@@ -6,6 +6,8 @@ categories: ["windows"]
 tags: ["windows-10", "windows-11", "microsoft-office", "установка", "активация", "удаленная-помощь"]
 images: ["/og/pomoshch-windows-office.jpg"]
 draft: false
+pinned: true
+pinnedOrder: 3
 ---
 
 Помогаю с Windows 10/11 и Microsoft Office удалённо: ставлю систему и Office, даю официальный ISO, чиню ошибки установки, разбираю синий экран по дампу, оформляю ESU для Windows 10. Подключаюсь через HopToDesk или AnyDesk — вы видите экран и в любой момент закрываете сессию. От 500 ₽.
