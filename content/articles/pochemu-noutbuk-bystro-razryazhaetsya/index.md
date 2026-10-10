@@ -183,6 +183,6 @@ powercfg /lastwake
 
 Если не хочется самому разбираться с отчётами, службами и схемами питания — помогу удалённо. Посмотрю, что именно расходует заряд на вашем ноутбуке, отключу лишнее и настрою питание. Заодно поставлю оригинальный Microsoft Office 2024 или Microsoft 365 и помогу с активацией Windows — без репаков и торрентов.
 
-→ [Удалённая установка Microsoft Office и помощь с активацией Windows](/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/)
+→ [Установка и активация Windows и Office — удалённая помощь](/articles/pomoshch-windows-office/)
 
 Нажмите кнопку «💬 Написать в чате» справа внизу.

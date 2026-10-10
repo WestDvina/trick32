@@ -121,6 +121,6 @@ images: ["/og/kakie-obhody-windows-11-rabotayut-v-2026.jpg"]
 
 Если Вы боитесь самого слова `реестр`, не понимаете в ключах и лицензировании — помогу удалённо. Активирую Windows, а заодно поставлю оригинальный Microsoft Office 2024 или Microsoft 365: подберу версию, установлю Word и Excel, исправлю ошибки установки и активации. Вы видите экран и отключаетесь в один клик, ставлю только официальные дистрибутивы — без репаков и торрентов.
 
-→ [Удалённая установка Microsoft Office и помощь с активацией Windows](/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/)
+→ [Установка и активация Windows и Office — удалённая помощь](/articles/pomoshch-windows-office/)
 
 Нажмите кнопку «💬 Написать в чате» справа внизу.

@@ -146,6 +146,6 @@ reg add "HKCU\Software\Microsoft\Office\16.0\Common\ExperimentConfigs\Ecs" /v "C
 
 Если нет времени разбираться с реестром, автономным установщиком и ошибками Click-to-Run — помогу удалённо. Ставлю оригинальный Office 2024 / Microsoft 365, проверяю `CountryCode`, чищу остатки старого Office и довожу до рабочего Word и Excel.
 
-→ [Удалённая установка Microsoft Office — помощь с установкой Word и Excel, исправляю ошибки](/articles/udalennaya-pomoshch-ustanovka-microsoft-office-word-excel/)
+→ [Установка и активация Windows и Office — удалённая помощь](/articles/pomoshch-windows-office/)
 
 Нажмите кнопку «💬 Написать в чате» справа внизу.
