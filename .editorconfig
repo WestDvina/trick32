@@ -1,0 +1,8 @@
+root = true
+
+# UTF-8 без BOM и LF — чтобы статьи, написанные на Windows, совпадали с macOS
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = false

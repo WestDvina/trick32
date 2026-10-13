@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 import render_og
-from articles import load_hooks, read_frontmatter
+from articles import apply_images, load_hooks, read_frontmatter
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SITE_STATIC = REPO_ROOT / "static"
@@ -31,7 +31,7 @@ def collect(content_dir: Path, only: list):
         info, _, _ = read_frontmatter(path)
         if only and info["slug"] not in only:
             continue
-        out.append(info)
+        out.append((info, path))
     return out
 
 
@@ -67,10 +67,10 @@ def main() -> int:
     hooks = load_hooks()
     items = collect(content_dir, only)
 
-    drawn, skipped, failed = [], [], []
+    drawn, skipped, failed, fixed = [], [], [], []
     if not args.check_only:
         out_dir.mkdir(parents=True, exist_ok=True)
-        for info in items:
+        for info, _ in items:
             dst = out_dir / f"{info['slug']}.jpg"
             if dst.exists() and not args.force:
                 skipped.append(info["slug"])
@@ -82,13 +82,18 @@ def main() -> int:
                 failed.append(f"{info['slug']}: {e}")
             if args.max and len(drawn) >= args.max:
                 break
+        for info, path in items:                 # a drawn card is useless until frontmatter points at it
+            if not info["draft"] and apply_images(path, info["slug"]):
+                fixed.append(info["slug"])
 
-    missing = [i["slug"] for i in items if not i["draft"] and not has_card(i, out_dir)]
+    missing = [i["slug"] for i, _ in items if not i["draft"] and not has_card(i, out_dir)]
 
     print(f"articles: {len(items)} | drawn: {len(drawn)} | already there: {len(skipped)} "
-          f"| cards: {out_dir}")
+          f"| frontmatter filled: {len(fixed)} | cards: {out_dir}")
     if drawn:
         print("drawn: " + ", ".join(drawn))
+    if fixed:
+        print("images: added to frontmatter -> " + ", ".join(fixed))
     if failed:
         print("DRAW FAILED:\n  " + "\n  ".join(failed))
     if missing:

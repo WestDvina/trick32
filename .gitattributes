@@ -1,0 +1,13 @@
+# текст — LF на всех системах, чтобы Windows и macOS не «переписывали» файлы целиком
+* text=auto eol=lf
+
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+
+*.svg text

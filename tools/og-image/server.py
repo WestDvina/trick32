@@ -5,7 +5,7 @@ from mcp.server.fastmcp import FastMCP
 
 import presets as P
 import render_og
-from articles import load_hooks, read_frontmatter, save_hooks
+from articles import apply_images, load_hooks, read_frontmatter, save_hooks
 
 mcp = FastMCP(
     "og-image",
@@ -152,29 +152,17 @@ def og_apply_frontmatter(article_path: str, slug: str = "", dry_run: bool = True
     path = Path(article_path).expanduser()
     if not path.exists():
         return f"❌ нет файла: {path}"
-    info, text, m = read_frontmatter(path)
-    slug = slug or info["slug"]
-    new_val = f'images: ["/og/{slug}.jpg"]'
-
+    info, _, m = read_frontmatter(path)
     if m is None:
         return "❌ не нашёл YAML-frontmatter (нет --- в начале файла)"
-
-    fm = m.group(1)
-    if re.search(r"^images:.*$", fm, re.MULTILINE):
-        new_fm = re.sub(r"^images:.*$", new_val, fm, count=1, flags=re.MULTILINE)
-    else:
-        anchor = re.search(r"^(tags:.*)$", fm, re.MULTILINE) or re.search(r"^(categories:.*)$", fm, re.MULTILINE)
-        if anchor:
-            new_fm = fm[:anchor.end()] + "\n" + new_val + fm[anchor.end():]
-        else:
-            new_fm = fm + "\n" + new_val
-
-    diff = f"- images: {re.search(r'^images:.*$', fm, re.MULTILINE).group(0)[8:] if re.search(r'^images:.*$', fm, re.MULTILINE) else '(нет)'}\n+ {new_val}"
+    slug = slug or info["slug"]
+    new_val = f'images: ["/og/{slug}.jpg"]'
+    cur = re.search(r"^images:.*$", m.group(1), re.MULTILINE)
+    diff = f"- {cur.group(0) if cur else 'images: (нет)'}\n+ {new_val}"
     if dry_run:
         return f"🔍 DRY-RUN {path}\n{diff}\n\nПодтверди — вызову с dry_run=False."
 
-    new_text = text[:m.start(1)] + new_fm + text[m.end(1):]
-    path.write_text(new_text, encoding="utf-8")
+    apply_images(path, slug, overwrite=True)
     return f"✅ Обновлён {path}\n{diff}"
 
 
