@@ -40,6 +40,18 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/og-image/requirements.txt
+      - name: Install OG renderer dependencies
+        run: |
+          sudo apt-get install -y --no-install-recommends libcairo2
+          python -m pip install --quiet -r tools/og-image/requirements.txt
+      - name: Draw missing OG cards
+        run: python tools/og-image/generate_og.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
