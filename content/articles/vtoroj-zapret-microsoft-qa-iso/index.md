@@ -3,7 +3,7 @@ title: "Второй запрет Microsoft: Q&A больше не выдаёт 
 date: "2026-10-05T11:25:00+03:00"
 description: "Инженеры Microsoft Q&A перестали выдавать временные ISO-ссылки пользователям из стран под ограничениями. Что закрылось 5 октября 2026 и как теперь работает мой ShIFER на своём скрипте."
 categories: ["windows"]
-tags: ["windows-11", "windows-10", "iso", "microsoft-qa", "shifer", "blokirovka"]
+tags: ["windows-11", "windows-10", "iso", "microsoft-qa", "shifer", "блокировка"]
 images: ["/og/vtoroj-zapret-microsoft-qa-iso.jpg"]
 draft: false
 ---

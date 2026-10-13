@@ -3,7 +3,7 @@ title: "PowerToys получил локальный ИИ Phi Silica: но раб
 date: "2026-08-10T20:19:00+03:00"
 description: "Предпросмотр PowerToys 0.101.2211.0 добавляет локальную модель Phi Silica в Advanced Paste, но только для Copilot+ ПК с NPU. Разбор новинки, обновления Mouse Jump и каналов Stable/Insider."
 categories: ["windows"]
-tags: ["powertoys", "windows-11", "ai", "copilot-plus"]
+tags: ["powertoys", "windows-11", "ии", "copilot-plus"]
 draft: false
 images: ["/og/phi-silica-powertoys-advanced-paste.jpg"]
 ---

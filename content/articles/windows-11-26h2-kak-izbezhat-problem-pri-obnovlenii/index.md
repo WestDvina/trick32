@@ -3,7 +3,7 @@ title: "Windows 11 26H2 без проблем: как подготовиться
 date: "2026-09-03T18:00:00+03:00"
 description: "Windows 11 26H2 ставится пакетом включения поверх 24H2 и 25H2 за одну перезагрузку, но даже маленькое обновление ломается на забитом диске, битом Центре обновления и лишнем софте. 9 шагов подготовки, чтобы не чинить систему часами."
 categories: ["windows", "os"]
-tags: ["windows-11", "windows-11-26h2", "обновление", "enablement-package"]
+tags: ["windows-11", "26h2", "обновление", "enablement-package"]
 draft: false
 images: ["/og/windows-11-26h2-kak-izbezhat-problem-pri-obnovlenii.jpg"]
 ---

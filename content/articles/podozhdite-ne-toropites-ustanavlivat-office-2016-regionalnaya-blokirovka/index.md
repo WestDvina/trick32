@@ -3,7 +3,7 @@ title: "«Подождите, не торопитесь устанавливат
 date: "2026-09-10T12:00:00+03:00"
 description: "Ошибка «Подождите, не торопитесь устанавливать Office 2016 — не удалось скачать нужный файл» при установке Office 2019, 2021 или Microsoft 365. Почему появляется сообщение про Office 2016, при чём здесь региональная блокировка и параметр CountryCode, как помогает VPN и когда нужен автономный установщик."
 categories: ["ms-office"]
-tags: ["microsoft-office", "office-2016", "oshibka-ustanovki", "regionalnaya-blokirovka"]
+tags: ["microsoft-office", "office-2016", "ошибка-установки", "региональная-блокировка"]
 draft: false
 images: ["/og/podozhdite-ne-toropites-ustanavlivat-office-2016-regionalnaya-blokirovka.jpg"]
 ---

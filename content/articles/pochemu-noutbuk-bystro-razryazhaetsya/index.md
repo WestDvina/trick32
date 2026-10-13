@@ -3,7 +3,7 @@ title: "Почему ноутбук быстро разряжается: про�
 date: "2026-09-16"
 description: "Ноутбук быстро разряжается? Пошаговая проверка: износ аккумулятора по powercfg /batteryreport, расход по приложениям, отчёт об энергии и разряд в режиме ожидания. Что лечится настройками, а когда пора менять батарею."
 categories: ["windows", "os"]
-tags: ["windows-11", "batareya", "noutbuk", "powercfg"]
+tags: ["windows-11", "батарея", "ноутбук", "powercfg"]
 draft: false
 images: ["/og/pochemu-noutbuk-bystro-razryazhaetsya.jpg"]
 ---

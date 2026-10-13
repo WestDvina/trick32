@@ -3,7 +3,7 @@ title: "Windows 11 начнёт включать «Целостность пам
 date: "2026-09-02T12:00:00+03:00"
 description: "Microsoft с октября 2026 года расширяет автоматическое включение Целостности памяти (HVCI) через обычные обновления Windows 11. Разбираем, какие ПК затронет изменение, как проверить драйверы и что делать, если Windows показывает несовместимость."
 categories: ["windows"]
-tags: ["windows-11", "tselostnost-pamyati", "hvci", "bezopasnost"]
+tags: ["windows-11", "целостность-памяти", "hvci", "безопасность"]
 draft: false
 images: ["/og/windows-11-tselostnost-pamyati-hvci-oktyabr-2026.jpg"]
 ---

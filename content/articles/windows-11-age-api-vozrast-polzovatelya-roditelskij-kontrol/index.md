@@ -3,7 +3,7 @@ title: "Windows 11 узнает возраст пользователя: как 
 date: "2026-09-11"
 description: "Windows 11 получает Age API — системный способ узнать возрастную группу пользователя без даты рождения. Разбираем, как работает GetUserAgeRangeAsync, зачем нужен и чем отличается от Family Safety."
 categories: ["windows", "os"]
-tags: ["windows-11", "microsoft", "roditelskij-kontrol", "age-api"]
+tags: ["windows-11", "microsoft", "родительский-контроль", "age-api"]
 draft: false
 images: ["/og/windows-11-age-api-vozrast-polzovatelya-roditelskij-kontrol.jpg"]
 ---

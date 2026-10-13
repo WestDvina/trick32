@@ -3,7 +3,7 @@ title: "Ноутбук разряжается выключенным: 4 прич
 date: "2026-10-10T12:00:00+03:00"
 description: "Ноутбук в сумке теряет заряд, хотя вы его выключили? Разбираем четыре причины: Modern Standby, зарядка USB-портов, саморазряд и таймеры пробуждения. Проверка штатными командами powercfg, без сторонних программ. И почему «Быстрый запуск» тут ни при чём."
 categories: ["windows", "os"]
-tags: ["windows-11", "windows-10", "batareya", "powercfg", "noutbuk"]
+tags: ["windows-11", "windows-10", "батарея", "powercfg", "ноутбук"]
 images: ["/og/pochemu-noutbuk-razryazhaetsya-vyklyuchennym.jpg"]
 draft: false
 ---

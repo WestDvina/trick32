@@ -3,7 +3,7 @@ title: "DNS_PROBE_FINISHED_NXDOMAIN в Edge: сайт не открываетс�
 date: "2026-10-06T21:40:00+03:00"
 description: "Edge показывает DNS_PROBE_FINISHED_NXDOMAIN, а интернет работает. Разбираю два разных случая: ошибка только в Edge — чинится Secure DNS в браузере, ошибка везде — правится системный DNS в Windows 11."
 categories: ["windows", "os"]
-tags: ["windows-11", "microsoft", "edge", "dns", "настройки"]
+tags: ["windows-11", "microsoft", "microsoft-edge", "dns", "настройки"]
 images: ["/og/dns-probe-finished-nxdomain-edge.jpg"]
 draft: false
 ---

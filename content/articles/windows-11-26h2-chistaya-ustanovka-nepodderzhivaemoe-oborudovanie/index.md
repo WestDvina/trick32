@@ -3,7 +3,7 @@ title: "Windows 11 26H2 на неподдерживаемом ПК: чистая
 date: "2026-08-08T22:00:00+03:00"
 description: "Как поставить Windows 11 26H2 на компьютер без TPM 2.0 и Secure Boot: качаем ISO через UUP Dump, создаём загрузочную флешку в Rufus и ставим систему в обход проверок оборудования."
 categories: ["os", "windows"]
-tags: ["windows-11", "windows-11-26h2", "rufus", "tpm"]
+tags: ["windows-11", "26h2", "rufus", "tpm"]
 draft: false
 images: ["/og/windows-11-26h2-chistaya-ustanovka-nepodderzhivaemoe-oborudovanie.jpg"]
 ---

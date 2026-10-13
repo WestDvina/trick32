@@ -3,7 +3,7 @@ title: "Сколько места занимает Windows 11 на диске и
 date: "2026-08-23T17:59:00+03:00"
 description: "Windows 11 требует диск от 64 ГБ, но этого мало для нормальной работы. Разбираю реальный размер системы, обновления, файл подкачки и гибернацию, какой SSD выбрать и что делать, когда место заканчивается"
 categories: ["windows"]
-tags: ["windows-11", "ssd", "optimizatsiya", "ustanovka"]
+tags: ["windows-11", "ssd", "оптимизация", "установка"]
 draft: false
 images: ["/og/skolko-mesta-zanyimaet-windows-11-realnye-cifry.jpg"]
 ---

@@ -3,7 +3,7 @@ title: "Ноутбук не выходит из сна: виноват не др
 date: "2026-10-10T12:00:00+03:00"
 description: "Ноутбук не выходит из спящего режима, а через час помогает только жёсткая перезагрузка? Разбираем переход Modern Standby (S0) в гибернацию (S4), проверку powercfg /a и /sleepstudy и развилку «драйвер или прошивка»."
 categories: ["windows", "os"]
-tags: ["windows-11", "windows-10", "noutbuk", "powercfg", "gibernaciya"]
+tags: ["windows-11", "windows-10", "ноутбук", "powercfg", "гибернация"]
 images: ["/og/noutbuk-ne-vyhodit-iz-sna.jpg"]
 draft: false
 ---

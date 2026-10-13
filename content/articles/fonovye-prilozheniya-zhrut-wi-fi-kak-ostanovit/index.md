@@ -3,7 +3,7 @@ title: "Windows тихо жрёт ваш Wi-Fi: как найти фоновые
 date: "2026-09-05"
 description: "Wi-Fi тормозит, хотя тариф нормальный? Разбираю, какие фоновые приложения Windows 11 качают трафик без спроса, от OneDrive до Delivery Optimization: и как за 10 минут вернуть скорость."
 categories: ["windows", "os"]
-tags: ["windows-11", "wi-fi", "trafik", "fоновые-приложения"]
+tags: ["windows-11", "wi-fi", "трафик", "фоновые-приложения"]
 draft: false
 images: ["/og/fonovye-prilozheniya-zhrut-wi-fi-kak-ostanovit.jpg"]
 ---

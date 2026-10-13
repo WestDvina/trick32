@@ -2,7 +2,7 @@
 title: "Intel снова достаёт процессоры 2022 года. Почему дорогая DDR5 вернула в продажу старые платформы"
 date: "2026-08-17T12:07:00+03:00"
 description: "Intel готовит третий рефреш Raptor Lake для LGA 1700, а AMD вернула Ryzen 7 5800X3D — всё из-за роста цен на DDR5. Разбираем, почему дорогая память воскресила старые платформы и что это значит для сборки ПК."
-categories: ["железо"]
+categories: ["hardware"]
 tags: ["ddr5", "ddr4", "intel", "процессоры", "память"]
 draft: false
 images: ["/og/intel-snova-dostaet-processory-2022-ddr5-starye-platformy.jpg"]

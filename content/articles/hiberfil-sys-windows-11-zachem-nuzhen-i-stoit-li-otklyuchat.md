@@ -3,7 +3,7 @@ title: "hiberfil.sys в Windows 11: зачем он нужен, сколько �
 date: "2026-09-06T12:00:00+03:00"
 description: "Что такое hiberfil.sys в Windows 11, почему он занимает десятки гигабайт, как влияет на SSD и когда стоит отключать гибернацию или оставлять быстрый запуск."
 categories: ["windows"]
-tags: ["windows-11", "gibernaciya", "ssd", "optimizatsiya"]
+tags: ["windows-11", "гибернация", "ssd", "оптимизация"]
 draft: false
 images: ["/og/hiberfil-sys-windows-11-zachem-nuzhen-i-stoit-li-otklyuchat.jpg"]
 ---

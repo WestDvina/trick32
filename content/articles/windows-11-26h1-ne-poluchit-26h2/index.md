@@ -3,7 +3,7 @@ title: "Новый ноутбук не получит Windows 11 26H2: как п
 date: "2026-09-25T07:00:00+03:00"
 description: "Некоторые новые ноутбуки с Windows 11 26H1 не перейдут на 26H2 осенью 2026 года. Разбираю разницу между ветками, сборки, сроки поддержки и что проверить перед покупкой."
 categories: ["windows", "hardware"]
-tags: ["windows-11", "26h1", "26h2", "snapdragon-x2", "обновления"]
+tags: ["windows-11", "26h1", "26h2", "snapdragon-x2", "обновление"]
 images: ["/og/windows-11-26h1-ne-poluchit-26h2.jpg"]
 draft: false
 ---
