@@ -66,20 +66,28 @@ BitLocker хранит ключ шифрования диска не в откр
 
 Сначала сохраните ключ в надёжном месте. Затем приостановите защиту, чтобы установка обновлений прошла без повторного запроса:
 
-`manage-bde -protectors -disable C:`
+```powershell
+manage-bde -protectors -disable C:
+```
 
 или в PowerShell:
 
-`Suspend-BitLocker -MountPoint "C:" -RebootCount 2`
+```powershell
+Suspend-BitLocker -MountPoint "C:" -RebootCount 2
+```
 
 После этого установите все накопительные обновления Windows, проверьте статус сертификатов в разделе Windows Security → Device security → Secure Boot (он должен быть зелёным), перезагрузитесь пару раз и возобновите защиту:
 
-`manage-bde -protectors -enable C:`
+```powershell
+manage-bde -protectors -enable C:
+```
 
 Проверить текущий профиль измерений и наличие сертификата 2023 года можно командами:
 
-`manage-bde -protectors -get C:`
-`(Get-SecureBootUEFI db).bytes`
+```powershell
+manage-bde -protectors -get C:
+(Get-SecureBootUEFI db).bytes
+```
 
 Первая покажет, к каким PCR привязан том, вторая — какие сертификаты лежат в базе db.
 
