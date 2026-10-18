@@ -230,5 +230,9 @@
   "pochemu-noutbuk-razryazhaetsya-vyklyuchennym": {
     "hook": "ВЫКЛЮЧЕННЫЙ НОУТБУК ЕСТ ЗАРЯД",
     "accent": ""
+  },
+  "fleshka-dlya-windows-11-ne-gruzitsya": {
+    "hook": "ФЛЕШКА НЕ ГРУЗИТСЯ",
+    "accent": "5 ПРИЧИН ДЛЯ WINDOWS 11 26H2"
   }
 }
