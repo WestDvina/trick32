@@ -718,6 +718,29 @@
   const TEXT_EXT_RE = /\.(txt|log|md)$/i;
   const ZIP_EXT_RE = /\.zip$/i;
   const ZIP_MAX = 15 * 1024 * 1024;
+  function uploadPost(url, fd) {
+    return fetch(url, {method:"POST", body: fd}).catch(function (e1) {
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.timeout = 90000;
+        xhr.onload = function () {
+          resolve({
+            ok: xhr.status >= 200 && xhr.status < 300,
+            status: xhr.status,
+            json: function () {
+              try { return Promise.resolve(JSON.parse(xhr.responseText || "{}")); }
+              catch (_) { return Promise.resolve({}); }
+            }
+          });
+        };
+        xhr.onerror = function () { reject(e1); };
+        xhr.ontimeout = function () { reject(e1); };
+        xhr.send(fd);
+      });
+    });
+  }
+
   async function uploadZipFile(file) {
     if (file.size > ZIP_MAX) return showUploadError("zip too big");
     const tmp = uploadTmp("📦 Отправка архива…");
@@ -727,7 +750,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", file, file.name || "windiag.zip");
-      const r = await fetch(`${API}/api/uploadzip`, {method:"POST", body: fd});
+      const r = await uploadPost(`${API}/api/bundle`, fd);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -739,15 +762,16 @@
       if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
       await r.json().catch(() => ({}));
       setTimeout(poll, 400);
-    } catch {
+    } catch (err) {
       tmp.remove();
-      showUploadError("no connection");
+      showUploadError("no connection", 0, err && (err.name || err.message));
     } finally { clipBtn.disabled = false; }
   }
   const isImageFile = f => /^image\//i.test(f.type || "") || /\.(png|jpe?g|webp)$/i.test(f.name || "");
-  function showUploadError(key, status) {
-    const txt = UPLOAD_ERR[key] ||
+  function showUploadError(key, status, detail) {
+    let txt = UPLOAD_ERR[key] ||
       (status ? "Не удалось отправить (код " + status + "). Попробуйте ещё раз." : "Не удалось отправить. Попробуйте позже.");
+    if (detail && key === "no connection") txt += " (" + String(detail).slice(0, 30) + ")";
     renderMessage({direction:"admin", text: txt});
     body.scrollTop = body.scrollHeight;
   }
@@ -770,7 +794,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", file, file.name || "diagnostics.txt");
-      const r = await fetch(`${API}/api/uploadtext`, {method:"POST", body: fd});
+      const r = await uploadPost(`${API}/api/uploadtext`, fd);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -782,9 +806,9 @@
       if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
       await r.json().catch(() => ({}));
       setTimeout(poll, 400);
-    } catch {
+    } catch (err) {
       tmp.remove();
-      showUploadError("no connection");
+      showUploadError("no connection", 0, err && (err.name || err.message));
     } finally { clipBtn.disabled = false; }
   }
   function downscale(file) {
@@ -843,7 +867,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", blob, "screenshot.jpg");
-      const r = await fetch(`${API}/api/upload`, {method:"POST", body: fd});
+      const r = await uploadPost(`${API}/api/upload`, fd);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -858,9 +882,9 @@
       }
       await r.json().catch(() => ({}));
       setTimeout(poll, 400);
-    } catch {
+    } catch (err) {
       tmp.remove();
-      showUploadError("no connection");
+      showUploadError("no connection", 0, err && (err.name || err.message));
     } finally { clipBtn.disabled = false; }
   }
   clipBtn.addEventListener("click", () => {
