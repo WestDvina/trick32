@@ -711,7 +711,8 @@
     "only zip": "Архив диагностики — только .zip",
     "not a zip": "Это не похоже на zip-архив.",
     "send failed": "Не удалось отправить. Попробуйте позже.",
-    "zip too big": "Архив больше 15 МБ. Пришлите архив, собранный сборщиком (обычно 1–5 МБ)."
+    "zip too big": "Архив больше 15 МБ. Пришлите архив, собранный сборщиком (обычно 1–5 МБ).",
+    "no connection": "Нет связи с сервером. Проверьте интернет и попробуйте ещё раз."
   };
   const TEXT_MAX = 256 * 1024;
   const TEXT_EXT_RE = /\.(txt|log|md)$/i;
@@ -735,18 +736,19 @@
         applyWorkState();
         return;
       }
-      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error); }
-      const j = await r.json();
-      if (j.id) lastId = Math.max(lastId, j.id);
-      setTimeout(poll, 500);
+      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
+      await r.json().catch(() => ({}));
+      setTimeout(poll, 400);
     } catch {
       tmp.remove();
-      showUploadError("send failed");
+      showUploadError("no connection");
     } finally { clipBtn.disabled = false; }
   }
   const isImageFile = f => /^image\//i.test(f.type || "") || /\.(png|jpe?g|webp)$/i.test(f.name || "");
-  function showUploadError(key) {
-    renderMessage({direction:"admin", text: UPLOAD_ERR[key] || "Не удалось отправить. Попробуйте позже."});
+  function showUploadError(key, status) {
+    const txt = UPLOAD_ERR[key] ||
+      (status ? "Не удалось отправить (код " + status + "). Попробуйте ещё раз." : "Не удалось отправить. Попробуйте позже.");
+    renderMessage({direction:"admin", text: txt});
     body.scrollTop = body.scrollHeight;
   }
   function uploadTmp(label) {
@@ -777,13 +779,12 @@
         applyWorkState();
         return;
       }
-      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error); }
-      const j = await r.json();
-      if (j.id) lastId = Math.max(lastId, j.id);
-      setTimeout(poll, 500);
+      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
+      await r.json().catch(() => ({}));
+      setTimeout(poll, 400);
     } catch {
       tmp.remove();
-      showUploadError("send failed");
+      showUploadError("no connection");
     } finally { clipBtn.disabled = false; }
   }
   function downscale(file) {
@@ -853,17 +854,13 @@
       }
       if (!r.ok) {
         const jj = await r.json().catch(() => ({}));
-        renderMessage({direction:"admin", text: UPLOAD_ERR[jj.error] || "Не удалось отправить. Попробуйте позже."});
-        body.scrollTop = body.scrollHeight;
-        return;
+        return showUploadError(jj.error, r.status);
       }
-      const j = await r.json();
-      if (j.id) lastId = Math.max(lastId, j.id);
-      setTimeout(poll, 500);
+      await r.json().catch(() => ({}));
+      setTimeout(poll, 400);
     } catch {
       tmp.remove();
-      renderMessage({direction:"admin", text: UPLOAD_ERR["send failed"]});
-      body.scrollTop = body.scrollHeight;
+      showUploadError("no connection");
     } finally { clipBtn.disabled = false; }
   }
   clipBtn.addEventListener("click", () => {
@@ -938,9 +935,8 @@
         return;
       }
       if (!r.ok) throw new Error();
-      const j = await r.json();
-      if (j.id) lastId = Math.max(lastId, j.id);
-      setTimeout(poll, 500);
+      await r.json().catch(() => ({}));
+      setTimeout(poll, 400);
     } catch {}
     finally { if (isWorkTime()) sendBtn.disabled = false; }
   });
