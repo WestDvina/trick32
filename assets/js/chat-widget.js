@@ -489,17 +489,17 @@
     const wrap = document.createDocumentFragment();
     const blocks = (ents || []).filter(e => e.type === "pre").sort((a, b) => a.offset - b.offset);
     const inline = (ents || []).filter(e => e.type !== "pre");
-    const safe = t => escapeBidi(t);
     let cursor = 0;
     blocks.forEach(b => {
+      const end = Math.min(b.offset + b.length, text.length);
       if (b.offset > cursor) {
-        wrap.appendChild(renderInline(safe(text.slice(cursor, b.offset)), inline, cursor, b.offset, isAdmin));
+        wrap.appendChild(renderInline(text, inline, cursor, b.offset, isAdmin));
       }
-      wrap.appendChild(makeCodeBlock(safe(text.slice(b.offset, b.offset + b.length)), b.language));
-      cursor = b.offset + b.length;
+      wrap.appendChild(makeCodeBlock(escapeBidi(text.slice(b.offset, end)), b.language));
+      cursor = end;
     });
     if (cursor < text.length) {
-      wrap.appendChild(renderInline(safe(text.slice(cursor)), inline, cursor, text.length, isAdmin));
+      wrap.appendChild(renderInline(text, inline, cursor, text.length, isAdmin));
     }
     return wrap;
   }
