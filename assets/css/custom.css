@@ -514,3 +514,39 @@ figure[data-lightbox] {
     right: -4px;
   }
 }
+/* Icon-only copy button for article code blocks (overrides congo theme text button) */
+.highlight-wrapper .copy-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0;
+  line-height: 0;
+  border-radius: 0 0 0 0.5rem;
+  visibility: visible;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.highlight-wrapper .copy-button svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  display: block;
+}
+.highlight-wrapper .copy-button:hover,
+.highlight-wrapper .copy-button:focus-visible,
+.highlight-wrapper .copy-button.is-copied {
+  opacity: 1;
+}
+.highlight-wrapper .copy-button.is-copied {
+  color: #04150d;
+  background-color: #00c871;
+}
+.highlight-wrapper:hover .copy-button {
+  opacity: 0.9;
+}
+@media (hover: none) {
+  .highlight-wrapper .copy-button {
+    opacity: 0.8;
+  }
+}
