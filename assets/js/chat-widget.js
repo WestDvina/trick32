@@ -781,29 +781,40 @@
     });
   }
 
-  function fileReadable(file) {
-    return new Promise(function (resolve) {
+  function readFileBuffer(file, ms) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
       var done = false;
-      var t = setTimeout(function () { if (!done) { done = true; resolve(false); } }, 6000);
-      try {
-        file.slice(0, 1).arrayBuffer().then(function () {
-          if (!done) { done = true; clearTimeout(t); resolve(true); }
-        }, function () {
-          if (!done) { done = true; clearTimeout(t); resolve(false); }
-        });
-      } catch (_) {
-        if (!done) { done = true; clearTimeout(t); resolve(false); }
-      }
+      var t = setTimeout(function () {
+        if (done) return;
+        done = true;
+        try { fr.abort(); } catch (_) {}
+        reject(new Error("read timeout"));
+      }, ms || 30000);
+      fr.onload = function () { if (done) return; done = true; clearTimeout(t); resolve(fr.result); };
+      fr.onerror = function () { if (done) return; done = true; clearTimeout(t); reject(fr.error || new Error("read error")); };
+      fr.onabort = function () { if (done) return; done = true; clearTimeout(t); reject(new Error("read abort")); };
+      fr.readAsArrayBuffer(file);
     });
+  }
+  function bytesToBase64(u8) {
+    var s = "", CH = 0x8000;
+    for (var i = 0; i < u8.length; i += CH) {
+      s += String.fromCharCode.apply(null, u8.subarray(i, i + CH));
+    }
+    return btoa(s);
   }
 
   async function uploadZipFile(file) {
     probe("start", file.size, file.name);
     if (file.size > ZIP_MAX) { probe("too-big", file.size); return showUploadError("zip too big"); }
-    const okRead = await fileReadable(file);
-    probe("readable", file.size, okRead ? "yes" : "no");
-    if (!okRead) {
-      renderMessage({direction:"admin", text: "Файл не читается браузером. Скорее всего, архив лежит в папке OneDrive и ещё не скачан на диск. Переместите его в локальную папку (например, C:\\Temp) и отправьте оттуда."});
+    let buf;
+    try {
+      buf = await readFileBuffer(file, 30000);
+      probe("read-ok", buf.byteLength);
+    } catch (e) {
+      probe("read-fail", file.size, (e && e.message) || "unknown");
+      renderMessage({direction:"admin", text: "Файл не читается браузером. Скорее всего, архив лежит в облачной папке (OneDrive) и ещё не скачан на диск. Переместите его в локальную папку (например, C:\\Temp) и отправьте оттуда."});
       body.scrollTop = body.scrollHeight;
       return;
     }
@@ -813,23 +824,15 @@
       const fd = new FormData();
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
-      fd.append("file", file, file.name || "windiag.zip");
+      fd.append("file", new Blob([buf], {type: "application/zip"}), file.name || "windiag.zip");
       let r;
       try {
         r = await uploadPost(`${API}/api/bundle`, fd, file.size);
       } catch (e) {
         probe("b64-fallback", file.size, (e && e.name) || "unknown");
         if (file.size > 6 * 1024 * 1024) throw e;
-        const b64 = await new Promise(function (res, rej) {
-          const fr = new FileReader();
-          fr.onload = function () {
-            const s = String(fr.result || "");
-            const i = s.indexOf(",");
-            res(i >= 0 ? s.slice(i + 1) : s);
-          };
-          fr.onerror = function () { rej(e); };
-          fr.readAsDataURL(file);
-        });
+        probe("b64-encode", buf.byteLength);
+        const b64 = bytesToBase64(new Uint8Array(buf));
         r = await fetch(`${API}/api/bundle64`, {
           method: "POST",
           headers: {"Content-Type": "application/json"},
