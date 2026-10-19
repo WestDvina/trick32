@@ -53,7 +53,21 @@
 .chat-close{width:32px;height:32px;border:0;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1;cursor:pointer;color:#064e3b;box-shadow:0 1px 6px rgba(0,0,0,.1);flex-shrink:0}
 .chat-close:hover{background:#e5e7eb}
 .chat-body{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fff;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-.chat-msg{max-width:78%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;word-break:break-word}
+.chat-msg{max-width:78%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;word-break:break-word;white-space:pre-wrap;overflow-wrap:anywhere}
+.chat-msg.has-code{max-width:100%;width:100%}
+.chat-code{position:relative;margin:3px 0;max-width:100%}
+.chat-code pre{margin:0;padding:22px 10px 10px;background:#141413;color:#e8e8e6;border:1px solid #262626;border-radius:10px;overflow-x:auto;overflow-y:auto;max-height:60vh;-webkit-overflow-scrolling:touch}
+.chat-code pre code{display:block;background:transparent;border:0;padding:0;color:inherit;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;tab-size:2}
+.chat-copy{position:absolute;top:5px;right:5px;z-index:2;border:0;border-radius:6px;padding:3px 8px;font:600 10px system-ui,sans-serif;background:rgba(255,255,255,.16);color:#e8e8e6;cursor:pointer;transition:background .15s,color .15s}
+.chat-copy:hover{background:#00c871;color:#04150d}
+.chat-copy.done{background:#00c871;color:#04150d}
+.chat-inline{background:rgba(0,200,113,.14);border:1px solid rgba(0,200,113,.32);border-radius:5px;padding:0 4px;font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;cursor:copy}
+.chat-msg.user .chat-inline{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.38)}
+.chat-msg .spoiler{background:#94a3b8;color:transparent;border-radius:4px;cursor:pointer;padding:0 2px}
+.chat-msg .spoiler.open{background:transparent;color:inherit}
+.chat-msg blockquote{margin:3px 0;padding:1px 0 1px 8px;border-left:3px solid #00c871;opacity:.92}
+.chat-msg a.chat-ext{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.chat-msg u{text-decoration:underline}
 .chat-msg.user{align-self:flex-end;background:#00c871;color:#fff;border-bottom-right-radius:4px}
 .chat-msg.admin{align-self:flex-start;background:#e8fff4;color:#064e3b;border:1px solid #aaf2d7;border-bottom-left-radius:4px}
 .chat-msg.sys-ban{align-self:stretch;max-width:100%;background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;text-align:center;font-weight:600}
@@ -171,8 +185,8 @@
       <small style="color:#64748b">От 500 ₽ · нет денег — договоримся. Оставьте заявку — отвечу здесь.</small></div>
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
-    <div class="chat-drop-veil">Отпустите, чтобы отправить скриншот</div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот" title="Прикрепить скриншот"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="2000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <div class="chat-drop-veil">Отпустите, чтобы отправить файл</div>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот или файл" title="Прикрепить скриншот или файл"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp,.txt,.log,.md" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="4000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
     <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Установка чатов на сайт → Telegram</a></div>
   `;
   document.body.appendChild(panel);
@@ -239,6 +253,7 @@
         {id:"activation", label:"Активация", reply:"Принято — активация Windows 10/11 безопасными способами. Какая система и сборка? Код ошибки активации? Есть ли ключ?"},
         {id:"errors", label:"Ошибки", reply:"Понял — ошибки Windows. Опишите: что случилось, код ошибки, когда началось? Скрин поможет."},
         {id:"install", label:"Установка", reply:"Принято — установка Windows. Какая версия нужна (10/11)? Сохранить файлы или чистая установка?"},
+        {id:"diag-audio", label:"🔊 Диагностика звука", action:"script:audio", reply:"Принято — сейчас вышлю скрипт диагностики звука. Запустите его в PowerShell от имени администратора и пришлите файл audio-diag.txt."},
         {id:"other", label:"Другое", reply:"Опишите задачу по Windows своими словами — что нужно сделать?"}
       ]}
     ]
@@ -261,11 +276,11 @@
   function showSub(service) {
     const subs = service.sub.map(s => ({
       label:s.label,
-      onClick:()=>choose(service.label, s.label, s.reply)
+      onClick:()=>choose(service.label, s.label, s.reply, s.action)
     }));
     renderQuick(subs);
   }
-  function choose(serviceLabel, subLabel, reply) {
+  function choose(serviceLabel, subLabel, reply, action) {
     const text = `Услуга: ${serviceLabel} → ${subLabel}`;
     // send as user message (bypass topic gate)
     window.__chatSkipFlow = true;
@@ -276,6 +291,21 @@
       renderMessage({direction:"admin", text:reply});
       body.scrollTop = body.scrollHeight;
     }, 400);
+    if (action && action.indexOf("script:") === 0) {
+      const key = action.slice(7);
+      setTimeout(async () => {
+        try {
+          const r = await fetch(`${API}/api/script`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({sid, name: getName() || "Гость", key})
+          });
+          if (r.ok) { setTimeout(poll, 600); return; }
+          const jj = await r.json().catch(() => ({}));
+          if (jj.error === "offline") applyWorkState();
+        } catch {}
+      }, 900);
+    }
     renderQuick([]);
     flowDone = true;
     localStorage.setItem("chat_flow_done","1");
@@ -335,6 +365,144 @@
     if (frag.childNodes.length === 0) frag.appendChild(document.createTextNode(text));
     return frag;
   }
+  function escapeBidi(t) {
+    return (t || "").replace(/[\u202a-\u202e\u2066-\u2069\u200e\u200f\ufeff]/g, "");
+  }
+  function copyText(text, btn, hint) {
+    const done = () => {
+      if (btn) {
+        const prev = btn.textContent;
+        btn.textContent = "Скопировано";
+        btn.classList.add("done");
+        setTimeout(() => { btn.textContent = prev; btn.classList.remove("done"); }, 1400);
+      }
+      if (hint) {
+        hint.classList.add("is-visible");
+        setTimeout(() => hint.classList.remove("is-visible"), 1400);
+      }
+    };
+    const fallback = () => {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch {}
+      ta.remove();
+      done();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else fallback();
+  }
+  function makeCodeBlock(code, lang) {
+    const wrap = document.createElement("div");
+    wrap.className = "chat-code";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chat-copy";
+    btn.textContent = "Копировать";
+    const pre = document.createElement("pre");
+    const cd = document.createElement("code");
+    if (lang) cd.setAttribute("data-lang", lang);
+    cd.textContent = code;
+    pre.appendChild(cd);
+    wrap.appendChild(btn);
+    wrap.appendChild(pre);
+    const doCopy = () => copyText(code, btn);
+    btn.addEventListener("click", e => { e.stopPropagation(); doCopy(); });
+    wrap.addEventListener("click", e => { if (!e.target.closest(".chat-copy") && !e.target.closest("a")) doCopy(); });
+    return wrap;
+  }
+  const INLINE_WRAP = {
+    bold: "b", italic: "i", underline: "u", strikethrough: "s",
+    blockquote: "blockquote", expandable_blockquote: "blockquote"
+  };
+  function textRun(str, isAdmin) {
+    return isAdmin ? adminKeywordFragment(str) : linkifyFragment(str);
+  }
+  function makeWrap(e) {
+    const t = e.type;
+    if (INLINE_WRAP[t]) return document.createElement(INLINE_WRAP[t]);
+    if (t === "text_link") {
+      const a = document.createElement("a");
+      a.href = e.url || "#";
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.className = "chat-ext";
+      return a;
+    }
+    if (t === "code") {
+      const c = document.createElement("code");
+      c.className = "chat-inline";
+      c.title = "Нажмите, чтобы скопировать";
+      c.addEventListener("click", ev => { ev.stopPropagation(); copyText(c.textContent, null); });
+      return c;
+    }
+    if (t === "spoiler") {
+      const s = document.createElement("span");
+      s.className = "spoiler";
+      s.title = "Нажмите, чтобы показать";
+      s.addEventListener("click", () => s.classList.toggle("open"));
+      return s;
+    }
+    return document.createElement("span");
+  }
+  function renderInline(text, ents, from, to, isAdmin) {
+    const list = (ents || []).filter(e => {
+      const a = e.offset, b = e.offset + e.length;
+      return a >= from && b <= to && b > a;
+    }).sort((a, b) => (a.offset - b.offset) || (b.length - a.length));
+    const root = { start: from, end: to, children: [] };
+    const stack = [root];
+    list.forEach(e => {
+      const end = e.offset + e.length;
+      while (stack.length > 1 && e.offset >= stack[stack.length - 1].end) stack.pop();
+      const parent = stack[stack.length - 1];
+      if (e.offset >= parent.start && end <= parent.end) {
+        const node = { e, start: e.offset, end, children: [] };
+        parent.children.push(node);
+        stack.push(node);
+      }
+    });
+    function emit(node) {
+      const out = document.createDocumentFragment();
+      let cur = node.start;
+      node.children.forEach(ch => {
+        if (ch.start > cur) out.appendChild(textRun(text.slice(cur, ch.start), isAdmin));
+        const el = makeWrap(ch.e);
+        const inner = emit(ch);
+        if (ch.e.type === "code" || ch.e.type === "spoiler") el.appendChild(inner);
+        else { el.appendChild(inner); }
+        out.appendChild(el);
+        cur = ch.end;
+      });
+      if (cur < node.end) out.appendChild(textRun(text.slice(cur, node.end), isAdmin));
+      return out;
+    }
+    return emit(root);
+  }
+  function renderContent(text, ents, isAdmin) {
+    const wrap = document.createDocumentFragment();
+    const blocks = (ents || []).filter(e => e.type === "pre").sort((a, b) => a.offset - b.offset);
+    const inline = (ents || []).filter(e => e.type !== "pre");
+    const safe = t => escapeBidi(t);
+    let cursor = 0;
+    blocks.forEach(b => {
+      if (b.offset > cursor) {
+        wrap.appendChild(renderInline(safe(text.slice(cursor, b.offset)), inline, cursor, b.offset, isAdmin));
+      }
+      wrap.appendChild(makeCodeBlock(safe(text.slice(b.offset, b.offset + b.length)), b.language));
+      cursor = b.offset + b.length;
+    });
+    if (cursor < text.length) {
+      wrap.appendChild(renderInline(safe(text.slice(cursor)), inline, cursor, text.length, isAdmin));
+    }
+    return wrap;
+  }
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
@@ -346,12 +514,14 @@
     }
     div.className = "chat-msg " + kind;
     const isAdmin = m.direction === "admin";
-    const lines = m.text.split("\n");
-    lines.forEach((line, idx) => {
-      if (idx > 0) div.appendChild(document.createElement("br"));
-      const frag = isAdmin ? adminKeywordFragment(line) : linkifyFragment(line);
-      div.appendChild(frag);
-    });
+    const ents = Array.isArray(m.entities) ? m.entities : null;
+    if (ents && ents.length) {
+      div.classList.add("formatted");
+      div.appendChild(renderContent(m.text, ents, isAdmin));
+      if (div.querySelector(".chat-code")) div.classList.add("has-code");
+    } else {
+      div.appendChild(isAdmin ? adminKeywordFragment(m.text) : linkifyFragment(m.text));
+    }
     body.appendChild(div);
   }
 
@@ -506,10 +676,58 @@
     "bad image": "Не получилось прочитать картинку.",
     "offline": "Чат работает с 8:00 до 22:00 по МСК. Сейчас нерабочее время.",
     "banned": BANNED_TEXT,
-    "one photo per minute": "Одно фото в минуту, подождите немного.",
+    "one photo per minute": "Один файл в минуту, подождите немного.",
+    "one file per minute": "Один файл в минуту, подождите немного.",
     "ip rate limit": "Слишком часто. Подождите минуту.",
+    "only txt/log/md": "Из файлов принимаю: .txt, .log, .md",
+    "not a text file": "Это не похоже на текстовый файл.",
+    "empty file": "Файл пустой.",
     "send failed": "Не удалось отправить. Попробуйте позже."
   };
+  const TEXT_MAX = 256 * 1024;
+  const TEXT_EXT_RE = /\.(txt|log|md)$/i;
+  const isImageFile = f => /^image\//i.test(f.type || "") || /\.(png|jpe?g|webp)$/i.test(f.name || "");
+  function showUploadError(key) {
+    renderMessage({direction:"admin", text: UPLOAD_ERR[key] || "Не удалось отправить. Попробуйте позже."});
+    body.scrollTop = body.scrollHeight;
+  }
+  function uploadTmp(label) {
+    const el = document.createElement("div");
+    el.className = "chat-msg user chat-uploading";
+    el.textContent = label;
+    const empty = body.querySelector(".chat-empty");
+    if (empty) empty.remove();
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  async function uploadTextFile(file) {
+    if (file.size > TEXT_MAX) return showUploadError("too big");
+    const tmp = uploadTmp("📄 Отправка файла…");
+    clipBtn.disabled = true;
+    try {
+      const fd = new FormData();
+      fd.append("sid", sid);
+      fd.append("name", getName() || "Гость");
+      fd.append("file", file, file.name || "diagnostics.txt");
+      const r = await fetch(`${API}/api/uploadtext`, {method:"POST", body: fd});
+      tmp.remove();
+      if (r.status === 403) {
+        const jj = await r.json().catch(() => ({}));
+        renderMessage({direction:"admin", text: jj.error === "offline" ? UPLOAD_ERR.offline : BANNED_TEXT});
+        body.scrollTop = body.scrollHeight;
+        applyWorkState();
+        return;
+      }
+      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error); }
+      const j = await r.json();
+      if (j.id) lastId = Math.max(lastId, j.id);
+      setTimeout(poll, 500);
+    } catch {
+      tmp.remove();
+      showUploadError("send failed");
+    } finally { clipBtn.disabled = false; }
+  }
   function downscale(file) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -542,22 +760,15 @@
       body.scrollTop = body.scrollHeight;
       return;
     }
-    if (!/^image\/(png|jpe?g|webp)$/i.test(file.type || "")) {
-      renderMessage({direction:"admin", text: UPLOAD_ERR["only png/jpeg/webp"]});
-      body.scrollTop = body.scrollHeight;
-      return;
+    if (!isImageFile(file)) {
+      if (TEXT_EXT_RE.test(file.name || "")) return uploadTextFile(file);
+      return showUploadError("only png/jpeg/webp");
     }
-    if (file.size > UPLOAD_MAX) {
-      renderMessage({direction:"admin", text: UPLOAD_ERR["too big"]});
-      body.scrollTop = body.scrollHeight;
-      return;
-    }
+    if (file.size > UPLOAD_MAX) return showUploadError("too big");
     let blob;
     try { blob = await downscale(file); }
     catch {
-      renderMessage({direction:"admin", text: UPLOAD_ERR["bad image"]});
-      body.scrollTop = body.scrollHeight;
-      return;
+      return showUploadError("bad image");
     }
     const tmp = document.createElement("div");
     tmp.className = "chat-msg user chat-uploading";
