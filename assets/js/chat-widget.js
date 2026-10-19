@@ -738,25 +738,45 @@
     } catch (_) {}
   }
 
-  function uploadPost(url, fd) {
-    return fetch(url, {method:"POST", body: fd}).catch(function (e1) {
-      return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.timeout = 90000;
-        xhr.onload = function () {
-          resolve({
-            ok: xhr.status >= 200 && xhr.status < 300,
-            status: xhr.status,
-            json: function () {
-              try { return Promise.resolve(JSON.parse(xhr.responseText || "{}")); }
-              catch (_) { return Promise.resolve({}); }
-            }
-          });
-        };
-        xhr.onerror = function () { reject(e1); };
-        xhr.ontimeout = function () { reject(e1); };
-        xhr.send(fd);
+  function xhrPost(url, fd, lastErr) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.timeout = 90000;
+      xhr.onload = function () {
+        resolve({
+          ok: xhr.status >= 200 && xhr.status < 300,
+          status: xhr.status,
+          json: function () {
+            try { return Promise.resolve(JSON.parse(xhr.responseText || "{}")); }
+            catch (_) { return Promise.resolve({}); }
+          }
+        });
+      };
+      xhr.onerror = function () { reject(lastErr || new Error("xhr")); };
+      xhr.ontimeout = function () { reject(lastErr || new Error("xhr timeout")); };
+      xhr.send(fd);
+    });
+  }
+
+  function uploadPost(url, fd, size) {
+    var ctrl = null, timer = null;
+    var opts = {method:"POST", body: fd};
+    try {
+      ctrl = new AbortController();
+      timer = setTimeout(function () { try { ctrl.abort(); } catch (_) {} }, 20000);
+      opts.signal = ctrl.signal;
+    } catch (_) { ctrl = null; }
+    probe("posting", size);
+    return fetch(url, opts).then(function (r) {
+      if (timer) clearTimeout(timer);
+      return r;
+    }, function (e1) {
+      if (timer) clearTimeout(timer);
+      probe("fetch-failed", size, (e1 && (e1.name || e1.message)) || "unknown");
+      return xhrPost(url, fd, e1).then(function (r) {
+        probe("xhr-ok", size);
+        return r;
       });
     });
   }
@@ -771,7 +791,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", file, file.name || "windiag.zip");
-      const r = await uploadPost(`${API}/api/bundle`, fd);
+      const r = await uploadPost(`${API}/api/bundle`, fd, file.size);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -817,7 +837,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", file, file.name || "diagnostics.txt");
-      const r = await uploadPost(`${API}/api/uploadtext`, fd);
+      const r = await uploadPost(`${API}/api/uploadtext`, fd, file.size);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -890,7 +910,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", blob, "screenshot.jpg");
-      const r = await uploadPost(`${API}/api/upload`, fd);
+      const r = await uploadPost(`${API}/api/upload`, fd, file.size);
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
