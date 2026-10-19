@@ -718,6 +718,13 @@
   const TEXT_EXT_RE = /\.(txt|log|md)$/i;
   const ZIP_EXT_RE = /\.zip$/i;
   const ZIP_MAX = 15 * 1024 * 1024;
+  function probe(stage, size, err) {
+    try {
+      const q = `stage=${encodeURIComponent(stage)}&size=${size || 0}` + (err ? `&err=${encodeURIComponent(err)}` : "");
+      fetch(`${API}/api/probe?${q}`, {method:"POST", keepalive:true}).catch(() => {});
+    } catch (_) {}
+  }
+
   function uploadPost(url, fd) {
     return fetch(url, {method:"POST", body: fd}).catch(function (e1) {
       return new Promise(function (resolve, reject) {
@@ -742,7 +749,8 @@
   }
 
   async function uploadZipFile(file) {
-    if (file.size > ZIP_MAX) return showUploadError("zip too big");
+    probe("start", file.size);
+    if (file.size > ZIP_MAX) { probe("too-big", file.size); return showUploadError("zip too big"); }
     const tmp = uploadTmp("📦 Отправка архива…");
     clipBtn.disabled = true;
     try {
@@ -761,9 +769,11 @@
       }
       if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
       await r.json().catch(() => ({}));
+      probe("ok", file.size);
       setTimeout(poll, 400);
     } catch (err) {
       tmp.remove();
+      probe("fail", file.size, (err && (err.name || err.message)) || "unknown");
       showUploadError("no connection", 0, err && (err.name || err.message));
     } finally { clipBtn.disabled = false; }
   }
