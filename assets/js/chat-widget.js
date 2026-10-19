@@ -791,7 +791,29 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", file, file.name || "windiag.zip");
-      const r = await uploadPost(`${API}/api/bundle`, fd, file.size);
+      let r;
+      try {
+        r = await uploadPost(`${API}/api/bundle`, fd, file.size);
+      } catch (e) {
+        probe("b64-fallback", file.size, (e && e.name) || "unknown");
+        if (file.size > 6 * 1024 * 1024) throw e;
+        const b64 = await new Promise(function (res, rej) {
+          const fr = new FileReader();
+          fr.onload = function () {
+            const s = String(fr.result || "");
+            const i = s.indexOf(",");
+            res(i >= 0 ? s.slice(i + 1) : s);
+          };
+          fr.onerror = function () { rej(e); };
+          fr.readAsDataURL(file);
+        });
+        r = await fetch(`${API}/api/bundle64`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({sid: sid, name: getName() || "Гость", data: b64})
+        });
+        probe("b64-sent", file.size, String(r.status));
+      }
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
