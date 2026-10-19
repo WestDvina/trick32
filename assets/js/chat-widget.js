@@ -186,7 +186,7 @@
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
     <div class="chat-drop-veil">Отпустите, чтобы отправить файл</div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот или файл" title="Прикрепить скриншот или архив диагностики"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp,.txt,.log,.md,.zip" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="4000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот" title="Прикрепить скриншот"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="4000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
     <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Установка чатов на сайт → Telegram</a></div>
   `;
   document.body.appendChild(panel);
@@ -206,19 +206,6 @@
     const h = (new Date().getUTCHours() + 3) % 24;
     return h >= WORK_FROM && h < WORK_TO;
   }
-  let serverOpen = null;   // null = unknown -> fall back to local clock
-  function chatOpen() {
-    return serverOpen === null ? isWorkTime() : serverOpen;
-  }
-  async function refreshHours() {
-    try {
-      const r = await fetch(`${API}/api/hours`, {cache: "no-store"});
-      if (r.ok) {
-        const j = await r.json();
-        serverOpen = !!j.open;
-      }
-    } catch (_) {}
-  }
   function autogrow() {
     if (CSS && CSS.supports && CSS.supports("field-sizing", "content")) return;
     input.style.height = "auto";
@@ -226,7 +213,7 @@
   }
   let workState = null;
   function applyWorkState() {
-    const on = chatOpen();
+    const on = isWorkTime();
     const changed = workState !== on;
     workState = on;
     fab.classList.toggle("offline", !on);
@@ -266,7 +253,6 @@
         {id:"activation", label:"Активация", reply:"Принято — активация Windows 10/11 безопасными способами. Какая система и сборка? Код ошибки активации? Есть ли ключ?"},
         {id:"errors", label:"Ошибки", reply:"Понял — ошибки Windows. Опишите: что случилось, код ошибки, когда началось? Скрин поможет."},
         {id:"install", label:"Установка", reply:"Принято — установка Windows. Какая версия нужна (10/11)? Сохранить файлы или чистая установка?"},
-        {id:"diag-pc", label:"🧪 Диагностика ПК", action:"script:pc", reply:"Принято — сейчас пришлю команду сборщика. Соберёт журналы в архив на рабочем столе, пришлите этот zip сюда."},
         {id:"other", label:"Другое", reply:"Опишите задачу по Windows своими словами — что нужно сделать?"}
       ]}
     ]
@@ -289,11 +275,11 @@
   function showSub(service) {
     const subs = service.sub.map(s => ({
       label:s.label,
-      onClick:()=>choose(service.label, s.label, s.reply, s.action)
+      onClick:()=>choose(service.label, s.label, s.reply)
     }));
     renderQuick(subs);
   }
-  function choose(serviceLabel, subLabel, reply, action) {
+  function choose(serviceLabel, subLabel, reply) {
     const text = `Услуга: ${serviceLabel} → ${subLabel}`;
     // send as user message (bypass topic gate)
     window.__chatSkipFlow = true;
@@ -304,21 +290,6 @@
       renderMessage({direction:"admin", text:reply});
       body.scrollTop = body.scrollHeight;
     }, 400);
-    if (action && action.indexOf("script:") === 0) {
-      const key = action.slice(7);
-      setTimeout(async () => {
-        try {
-          const r = await fetch(`${API}/api/script`, {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({sid, name: getName() || "Гость", key})
-          });
-          if (r.ok) { setTimeout(poll, 600); return; }
-          const jj = await r.json().catch(() => ({}));
-          if (jj.error === "offline") applyWorkState();
-        } catch {}
-      }, 900);
-    }
     renderQuick([]);
     flowDone = true;
     localStorage.setItem("chat_flow_done","1");
@@ -516,30 +487,6 @@
     }
     return wrap;
   }
-  function fenceBlocks(text) {
-    if (!text || text.indexOf("```") === -1) return null;
-    const parts = text.split("```");
-    if (parts.length < 3 || parts.length % 2 === 0) return null;
-    let out = "";
-    const ents = [];
-    for (let i = 0; i < parts.length; i++) {
-      if (i % 2 === 0) { out += parts[i]; continue; }
-      let body = parts[i];
-      let lang = "";
-      const nl = body.indexOf("\n");
-      if (nl !== -1) {
-        const first = body.slice(0, nl).trim();
-        if (first && !/\s/.test(first) && first.length <= 20) { lang = first; body = body.slice(nl + 1); }
-      }
-      const block = body.replace(/^\n+/, "").replace(/\n+$/, "");
-      const offset = out.length;
-      out += block;
-      const e = { type: "pre", offset, length: block.length };
-      if (lang) e.language = lang;
-      ents.push(e);
-    }
-    return ents.length ? { text: out, entities: ents } : null;
-  }
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
@@ -555,12 +502,10 @@
     if (ents && ents.length) {
       div.classList.add("formatted");
       div.appendChild(renderContent(m.text, ents, isAdmin));
+      if (div.querySelector(".chat-code")) div.classList.add("has-code");
     } else {
-      const conv = fenceBlocks(m.text);
-      if (conv) div.appendChild(renderContent(conv.text, conv.entities, isAdmin));
-      else div.appendChild(isAdmin ? adminKeywordFragment(m.text) : linkifyFragment(m.text));
+      div.appendChild(isAdmin ? adminKeywordFragment(m.text) : linkifyFragment(m.text));
     }
-    if (div.querySelector(".chat-code")) div.classList.add("has-code");
     body.appendChild(div);
   }
 
@@ -718,157 +663,11 @@
     "one photo per minute": "Один файл в минуту, подождите немного.",
     "one file per minute": "Один файл в минуту, подождите немного.",
     "ip rate limit": "Слишком часто. Подождите минуту.",
-    "only txt/log/md": "Из файлов принимаю: .txt, .log, .md",
-    "not a text file": "Это не похоже на текстовый файл.",
-    "empty file": "Файл пустой.",
-    "only zip": "Архив диагностики — только .zip",
-    "not a zip": "Это не похоже на zip-архив.",
-    "send failed": "Не удалось отправить. Попробуйте позже.",
-    "zip too big": "Архив больше 15 МБ. Пришлите архив, собранный сборщиком (обычно 1–5 МБ).",
-    "no connection": "Нет связи с сервером. Проверьте интернет и попробуйте ещё раз."
+    "send failed": "Не удалось отправить. Попробуйте позже."
   };
-  const TEXT_MAX = 256 * 1024;
-  const TEXT_EXT_RE = /\.(txt|log|md)$/i;
-  const ZIP_EXT_RE = /\.zip$/i;
-  const ZIP_MAX = 15 * 1024 * 1024;
-  function probe(stage, size, err) {
-    try {
-      const q = `stage=${encodeURIComponent(stage)}&size=${size || 0}` + (err ? `&err=${encodeURIComponent(err)}` : "");
-      fetch(`${API}/api/probe?${q}`, {method:"POST", keepalive:true}).catch(() => {});
-    } catch (_) {}
-  }
-
-  function xhrPost(url, fd, lastErr) {
-    return new Promise(function (resolve, reject) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", url, true);
-      xhr.timeout = 90000;
-      xhr.onload = function () {
-        resolve({
-          ok: xhr.status >= 200 && xhr.status < 300,
-          status: xhr.status,
-          json: function () {
-            try { return Promise.resolve(JSON.parse(xhr.responseText || "{}")); }
-            catch (_) { return Promise.resolve({}); }
-          }
-        });
-      };
-      xhr.onerror = function () { reject(lastErr || new Error("xhr")); };
-      xhr.ontimeout = function () { reject(lastErr || new Error("xhr timeout")); };
-      xhr.send(fd);
-    });
-  }
-
-  function uploadPost(url, fd, size) {
-    var ctrl = null, timer = null;
-    var opts = {method:"POST", body: fd};
-    try {
-      ctrl = new AbortController();
-      timer = setTimeout(function () { try { ctrl.abort(); } catch (_) {} }, 60000);
-      opts.signal = ctrl.signal;
-    } catch (_) { ctrl = null; }
-    probe("posting", size);
-    var waited = 0;
-    var hb = setInterval(function () { waited += 10; probe("waiting", size, String(waited)); }, 10000);
-    function stopHb() { if (hb) { clearInterval(hb); hb = null; } }
-    return fetch(url, opts).then(function (r) {
-      if (timer) clearTimeout(timer);
-      stopHb();
-      return r;
-    }, function (e1) {
-      if (timer) clearTimeout(timer);
-      stopHb();
-      probe("fetch-failed", size, (e1 && (e1.name || e1.message)) || "unknown");
-      return xhrPost(url, fd, e1).then(function (r) {
-        probe("xhr-ok", size);
-        return r;
-      });
-    });
-  }
-
-  function readFileBuffer(file, ms) {
-    return new Promise(function (resolve, reject) {
-      var fr = new FileReader();
-      var done = false;
-      var t = setTimeout(function () {
-        if (done) return;
-        done = true;
-        try { fr.abort(); } catch (_) {}
-        reject(new Error("read timeout"));
-      }, ms || 30000);
-      fr.onload = function () { if (done) return; done = true; clearTimeout(t); resolve(fr.result); };
-      fr.onerror = function () { if (done) return; done = true; clearTimeout(t); reject(fr.error || new Error("read error")); };
-      fr.onabort = function () { if (done) return; done = true; clearTimeout(t); reject(new Error("read abort")); };
-      fr.readAsArrayBuffer(file);
-    });
-  }
-  function bytesToBase64(u8) {
-    var s = "", CH = 0x8000;
-    for (var i = 0; i < u8.length; i += CH) {
-      s += String.fromCharCode.apply(null, u8.subarray(i, i + CH));
-    }
-    return btoa(s);
-  }
-
-  async function uploadZipFile(file) {
-    probe("start", file.size, file.name);
-    if (file.size > ZIP_MAX) { probe("too-big", file.size); return showUploadError("zip too big"); }
-    let buf;
-    try {
-      buf = await readFileBuffer(file, 30000);
-      probe("read-ok", buf.byteLength);
-    } catch (e) {
-      probe("read-fail", file.size, (e && e.message) || "unknown");
-      renderMessage({direction:"admin", text: "Файл не читается браузером. Скорее всего, архив лежит в облачной папке (OneDrive) и ещё не скачан на диск. Переместите его в локальную папку (например, C:\\Temp) и отправьте оттуда."});
-      body.scrollTop = body.scrollHeight;
-      return;
-    }
-    const tmp = uploadTmp("📦 Отправка архива…");
-    clipBtn.disabled = true;
-    try {
-      const fd = new FormData();
-      fd.append("sid", sid);
-      fd.append("name", getName() || "Гость");
-      fd.append("file", new Blob([buf], {type: "application/zip"}), file.name || "windiag.zip");
-      let r;
-      try {
-        r = await uploadPost(`${API}/api/bundle`, fd, file.size);
-      } catch (e) {
-        probe("b64-fallback", file.size, (e && e.name) || "unknown");
-        if (file.size > 6 * 1024 * 1024) throw e;
-        probe("b64-encode", buf.byteLength);
-        const b64 = bytesToBase64(new Uint8Array(buf));
-        r = await fetch(`${API}/api/bundle64`, {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({sid: sid, name: getName() || "Гость", data: b64})
-        });
-        probe("b64-sent", file.size, String(r.status));
-      }
-      tmp.remove();
-      if (r.status === 403) {
-        const jj = await r.json().catch(() => ({}));
-        renderMessage({direction:"admin", text: jj.error === "offline" ? UPLOAD_ERR.offline : BANNED_TEXT});
-        body.scrollTop = body.scrollHeight;
-        applyWorkState();
-        return;
-      }
-      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
-      await r.json().catch(() => ({}));
-      probe("ok", file.size);
-      setTimeout(poll, 400);
-    } catch (err) {
-      tmp.remove();
-      probe("fail", file.size, (err && (err.name || err.message)) || "unknown");
-      showUploadError("no connection", 0, err && (err.name || err.message));
-    } finally { clipBtn.disabled = false; }
-  }
   const isImageFile = f => /^image\//i.test(f.type || "") || /\.(png|jpe?g|webp)$/i.test(f.name || "");
-  function showUploadError(key, status, detail) {
-    let txt = UPLOAD_ERR[key] ||
-      (status ? "Не удалось отправить (код " + status + "). Попробуйте ещё раз." : "Не удалось отправить. Попробуйте позже.");
-    if (detail && key === "no connection") txt += " (" + String(detail).slice(0, 30) + ")";
-    renderMessage({direction:"admin", text: txt});
+  function showUploadError(key) {
+    renderMessage({direction:"admin", text: UPLOAD_ERR[key] || "Не удалось отправить. Попробуйте позже."});
     body.scrollTop = body.scrollHeight;
   }
   function uploadTmp(label) {
@@ -881,57 +680,9 @@
     body.scrollTop = body.scrollHeight;
     return el;
   }
-  async function uploadTextFile(file) {
-    if (file.size > TEXT_MAX) return showUploadError("too big");
-    const tmp = uploadTmp("📄 Отправка файла…");
-    clipBtn.disabled = true;
-    try {
-      const fd = new FormData();
-      fd.append("sid", sid);
-      fd.append("name", getName() || "Гость");
-      fd.append("file", file, file.name || "diagnostics.txt");
-      const r = await uploadPost(`${API}/api/uploadtext`, fd, file.size);
-      tmp.remove();
-      if (r.status === 403) {
-        const jj = await r.json().catch(() => ({}));
-        renderMessage({direction:"admin", text: jj.error === "offline" ? UPLOAD_ERR.offline : BANNED_TEXT});
-        body.scrollTop = body.scrollHeight;
-        applyWorkState();
-        return;
-      }
-      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error, r.status); }
-      await r.json().catch(() => ({}));
-      setTimeout(poll, 400);
-    } catch (err) {
-      tmp.remove();
-      showUploadError("no connection", 0, err && (err.name || err.message));
-    } finally { clipBtn.disabled = false; }
-  }
-  function downscale(file) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = () => {
-        try {
-          const MAX = 1600;
-          let w = img.width, h = img.height;
-          if (!w || !h) throw new Error("bad");
-          const k = Math.min(1, MAX / Math.max(w, h));
-          w = Math.round(w * k); h = Math.round(h * k);
-          const cv = document.createElement("canvas");
-          cv.width = w; cv.height = h;
-          cv.getContext("2d").drawImage(img, 0, 0, w, h);
-          URL.revokeObjectURL(url);
-          cv.toBlob(b => b ? resolve(b) : reject(new Error("bad")), "image/jpeg", 0.82);
-        } catch (e) { URL.revokeObjectURL(url); reject(e); }
-      };
-      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("bad")); };
-      img.src = url;
-    });
-  }
   async function uploadShot(file) {
     if (!file) return;
-    if (!chatOpen()) { applyWorkState(); return; }
+    if (!isWorkTime()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     if (!flowDone) {
       renderMessage({direction:"admin", text:"Выберите тему сообщения"});
@@ -939,11 +690,7 @@
       body.scrollTop = body.scrollHeight;
       return;
     }
-    if (!isImageFile(file)) {
-      if (ZIP_EXT_RE.test(file.name || "")) return uploadZipFile(file);
-      if (TEXT_EXT_RE.test(file.name || "")) return uploadTextFile(file);
-      return showUploadError("only png/jpeg/webp");
-    }
+    if (!isImageFile(file)) return showUploadError("only png/jpeg/webp");
     if (file.size > UPLOAD_MAX) return showUploadError("too big");
     let blob;
     try { blob = await downscale(file); }
@@ -963,7 +710,7 @@
       fd.append("sid", sid);
       fd.append("name", getName() || "Гость");
       fd.append("file", blob, "screenshot.jpg");
-      const r = await uploadPost(`${API}/api/upload`, fd, file.size);
+      const r = await fetch(`${API}/api/upload`, {method:"POST", body: fd});
       tmp.remove();
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
@@ -974,17 +721,21 @@
       }
       if (!r.ok) {
         const jj = await r.json().catch(() => ({}));
-        return showUploadError(jj.error, r.status);
+        renderMessage({direction:"admin", text: UPLOAD_ERR[jj.error] || "Не удалось отправить. Попробуйте позже."});
+        body.scrollTop = body.scrollHeight;
+        return;
       }
-      await r.json().catch(() => ({}));
-      setTimeout(poll, 400);
-    } catch (err) {
+      const j = await r.json();
+      if (j.id) lastId = Math.max(lastId, j.id);
+      setTimeout(poll, 500);
+    } catch {
       tmp.remove();
-      showUploadError("no connection", 0, err && (err.name || err.message));
+      renderMessage({direction:"admin", text: UPLOAD_ERR["send failed"]});
+      body.scrollTop = body.scrollHeight;
     } finally { clipBtn.disabled = false; }
   }
   clipBtn.addEventListener("click", () => {
-    if (!chatOpen()) { applyWorkState(); return; }
+    if (!isWorkTime()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     fileInput.click();
   });
@@ -1015,7 +766,7 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (hpInput.value.trim() !== "") return; // honeypot
-    if (!chatOpen()) { applyWorkState(); return; }
+    if (!isWorkTime()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     const text = input.value.trim();
     if (!text) return;
@@ -1036,7 +787,7 @@
     input.value = "";
     autogrow();
     sendBtn.disabled = true;
-    setTimeout(() => { if (chatOpen()) sendBtn.disabled = false; }, 1000); // anti-spam throttle
+    setTimeout(() => { if (isWorkTime()) sendBtn.disabled = false; }, 1000); // anti-spam throttle
     const tmp = {id: lastId+1, direction:"user", text};
     renderMessage(tmp);
     body.scrollTop = body.scrollHeight;
@@ -1055,11 +806,11 @@
         return;
       }
       if (!r.ok) throw new Error();
-      const j = await r.json().catch(() => ({}));
-      if (j && j.id) lastId = Math.max(lastId, j.id);
-      setTimeout(poll, 400);
+      const j = await r.json();
+      if (j.id) lastId = Math.max(lastId, j.id);
+      setTimeout(poll, 500);
     } catch {}
-    finally { if (chatOpen()) sendBtn.disabled = false; }
+    finally { if (isWorkTime()) sendBtn.disabled = false; }
   });
 
   // autogrow + Enter to send (Shift+Enter = newline), field-sizing:content is the CSS base
@@ -1072,7 +823,7 @@
     }
   });
 
-  refreshHours().then(applyWorkState);
-  setInterval(() => { refreshHours().then(applyWorkState); }, 60000);
+  applyWorkState();
+  setInterval(applyWorkState, 60000);
   setInterval(() => { if (!open) poll(); }, 8000);
 })();
