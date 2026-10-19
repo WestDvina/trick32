@@ -206,6 +206,19 @@
     const h = (new Date().getUTCHours() + 3) % 24;
     return h >= WORK_FROM && h < WORK_TO;
   }
+  let serverOpen = null;   // null = unknown -> fall back to local clock
+  function chatOpen() {
+    return serverOpen === null ? isWorkTime() : serverOpen;
+  }
+  async function refreshHours() {
+    try {
+      const r = await fetch(`${API}/api/hours`, {cache: "no-store"});
+      if (r.ok) {
+        const j = await r.json();
+        serverOpen = !!j.open;
+      }
+    } catch (_) {}
+  }
   function autogrow() {
     if (CSS && CSS.supports && CSS.supports("field-sizing", "content")) return;
     input.style.height = "auto";
@@ -213,7 +226,7 @@
   }
   let workState = null;
   function applyWorkState() {
-    const on = isWorkTime();
+    const on = chatOpen();
     const changed = workState !== on;
     workState = on;
     fab.classList.toggle("offline", !on);
@@ -845,7 +858,7 @@
   }
   async function uploadShot(file) {
     if (!file) return;
-    if (!isWorkTime()) { applyWorkState(); return; }
+    if (!chatOpen()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     if (!flowDone) {
       renderMessage({direction:"admin", text:"Выберите тему сообщения"});
@@ -898,7 +911,7 @@
     } finally { clipBtn.disabled = false; }
   }
   clipBtn.addEventListener("click", () => {
-    if (!isWorkTime()) { applyWorkState(); return; }
+    if (!chatOpen()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     fileInput.click();
   });
@@ -929,7 +942,7 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (hpInput.value.trim() !== "") return; // honeypot
-    if (!isWorkTime()) { applyWorkState(); return; }
+    if (!chatOpen()) { applyWorkState(); return; }
     if (!getName()) { showGate(); return; }
     const text = input.value.trim();
     if (!text) return;
@@ -950,7 +963,7 @@
     input.value = "";
     autogrow();
     sendBtn.disabled = true;
-    setTimeout(() => { if (isWorkTime()) sendBtn.disabled = false; }, 1000); // anti-spam throttle
+    setTimeout(() => { if (chatOpen()) sendBtn.disabled = false; }, 1000); // anti-spam throttle
     const tmp = {id: lastId+1, direction:"user", text};
     renderMessage(tmp);
     body.scrollTop = body.scrollHeight;
@@ -973,7 +986,7 @@
       if (j && j.id) lastId = Math.max(lastId, j.id);
       setTimeout(poll, 400);
     } catch {}
-    finally { if (isWorkTime()) sendBtn.disabled = false; }
+    finally { if (chatOpen()) sendBtn.disabled = false; }
   });
 
   // autogrow + Enter to send (Shift+Enter = newline), field-sizing:content is the CSS base
@@ -986,7 +999,7 @@
     }
   });
 
-  applyWorkState();
-  setInterval(applyWorkState, 60000);
+  refreshHours().then(applyWorkState);
+  setInterval(() => { refreshHours().then(applyWorkState); }, 60000);
   setInterval(() => { if (!open) poll(); }, 8000);
 })();
