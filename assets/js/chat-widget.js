@@ -935,7 +935,8 @@
         return;
       }
       if (!r.ok) throw new Error();
-      await r.json().catch(() => ({}));
+      const j = await r.json().catch(() => ({}));
+      if (j && j.id) lastId = Math.max(lastId, j.id);
       setTimeout(poll, 400);
     } catch {}
     finally { if (isWorkTime()) sendBtn.disabled = false; }
