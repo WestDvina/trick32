@@ -764,7 +764,7 @@
     var opts = {method:"POST", body: fd};
     try {
       ctrl = new AbortController();
-      timer = setTimeout(function () { try { ctrl.abort(); } catch (_) {} }, 20000);
+      timer = setTimeout(function () { try { ctrl.abort(); } catch (_) {} }, 60000);
       opts.signal = ctrl.signal;
     } catch (_) { ctrl = null; }
     probe("posting", size);
@@ -781,9 +781,32 @@
     });
   }
 
+  function fileReadable(file) {
+    return new Promise(function (resolve) {
+      var done = false;
+      var t = setTimeout(function () { if (!done) { done = true; resolve(false); } }, 6000);
+      try {
+        file.slice(0, 1).arrayBuffer().then(function () {
+          if (!done) { done = true; clearTimeout(t); resolve(true); }
+        }, function () {
+          if (!done) { done = true; clearTimeout(t); resolve(false); }
+        });
+      } catch (_) {
+        if (!done) { done = true; clearTimeout(t); resolve(false); }
+      }
+    });
+  }
+
   async function uploadZipFile(file) {
-    probe("start", file.size);
+    probe("start", file.size, file.name);
     if (file.size > ZIP_MAX) { probe("too-big", file.size); return showUploadError("zip too big"); }
+    const okRead = await fileReadable(file);
+    probe("readable", file.size, okRead ? "yes" : "no");
+    if (!okRead) {
+      renderMessage({direction:"admin", text: "Файл не читается браузером. Скорее всего, архив лежит в папке OneDrive и ещё не скачан на диск. Переместите его в локальную папку (например, C:\\Temp) и отправьте оттуда."});
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
     const tmp = uploadTmp("📦 Отправка архива…");
     clipBtn.disabled = true;
     try {
