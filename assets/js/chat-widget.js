@@ -768,11 +768,16 @@
       opts.signal = ctrl.signal;
     } catch (_) { ctrl = null; }
     probe("posting", size);
+    var waited = 0;
+    var hb = setInterval(function () { waited += 10; probe("waiting", size, String(waited)); }, 10000);
+    function stopHb() { if (hb) { clearInterval(hb); hb = null; } }
     return fetch(url, opts).then(function (r) {
       if (timer) clearTimeout(timer);
+      stopHb();
       return r;
     }, function (e1) {
       if (timer) clearTimeout(timer);
+      stopHb();
       probe("fetch-failed", size, (e1 && (e1.name || e1.message)) || "unknown");
       return xhrPost(url, fd, e1).then(function (r) {
         probe("xhr-ok", size);
