@@ -186,7 +186,7 @@
       <div class="chat-quick" style="display:none"></div>
       <div class="chat-empty">Напишите сообщение — отвечу здесь же.<br>Работаю через HopToDesk / AnyDesk / RuDesktop.</div></div>
     <div class="chat-drop-veil">Отпустите, чтобы отправить файл</div>
-    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот или файл" title="Прикрепить скриншот или файл"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp,.txt,.log,.md" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="4000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
+    <form class="chat-foot"><input type="text" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" name="hp"><div class="foot-pill"><button type="button" class="clip-btn" aria-label="Прикрепить скриншот или файл" title="Прикрепить скриншот или архив диагностики"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button><input type="file" accept="image/png,image/jpeg,image/webp,.txt,.log,.md,.zip" style="display:none" name="shot"><textarea name="msg" rows="1" placeholder="Ваше сообщение..." maxlength="4000" autocomplete="off" enterkeyhint="send"></textarea><button type="submit" aria-label="Отправить"><span class="btn-text">Отправить</span><span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></span></button></div></form>
     <div class="chat-footer-note"><a href="https://t.me/Pathf1nder" target="_blank" rel="noopener">Установка чатов на сайт → Telegram</a></div>
   `;
   document.body.appendChild(panel);
@@ -253,7 +253,7 @@
         {id:"activation", label:"Активация", reply:"Принято — активация Windows 10/11 безопасными способами. Какая система и сборка? Код ошибки активации? Есть ли ключ?"},
         {id:"errors", label:"Ошибки", reply:"Понял — ошибки Windows. Опишите: что случилось, код ошибки, когда началось? Скрин поможет."},
         {id:"install", label:"Установка", reply:"Принято — установка Windows. Какая версия нужна (10/11)? Сохранить файлы или чистая установка?"},
-        {id:"diag-audio", label:"🔊 Диагностика звука", action:"script:audio", reply:"Принято — сейчас вышлю скрипт диагностики звука. Запустите его в PowerShell от имени администратора и пришлите файл audio-diag.txt."},
+        {id:"diag-pc", label:"🧪 Диагностика ПК", action:"script:pc", reply:"Принято — сейчас пришлю команду сборщика. Соберёт журналы в архив на рабочем столе, пришлите этот zip сюда."},
         {id:"other", label:"Другое", reply:"Опишите задачу по Windows своими словами — что нужно сделать?"}
       ]}
     ]
@@ -708,10 +708,42 @@
     "only txt/log/md": "Из файлов принимаю: .txt, .log, .md",
     "not a text file": "Это не похоже на текстовый файл.",
     "empty file": "Файл пустой.",
-    "send failed": "Не удалось отправить. Попробуйте позже."
+    "only zip": "Архив диагностики — только .zip",
+    "not a zip": "Это не похоже на zip-архив.",
+    "send failed": "Не удалось отправить. Попробуйте позже.",
+    "zip too big": "Архив больше 15 МБ. Пришлите архив, собранный сборщиком (обычно 1–5 МБ)."
   };
   const TEXT_MAX = 256 * 1024;
   const TEXT_EXT_RE = /\.(txt|log|md)$/i;
+  const ZIP_EXT_RE = /\.zip$/i;
+  const ZIP_MAX = 15 * 1024 * 1024;
+  async function uploadZipFile(file) {
+    if (file.size > ZIP_MAX) return showUploadError("zip too big");
+    const tmp = uploadTmp("📦 Отправка архива…");
+    clipBtn.disabled = true;
+    try {
+      const fd = new FormData();
+      fd.append("sid", sid);
+      fd.append("name", getName() || "Гость");
+      fd.append("file", file, file.name || "windiag.zip");
+      const r = await fetch(`${API}/api/uploadzip`, {method:"POST", body: fd});
+      tmp.remove();
+      if (r.status === 403) {
+        const jj = await r.json().catch(() => ({}));
+        renderMessage({direction:"admin", text: jj.error === "offline" ? UPLOAD_ERR.offline : BANNED_TEXT});
+        body.scrollTop = body.scrollHeight;
+        applyWorkState();
+        return;
+      }
+      if (!r.ok) { const jj = await r.json().catch(() => ({})); return showUploadError(jj.error); }
+      const j = await r.json();
+      if (j.id) lastId = Math.max(lastId, j.id);
+      setTimeout(poll, 500);
+    } catch {
+      tmp.remove();
+      showUploadError("send failed");
+    } finally { clipBtn.disabled = false; }
+  }
   const isImageFile = f => /^image\//i.test(f.type || "") || /\.(png|jpe?g|webp)$/i.test(f.name || "");
   function showUploadError(key) {
     renderMessage({direction:"admin", text: UPLOAD_ERR[key] || "Не удалось отправить. Попробуйте позже."});
@@ -787,6 +819,7 @@
       return;
     }
     if (!isImageFile(file)) {
+      if (ZIP_EXT_RE.test(file.name || "")) return uploadZipFile(file);
       if (TEXT_EXT_RE.test(file.name || "")) return uploadTextFile(file);
       return showUploadError("only png/jpeg/webp");
     }
