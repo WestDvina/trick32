@@ -503,6 +503,30 @@
     }
     return wrap;
   }
+  function fenceBlocks(text) {
+    if (!text || text.indexOf("```") === -1) return null;
+    const parts = text.split("```");
+    if (parts.length < 3 || parts.length % 2 === 0) return null;
+    let out = "";
+    const ents = [];
+    for (let i = 0; i < parts.length; i++) {
+      if (i % 2 === 0) { out += parts[i]; continue; }
+      let body = parts[i];
+      let lang = "";
+      const nl = body.indexOf("\n");
+      if (nl !== -1) {
+        const first = body.slice(0, nl).trim();
+        if (first && !/\s/.test(first) && first.length <= 20) { lang = first; body = body.slice(nl + 1); }
+      }
+      const block = body.replace(/^\n+/, "").replace(/\n+$/, "");
+      const offset = out.length;
+      out += block;
+      const e = { type: "pre", offset, length: block.length };
+      if (lang) e.language = lang;
+      ents.push(e);
+    }
+    return ents.length ? { text: out, entities: ents } : null;
+  }
   function renderMessage(m) {
     const empty = body.querySelector(".chat-empty");
     if (empty) empty.remove();
@@ -518,10 +542,12 @@
     if (ents && ents.length) {
       div.classList.add("formatted");
       div.appendChild(renderContent(m.text, ents, isAdmin));
-      if (div.querySelector(".chat-code")) div.classList.add("has-code");
     } else {
-      div.appendChild(isAdmin ? adminKeywordFragment(m.text) : linkifyFragment(m.text));
+      const conv = fenceBlocks(m.text);
+      if (conv) div.appendChild(renderContent(conv.text, conv.entities, isAdmin));
+      else div.appendChild(isAdmin ? adminKeywordFragment(m.text) : linkifyFragment(m.text));
     }
+    if (div.querySelector(".chat-code")) div.classList.add("has-code");
     body.appendChild(div);
   }
 
