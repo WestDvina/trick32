@@ -242,5 +242,9 @@
   "aomei-backupper-backdoor": {
     "hook": "БЭКДОР ОТ AOMEI",
     "accent": "5 МИНУТ ХВАТИЛО"
+  },
+  "kak-otkatit-drayver-videokarty-esli-windows-stavit-obratno": {
+    "hook": "ДРАЙВЕР ВЕРНУЛСЯ",
+    "accent": "ОТКАТ НЕ ДЕРЖИТСЯ"
   }
 }
