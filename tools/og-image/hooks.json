@@ -250,5 +250,9 @@
   "kak-otkatit-drayver-videokarty-esli-windows-stavit-obratno": {
     "hook": "ДРАЙВЕР ВЕРНУЛСЯ",
     "accent": "ОТКАТ НЕ ДЕРЖИТСЯ"
+  },
+  "scanning-and-repairing-drive-c-0x800701b1": {
+    "hook": "ДИСК ОТВАЛИВАЕТСЯ",
+    "accent": "0X800701B1"
   }
 }
