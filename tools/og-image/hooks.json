@@ -254,5 +254,9 @@
   "scanning-and-repairing-drive-c-0x800701b1": {
     "hook": "ДИСК ОТВАЛИВАЕТСЯ",
     "accent": "0X800701B1"
+  },
+  "office-2021-mac-ne-aktiviruetsya-otkat-16-101": {
+    "hook": "ЛИЦЕНЗИЯ ВЕРНУЛАСЬ",
+    "accent": "OFFICE 2021 НА MAC"
   }
 }
