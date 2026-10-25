@@ -91,4 +91,14 @@
   <script type="application/ld+json">
     {{ $scratch.Get "breadcrumb" | jsonify (dict "prefix" " " "indent" "  ") | safeJS }}
   </script>
+
+  {{- with .Params.faq }}
+  {{- $items := slice -}}
+  {{- range . -}}
+    {{- $items = $items | append (dict "@type" "Question" "name" .q "acceptedAnswer" (dict "@type" "Answer" "text" .a)) -}}
+  {{- end -}}
+  <script type="application/ld+json">
+    {{- dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $items | jsonify (dict "indent" "  ") | safeJS -}}
+  </script>
+  {{- end }}
 {{- end }}
