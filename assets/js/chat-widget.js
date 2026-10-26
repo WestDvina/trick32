@@ -1,9 +1,21 @@
 (() => {
   const API = "https://chat.a62i.ru";
-  const LS_SID = "chat_sid_v1";
+  const LS_SID = "chat_sid_v2";
   const LS_NAME = "chat_name_v1";
   function genSid() {
-    return Math.random().toString(36).slice(2, 10) + "-" + Date.now().toString(36);
+    // Криптостойкий идентификатор сессии: Math.random() предсказуем и
+    // позволяет угадать sid, а значит читать чужую переписку. Fallback
+    // нужен для старых браузеров без crypto.randomUUID.
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+    const bytes = new Uint8Array(16);
+    if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
+      crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
   }
   function getSid() {
     let s = localStorage.getItem(LS_SID);
