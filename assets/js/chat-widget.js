@@ -1,6 +1,7 @@
 (() => {
   const API = "https://chat.a62i.ru";
-  const LS_SID = "chat_sid_v2";
+  const LS_SID = "chat_sid_v3";
+  const LS_TOKEN = "chat_token_v3";
   const LS_NAME = "chat_name_v1";
   function genSid() {
     // Криптостойкий идентификатор сессии: Math.random() предсказуем и
@@ -17,11 +18,38 @@
     }
     return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
   }
-  function getSid() {
-    let s = localStorage.getItem(LS_SID);
-    if (!s) { s = genSid(); localStorage.setItem(LS_SID, s); }
-    return s;
+  let sid = localStorage.getItem(LS_SID) || null;
+  let sessionToken = localStorage.getItem(LS_TOKEN) || null;
+  let LS_LAST = sid ? ("chat_last_" + sid) : null;
+  let LS_SEEN = sid ? ("chat_seen_" + sid) : null;
+  async function ensureSession() {
+    if (sid && sessionToken) {
+      if (!LS_LAST) { LS_LAST = "chat_last_" + sid; LS_SEEN = "chat_seen_" + sid; }
+      if (seenId === 0) seenId = parseInt(localStorage.getItem(LS_SEEN) || "0", 10) || 0;
+      return;
+    }
+    try {
+      const r = await fetch(API + "/api/session", {method:"POST", headers:{"Origin":location.origin}});
+      const j = await r.json();
+      if (j && j.sid && j.token) {
+        sid = j.sid; sessionToken = j.token;
+        localStorage.setItem(LS_SID, sid);
+        localStorage.setItem(LS_TOKEN, sessionToken);
+        LS_LAST = "chat_last_" + sid;
+        LS_SEEN = "chat_seen_" + sid;
+        seenId = parseInt(localStorage.getItem(LS_SEEN) || "0", 10) || 0;
+      }
+    } catch {}
+    if (!sid) {
+      sid = genSid();
+      localStorage.setItem(LS_SID, sid);
+      LS_LAST = "chat_last_" + sid;
+      LS_SEEN = "chat_seen_" + sid;
+      seenId = parseInt(localStorage.getItem(LS_SEEN) || "0", 10) || 0;
+    }
   }
+  function getSid() { return sid; }
+  function getToken() { return sessionToken || ""; }
   function getName() { return localStorage.getItem(LS_NAME) || ""; }
   function setName(v) { localStorage.setItem(LS_NAME, v); }
   const RULES_TEXT = `Правила чата поддержки:
@@ -242,11 +270,8 @@
     }
   }
 
-  let sid = getSid();
-  const LS_LAST = "chat_last_" + sid;
-  const LS_SEEN = "chat_seen_" + sid;
   let lastId = 0;
-  let seenId = parseInt(localStorage.getItem(LS_SEEN) || "0", 10) || 0;
+  let seenId = 0;
   let open = false;
   let unread = 0;
   let timer = null;
@@ -551,7 +576,9 @@
 
   async function poll() {
     try {
-      const r = await fetch(`${API}/api/messages?sid=${encodeURIComponent(sid)}&after=${lastId}`);
+      await ensureSession();
+      if (!sid) return;
+      const r = await fetch(`${API}/api/messages?sid=${encodeURIComponent(sid)}&token=${encodeURIComponent(getToken())}&after=${lastId}`);
       if (!r.ok) return;
       const j = await r.json();
       const msgs = j.messages || [];
@@ -586,7 +613,7 @@
 
   function markSeen() {
     seenId = lastId;
-    localStorage.setItem(LS_SEEN, String(seenId));
+    if (LS_SEEN) localStorage.setItem(LS_SEEN, String(seenId));
     unread = 0;
     badge.style.display = "none";
   }
@@ -718,8 +745,10 @@
     body.scrollTop = body.scrollHeight;
     clipBtn.disabled = true;
     try {
+      await ensureSession();
       const fd = new FormData();
       fd.append("sid", sid);
+      fd.append("token", getToken());
       fd.append("name", getName() || "Гость");
       fd.append("file", blob, "screenshot.jpg");
       const r = await fetch(`${API}/api/upload`, {method:"POST", body: fd});
@@ -805,10 +834,11 @@
     body.scrollTop = body.scrollHeight;
     checkKeywords(text);
     try {
+      await ensureSession();
       const r = await fetch(`${API}/api/message`, {
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({sid, text, name: getName() || "Гость"})
+        body: JSON.stringify({sid, token: getToken(), text, name: getName() || "Гость"})
       });
       if (r.status === 403) {
         const jj = await r.json().catch(() => ({}));
