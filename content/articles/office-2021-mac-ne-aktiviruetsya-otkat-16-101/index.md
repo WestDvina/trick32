@@ -56,10 +56,12 @@ draft: false
 ## Кого это касается
 
 - Mac с **Office 2021** (Home & Student, Home & Business): бессрочная лицензия, привязанная к учётной записи;
-- по сообщениям пользователей: сборки **16.114, 16.114.1 и 16.114.2** (последняя вышла 26 октября 2026);
+- по сообщениям пользователей: сборки **16.114.1 и 16.114.2** (последняя вышла 26 октября 2026);
 - чаще всего после автоматического обновления.
 
-**Рабочие сборки**, на которых лицензия принимается: **16.113.4** (октябрьская, новее) и **16.101** (сентябрьская, проверена нами).
+**16.114 (26101123)**, по сообщениям пользователей, ещё принимает лицензию Office 2021 — если у вас 16.114 и всё работает, не обновляйтесь. Ломает именно 16.114.1.
+
+**Рабочие сборки**, на которых лицензия принимается: **16.114** (октябрьская, последняя рабочая), **16.113.4** (октябрьская) и **16.101** (сентябрьская, проверена нами).
 
 Если у вас Office 2024 или подписка Microsoft 365, этот сценарий, скорее всего, не ваш. Если Office 2019 — там своя история с июльским сертификатом, о ней отдельно.
 
@@ -97,7 +99,7 @@ defaults read /Library/Preferences/com.microsoft.autoupdate2 HowToCheck
 
 Нужна версия **16.101 (25091314)**: на ней активация работает: это подтверждают и наш прогон, и сообщения пользователей.
 
-Корпоративный установщик (рекомендую именно его, он же используется в организациях):
+Установщик **с Teams** (больший пакет, включает Microsoft Teams):
 
 ```bash
 cd ~/Downloads
@@ -106,7 +108,7 @@ curl -L --http1.1 -C - --retry 20 --retry-delay 5 --retry-all-errors \
   "https://officecdn.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_365_and_Office_16.101.25091314_BusinessPro_Installer.pkg"
 ```
 
-Розничный вариант, если корпоративный недоступен:
+Установщик **без Teams** (меньший пакет):
 
 ```bash
 cd ~/Downloads
@@ -117,9 +119,27 @@ curl -L --http1.1 -C - --retry 20 --retry-delay 5 --retry-all-errors \
 
 Команда с `-C -` умеет продолжать загрузку с места обрыва: если интернет отвалился, запустите её снова.
 
-**Альтернатива: 16.113.4.** По сообщениям пользователей, октябрьская сборка тоже принимает лицензию Office 2021, и она ближе к актуальной, чем 16.101. Отдельного .pkg в открытом доступе для неё нет — ставится через Microsoft AutoUpdate (см. Путь Б в Шаге 4). Если 16.101 по какой-то причине не подходит, используйте 16.113.4.
+**Альтернатива: 16.113.4.** По сообщениям пользователей, октябрьская сборка тоже принимает лицензию Office 2021, и она ближе к актуальной, чем 16.101. Прямые ссылки Microsoft (проверил — доступны):
 
-**Проверьте файл перед установкой.** У корпоративного пакета размер ровно `2986839695` байт, у розничного — `2623373549`.
+С Teams (размер 3 224 135 480 байт):
+```bash
+cd ~/Downloads
+curl -L --http1.1 -C - --retry 20 --retry-delay 5 --retry-all-errors \
+  -o Office-16.113.4.pkg \
+  "https://res.public.onecdn.static.microsoft/mro1cdnstorage/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_365_and_Office_16.113.26100421_BusinessPro_Installer.pkg"
+```
+
+Без Teams (размер 2 877 627 418 байт):
+```bash
+cd ~/Downloads
+curl -L --http1.1 -C - --retry 20 --retry-delay 5 --retry-all-errors \
+  -o Office-16.113.4.pkg \
+  "https://res.public.onecdn.static.microsoft/mro1cdnstorage/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_365_and_Office_16.113.26100421_Installer.pkg"
+```
+
+Если 16.101 по какой-то причине не подходит, используйте 16.113.4 — установка и проверка те же, что в Шагах 4–6.
+
+**Проверьте файл перед установкой.** У пакета с Teams размер ровно `2986839695` байт, без Teams — `2623373549`.
 
 ```bash
 stat -f%z ~/Downloads/Office-16.101.pkg
@@ -136,21 +156,34 @@ pkgutil --check-signature ~/Downloads/Office-16.101.pkg | head -3
 
 1. Закройте все приложения Office.
 
-2. Удалите приложения:
+2. Удалите приложения Office (именно они несут сломанную сборку). Teams, Copilot и OneDrive — отдельные продукты, в пакет Office не входят (Teams есть только в варианте «с Teams»). На лицензию Office 2021 они не влияют, удалять их не обязательно — но если хотите убрать заодно, добавьте в список `/Applications/Microsoft\ Teams.app`, `/Applications/Microsoft\ Copilot.app`, `/Applications/OneDrive.app`:
 
 ```bash
 sudo rm -rf /Applications/Microsoft\ Word.app /Applications/Microsoft\ Excel.app /Applications/Microsoft\ PowerPoint.app /Applications/Microsoft\ Outlook.app /Applications/Microsoft\ OneNote.app
 ```
 
-3. Проверьте, что ничего не осталось:
+3. Проверьте, что ничего не осталось (Word, Excel и PowerPoint — все три, а не только Word):
 
 ```bash
-mdfind "kMDItemFSName == 'Microsoft Word.app'"
+mdfind "kMDItemFSName == 'Microsoft Word.app' || kMDItemFSName == 'Microsoft Excel.app' || kMDItemFSName == 'Microsoft PowerPoint.app'"
 ```
 
-Если пути есть — удалите их вручную.
+Должно быть пусто. Если путь остался — приложение лежит не в `/Applications` (проверьте Downloads и внешние диски) и его нужно удалить вручную.
 
-4. Установите 16.101:
+4. (Необязательно, но полезно) Почистите кэш лицензии и настроек, чтобы старая сборка не оставила следов. ⚠️ Это сбросит локальные настройки Office (шаблоны, словари, подписи, правила Outlook). Документы в `~/Documents` не пострадают.
+
+```bash
+rm -rf ~/Library/Containers/com.microsoft.Word
+rm -rf ~/Library/Containers/com.microsoft.Excel
+rm -rf ~/Library/Containers/com.microsoft.Powerpoint
+rm -rf ~/Library/Containers/com.microsoft.Outlook
+rm -rf ~/Library/Containers/com.microsoft.onenote.mac
+rm -rf ~/Library/Group\ Containers/UBF8T346G9.Office
+rm -rf ~/Library/Group\ Containers/UBF8T346G9.ms
+rm -rf ~/Library/Group\ Containers/UBF8T346G9.OfficeOsfWebHost
+```
+
+5. Установите 16.101:
 
 ```bash
 sudo installer -pkg ~/Downloads/Office-16.101.pkg -target /
@@ -236,14 +269,21 @@ mdfind "kMDItemFSName == 'Microsoft Word.app'"
 
 Самая частая причина — **версия осталась 16.114.x после установки 16.101**. Проверьте по порядку:
 
-1. **`HowToCheck` реально `Manual`?** Команда из Шага 2 пишет в `/Library/Preferences/com.microsoft.autoupdate2`. Если у вас старая версия MAU, домен может быть `com.microsoft.autoupdate` (без двойки). Проверьте оба:
+1. **`HowToCheck` реально `Manual`?** Команда из Шага 2 пишет в `/Library/Preferences/com.microsoft.autoupdate2`. Проверьте, что значение записалось:
    ```bash
    defaults read /Library/Preferences/com.microsoft.autoupdate2 HowToCheck
-   defaults read /Library/Preferences/com.microsoft.autoupdate HowToCheck
+   ```
+   Если домен не найден, посмотрите, какие домены MAU вообще есть на машине:
+   ```bash
+   defaults domains | tr ',' '\n' | grep -i autoupdate
    ```
 2. **MAU не включился обратно?** Откройте Microsoft AutoUpdate вручную и посмотрите галочку автоматического обновления. Другие приложения Office (Excel, PowerPoint) при запуске могут инициировать проверку.
 3. **Установщик действительно 16.101?** `stat -f%z ~/Downloads/Office-16.101.pkg` должен дать `2986839695` (корпоративный) или `2623373549` (розничный). Если размер другой — файл повреждён или это не та сборка.
-4. **Нет второй копии Office?** `mdfind "kMDItemFSName == 'Microsoft Word.app'"` должен вернуть один путь. Лишние копии (в Downloads, на внешнем диске) перехватывают запуск.
+4. **Нет второй копии Office?** `mdfind "kMDItemFSName == 'Microsoft Word.app' || kMDItemFSName == 'Microsoft Excel.app' || kMDItemFSName == 'Microsoft PowerPoint.app'"` должен вернуть пусто (после сноса) или один путь (после установки). Лишние копии (в Downloads, на внешнем диске) перехватывают запуск.
+5. **Проверьте, как читаете версию.** `defaults read "/Applications/Microsoft Word.app/Contents/Info.plist" CFBundleShortVersionString` может отдать закэшированное значение. Перепроверьте напрямую:
+   ```bash
+   plutil -p "/Applications/Microsoft Word.app/Contents/Info.plist" | grep -E "CFBundleShortVersionString|CFBundleVersion"
+   ```
 5. **Попробуйте Путь Б (msupdate)** из Шага 4 — он ставит версию принудительно, минуя установщик.
 
 Если после всех проверок версия всё равно новая — это подтверждённый баг установщика на вашей конфигурации. Единственный надёжный вариант — Путь А (полный снос) или ожидание исправления от Microsoft.
@@ -253,10 +293,11 @@ mdfind "kMDItemFSName == 'Microsoft Word.app'"
 | Что | Значение |
 |---|---|
 | Симптом | «Лицензия Office 2021 не поддерживается этой версией приложения» |
-| Сломанные сборки | 16.114, 16.114.1, 16.114.2 (26.10.2026) |
+| Сломанные сборки | 16.114.1, 16.114.2 (26.10.2026) |
+| 16.114 (26101123) | по сообщениям пользователей, лицензия ещё принимается |
 | Рабочие сборки | 16.113.4, 16.101 (25091314) |
-| Рабочая сборка | 16.101 (25091314) |
-| Размер корпоративного пакета | 2 986 839 695 байт |
+| Размер пакета с Teams | 2 986 839 695 байт (16.101) |
+| Размер пакета без Teams | 2 623 373 549 байт (16.101) |
 | Обязательный шаг | `HowToCheck = Manual` до установки |
 | Проверка | два запуска подряд + перезагрузка |
 
@@ -280,7 +321,7 @@ mdfind "kMDItemFSName == 'Microsoft Word.app'"
 
 ### Откатил, но версия осталась 16.114.2 — что делать?
 
-Это значит, что установщик не заменил новую сборку старой — на Mac он так и работает. Нужно либо полностью удалить Office (Путь А в Шаге 4), либо поставить версию через `msupdate --install` (Путь Б). После удаления проверьте `mdfind`, что копий не осталось, и только потом ставьте 16.101.
+Сначала перепроверьте версию через `plutil`, а не `defaults read`: `defaults` может отдать закэшированное значение. Если `plutil` тоже показывает 16.114.2 — установщик действительно не заменил новую сборку старой (на Mac он так и работает). Нужно либо полностью удалить Office (Путь А в Шаге 4), либо поставить версию через `msupdate --install` (Путь Б). После удаления проверьте `mdfind`, что копий не осталось, и только потом ставьте 16.101.
 
 ## Читайте также
 
