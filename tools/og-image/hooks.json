@@ -262,5 +262,9 @@
   "stiler-chto-kradet-i-pochemu-2fa-ne-spasla": {
     "hook": "СТИЛЕР С YOUTUBE",
     "accent": "ЧТО ОН ЗАБИРАЕТ"
+  },
+  "windows-10-19045-6456-tormozit": {
+    "hook": "ОБНОВЛЕНИЕ ГОДИЧНОЙ ДАВНОСТИ",
+    "accent": "СБОРКА 19045.6456"
   }
 }
