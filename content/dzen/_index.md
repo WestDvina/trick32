@@ -5,7 +5,7 @@ outputs: ["HTML", "RSS"]
 cascade:
   robots: "noindex, nofollow"
   xml: false
-  _build:
+  build:
     list: never
     render: always
 ---

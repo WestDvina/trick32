@@ -6,7 +6,7 @@ description: "Компьютер пускает по PIN, файлы на мес
 cover: "/og/ne-mogu-vosstanovit-akkaunt-microsoft.jpg"
 robots: "noindex, nofollow"
 xml: false
-_build:
+build:
   list: never
   render: always
 ---
