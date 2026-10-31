@@ -25,7 +25,10 @@
       {{- $body = replaceRE `src="/([^"]+)"` `src="https://trick32.ru/$1"` $body -}}
       {{- $body = replaceRE `srcset="[^"]*"` `` $body -}}
       {{- $body = replaceRE `href="/([^"]+)"` `href="https://trick32.ru/$1"` $body -}}
-      {{- $body = printf "<h2>%s</h2>%s" (.Title | htmlEscape) $body -}}
+      {{- $itemTitle := .Title | htmlEscape -}}
+      {{- $coverUrl := $cover | absURL -}}
+      {{- $figure := printf `<figure><img src="%s" alt="%s"><figcaption>%s</figcaption></figure>` $coverUrl $itemTitle $itemTitle -}}
+      {{- $body = printf "<h2>%s</h2>%s%s" $itemTitle $figure $body -}}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
