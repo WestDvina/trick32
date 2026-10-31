@@ -17,6 +17,9 @@
         {{- $published = time . -}}
       {{- end -}}
       {{- $body := .Content -}}
+      {{- $body = replaceRE `<span[^>]*>` `` $body -}}
+      {{- $body = replaceRE `</span>` `` $body -}}
+      {{- $body = replaceRE ` class="[^"]*"` `` $body -}}
       {{- $body = replaceRE `src="/([^"]+)"` `src="https://trick32.ru/$1"` $body -}}
       {{- $body = replaceRE `srcset="[^"]*"` `` $body -}}
       {{- $body = replaceRE `href="/([^"]+)"` `href="https://trick32.ru/$1"` $body -}}
@@ -30,7 +33,7 @@
       <category>comment-all</category>
       <description>{{ .Description }}</description>
       <enclosure url="{{ $cover | absURL }}" type="image/jpeg" length="0" />
-      <content:encoded><![CDATA[{{ $body | safeHTML }}]]></content:encoded>
+      <content:encoded>{{ printf "<![CDATA[%s]]>" $body | safeHTML }}</content:encoded>
     </item>
     {{ end }}
   </channel>
