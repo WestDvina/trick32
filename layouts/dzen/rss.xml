@@ -19,10 +19,13 @@
       {{- $body := .Content -}}
       {{- $body = replaceRE `<span[^>]*>` `` $body -}}
       {{- $body = replaceRE `</span>` `` $body -}}
+      {{- $body = replaceRE `<code[^>]*>` `<b>` $body -}}
+      {{- $body = replaceRE `</code>` `</b>` $body -}}
       {{- $body = replaceRE ` class="[^"]*"` `` $body -}}
       {{- $body = replaceRE `src="/([^"]+)"` `src="https://trick32.ru/$1"` $body -}}
       {{- $body = replaceRE `srcset="[^"]*"` `` $body -}}
       {{- $body = replaceRE `href="/([^"]+)"` `href="https://trick32.ru/$1"` $body -}}
+      {{- $body = printf "<h2>%s</h2>%s" (.Title | htmlEscape) $body -}}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
