@@ -6,9 +6,6 @@ description: "Компьютер пускает по PIN, файлы на мес
 cover: "/og/ne-mogu-vosstanovit-akkaunt-microsoft.jpg"
 robots: "noindex, nofollow"
 xml: false
-build:
-  list: never
-  render: always
 ---
 
 Компьютер встречает вас PIN-кодом. Рабочий стол, документы, фотографии — всё на месте. Вы открываете сайт Microsoft, чтобы заняться делами, и упираетесь в форму входа.
