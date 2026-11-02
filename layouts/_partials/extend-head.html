@@ -1,3 +1,13 @@
+{{ if and .IsPage (eq .Section "dzen") }}
+  {{ with .Params.cover }}
+    <meta property="og:image" content="{{ . | absURL }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ $.Title }}">
+    <meta name="twitter:image" content="{{ . | absURL }}">
+  {{ end }}
+{{ end }}
 <meta name="zen-verification" content="Z20t7gBPVzJ6GsJb9KXJ33L6YkuaB9KmIv2EbBiSYmsDZyV4UR9G39wr1UUVmEER" />
 {{ $lightbox := resources.Get "js/lightbox.js" | js.Build | minify }}
 <script type="text/javascript" src="{{ $lightbox.RelPermalink }}" defer></script>

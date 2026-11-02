@@ -27,6 +27,12 @@
       {{- $body = replaceRE `href="/([^"]+)"` `href="https://trick32.ru/$1"` $body -}}
       {{- $itemTitle := .Title | htmlEscape -}}
       {{- $coverUrl := $cover | absURL -}}
+      {{- $coverSize := 0 -}}
+      {{- if os.FileExists (printf "static%s" $cover) -}}
+        {{- with os.Stat (printf "static%s" $cover) -}}
+          {{- $coverSize = .Size -}}
+        {{- end -}}
+      {{- end -}}
       {{- $figure := printf `<figure><img src="%s" alt="%s"><figcaption>%s</figcaption></figure>` $coverUrl $itemTitle $itemTitle -}}
       {{- $body = printf "<h2>%s</h2>%s%s" $itemTitle $figure $body -}}
     <item>
@@ -38,7 +44,8 @@
       <category>index</category>
       <category>comment-all</category>
       <description>{{ .Description }}</description>
-      <enclosure url="{{ $cover | absURL }}" type="image/jpeg" length="0" />
+      <enclosure url="{{ $cover | absURL }}" type="image/jpeg" length="{{ $coverSize }}" />
+      <media:content url="{{ $coverUrl }}" medium="image" type="image/jpeg" />
       <content:encoded>{{ printf "<![CDATA[%s]]>" $body | safeHTML }}</content:encoded>
     </item>
     {{ end }}
