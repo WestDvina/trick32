@@ -350,7 +350,7 @@ figure[data-lightbox] {
 }
 
 .home-pinned-link--featured .home-pinned-meta {
-  color: rgba(2, 44, 34, 0.7);
+  color: #022c22;
 }
 
 .home-pinned-link--featured:hover {
@@ -363,11 +363,11 @@ figure[data-lightbox] {
 
 .dark .home-pinned-link--featured {
   background: rgba(var(--color-primary-600), 1);
-  color: #ecfdf5;
+  color: #022c22;
 }
 
 .dark .home-pinned-link--featured .home-pinned-meta {
-  color: rgba(236, 253, 245, 0.75);
+  color: #022c22;
 }
 
 .dark .home-pinned-link--featured:hover {
@@ -488,7 +488,7 @@ figure[data-lightbox] {
   margin-top: 0.35rem;
   font-size: 1rem;
   font-weight: 500;
-  color: #0a9b5c;
+  color: #067a45;
   text-decoration: none;
 }
 
