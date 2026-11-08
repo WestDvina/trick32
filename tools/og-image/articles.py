@@ -66,8 +66,17 @@ def apply_images(path: Path, slug: str, overwrite: bool = False) -> bool:
             return False
         new_fm = fm[:cur.start()] + want + fm[cur.end():]
     else:
-        anchor = (re.search(r"^(tags:.*)$", fm, re.MULTILINE)
-                  or re.search(r"^(categories:.*)$", fm, re.MULTILINE))
-        new_fm = fm[:anchor.end()] + "\n" + want + fm[anchor.end():] if anchor else fm + "\n" + want
+        # Insert after the whole block of the anchor key, not right after its
+        # `tags:`/`categories:` line: those keys are YAML lists, and a line put
+        # between the key and its items breaks the frontmatter.
+        anchor = (re.search(r"^tags:(?:[ \t]*\[[^\]]*\])?[ \t]*\n(?:[ \t]*-[^\n]*\n?)*", fm, re.MULTILINE)
+                  or re.search(r"^categories:(?:[ \t]*\[[^\]]*\])?[ \t]*\n(?:[ \t]*-[^\n]*\n?)*", fm,
+                               re.MULTILINE))
+        pos = anchor.end() if anchor else len(fm)
+        head = fm[:pos]
+        if head and not head.endswith("\n"):
+            head += "\n"
+        tail = fm[pos:]
+        new_fm = head + want + ("\n" + tail if tail else "")
     path.write_text(text[:m.start(1)] + new_fm + text[m.end(1):], encoding="utf-8")
     return True
