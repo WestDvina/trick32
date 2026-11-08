@@ -719,6 +719,28 @@
     body.scrollTop = body.scrollHeight;
     return el;
   }
+  function downscale(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        try {
+          const MAX = 1600;
+          let w = img.width, h = img.height;
+          if (!w || !h) throw new Error("bad");
+          const k = Math.min(1, MAX / Math.max(w, h));
+          w = Math.round(w * k); h = Math.round(h * k);
+          const cv = document.createElement("canvas");
+          cv.width = w; cv.height = h;
+          cv.getContext("2d").drawImage(img, 0, 0, w, h);
+          URL.revokeObjectURL(url);
+          cv.toBlob(b => b ? resolve(b) : reject(new Error("bad")), "image/jpeg", 0.82);
+        } catch (e) { URL.revokeObjectURL(url); reject(e); }
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("bad")); };
+      img.src = url;
+    });
+  }
   async function uploadShot(file) {
     if (!file) return;
     if (!isWorkTime()) { applyWorkState(); return; }
