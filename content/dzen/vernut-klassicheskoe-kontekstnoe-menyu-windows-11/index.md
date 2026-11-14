@@ -1,7 +1,7 @@
 ---
 title: "Вернуть старое меню Windows 11: когда реестр помогает"
 date: 2026-11-14
-dzen_pubdate: 2026-11-14T23:00:00+03:00
+dzen_pubdate: 2026-11-15T09:00:00+03:00
 description: Как проверить недокументированную правку реестра для классического
   меню Windows 11 и что делать, если на 26H2 она не сработала.
 cover: /og/vernut-klassicheskoe-kontekstnoe-menyu-windows-11.jpg
